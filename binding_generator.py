@@ -464,7 +464,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         )
 
     source.append("\tpandemonium_string_name class_name;")
-    source.append('\tgodot::api->pandemonium_string_name_new_data(&class_name, "' + c["name"] + '");')
+    source.append('\tgodot::api->pandemonium_string_name_new_data_char(&class_name, "' + c["name"] + '");')
     source.append("\t_detail_class_tag = godot::api->pandemonium_get_class_tag(&class_name);")
     source.append("\tgodot::api->pandemonium_string_name_destroy(&class_name);")
 

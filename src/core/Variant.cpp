@@ -86,6 +86,10 @@ Variant::Variant(const String &p_string) {
 	godot::api->pandemonium_variant_new_string(&_pandemonium_variant, (pandemonium_string *)&p_string);
 }
 
+Variant::Variant(const StringName &p_string) {
+	godot::api->pandemonium_variant_new_string_name(&_pandemonium_variant, (pandemonium_string_name *)&p_string);
+}
+
 Variant::Variant(const char *const p_cstring) {
 	String s = String(p_cstring);
 	godot::api->pandemonium_variant_new_string(&_pandemonium_variant, (pandemonium_string *)&s);
@@ -112,7 +116,7 @@ Variant::Variant(const Plane &p_plane) {
 	godot::api->pandemonium_variant_new_plane(&_pandemonium_variant, (pandemonium_plane *)&p_plane);
 }
 
-Variant::Variant(const AABB &p_aabb) {
+Variant::Variant(const ::AABB &p_aabb) {
 	godot::api->pandemonium_variant_new_aabb(&_pandemonium_variant, (pandemonium_aabb *)&p_aabb);
 }
 
@@ -140,7 +144,7 @@ Variant::Variant(const NodePath &p_path) {
 	godot::api->pandemonium_variant_new_node_path(&_pandemonium_variant, (pandemonium_node_path *)&p_path);
 }
 
-Variant::Variant(const RID &p_rid) {
+Variant::Variant(const ::RID &p_rid) {
 	godot::api->pandemonium_variant_new_rid(&_pandemonium_variant, (pandemonium_rid *)&p_rid);
 }
 
@@ -237,6 +241,10 @@ Variant::operator String() const {
 	pandemonium_string s = godot::api->pandemonium_variant_as_string(&_pandemonium_variant);
 	return String(s);
 }
+Variant::operator StringName() const {
+	pandemonium_string_name s = godot::api->pandemonium_variant_as_string_name(&_pandemonium_variant);
+	return StringName(s);
+}
 Variant::operator Vector2() const {
 	pandemonium_vector2 s = godot::api->pandemonium_variant_as_vector2(&_pandemonium_variant);
 	return *(Vector2 *)&s;
@@ -253,9 +261,9 @@ Variant::operator Plane() const {
 	pandemonium_plane s = godot::api->pandemonium_variant_as_plane(&_pandemonium_variant);
 	return *(Plane *)&s;
 }
-Variant::operator AABB() const {
+Variant::operator ::AABB() const {
 	pandemonium_aabb s = godot::api->pandemonium_variant_as_aabb(&_pandemonium_variant);
-	return *(AABB *)&s;
+	return *(::AABB *)&s;
 }
 Variant::operator Quat() const {
 	pandemonium_quat s = godot::api->pandemonium_variant_as_quat(&_pandemonium_variant);
@@ -282,9 +290,9 @@ Variant::operator NodePath() const {
 	pandemonium_node_path ret = godot::api->pandemonium_variant_as_node_path(&_pandemonium_variant);
 	return NodePath(ret);
 }
-Variant::operator RID() const {
+Variant::operator ::RID() const {
 	pandemonium_rid s = godot::api->pandemonium_variant_as_rid(&_pandemonium_variant);
-	return *(RID *)&s;
+	return *(::RID *)&s;
 }
 
 Variant::operator Dictionary() const {

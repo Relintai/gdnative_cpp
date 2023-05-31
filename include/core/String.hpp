@@ -42,6 +42,7 @@ class PoolIntArray;
 class PoolRealArray;
 class PoolStringArray;
 class String;
+class StringName;
 
 class CharString {
 	friend class String;
@@ -61,6 +62,7 @@ class String {
 	friend class Dictionary;
 	friend class NodePath;
 	friend class Variant;
+	friend class StringName;
 	explicit inline String(pandemonium_string contents) :
 			_pandemonium_string(contents) {}
 

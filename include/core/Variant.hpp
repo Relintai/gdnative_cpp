@@ -76,41 +76,51 @@ public:
 		STRING,
 
 		// math types
-
-		VECTOR2, // 5
-		RECT2,
+		RECT2, // 5
+		RECT2I,
+		VECTOR2,
+		VECTOR2I,
 		VECTOR3,
-		TRANSFORM2D,
+		VECTOR3I, // 10
+		VECTOR4,
+		VECTOR4I,
+
 		PLANE,
-		QUAT, // 10
-		RECT3, //sorry naming convention fail :( not like it's used often
+		QUATERNION,
+		AABB, // 15
 		BASIS,
 		TRANSFORM,
+		TRANSFORM2D,
+		PROJECTION,
 
 		// misc types
-		COLOR,
-		NODE_PATH, // 15
-		_RID,
+		COLOR, // 20
+		NODE_PATH,
+		RID,
 		OBJECT,
-		DICTIONARY,
+		STRING_NAME,
+		DICTIONARY, // 25
 		ARRAY,
 
 		// arrays
-		POOL_BYTE_ARRAY, // 20
+		POOL_BYTE_ARRAY,
 		POOL_INT_ARRAY,
 		POOL_REAL_ARRAY,
-		POOL_STRING_ARRAY,
+		POOL_STRING_ARRAY, // 30
 		POOL_VECTOR2_ARRAY,
-		POOL_VECTOR3_ARRAY, // 25
+		POOL_VECTOR2I_ARRAY,
+		POOL_VECTOR3_ARRAY,
+		POOL_VECTOR3I_ARRAY,
+		POOL_VECTOR4_ARRAY, // 35
+		POOL_VECTOR4I_ARRAY,
 		POOL_COLOR_ARRAY,
 
-		VARIANT_MAX
-
+		VARIANT_MAX // 38
 	};
 
 	enum Operator {
 
-		//comparation
+		// comparation
 		OP_EQUAL,
 		OP_NOT_EQUAL,
 		OP_LESS,
@@ -118,7 +128,7 @@ public:
 		OP_GREATER,
 		OP_GREATER_EQUAL,
 
-		//mathematic
+		// mathematic
 		OP_ADD,
 		OP_SUBSTRACT,
 		OP_MULTIPLY,
@@ -128,7 +138,7 @@ public:
 		OP_MODULE,
 		OP_STRING_CONCAT,
 
-		//bitwise
+		// bitwise
 		OP_SHIFT_LEFT,
 		OP_SHIFT_RIGHT,
 		OP_BIT_AND,
@@ -136,13 +146,13 @@ public:
 		OP_BIT_XOR,
 		OP_BIT_NEGATE,
 
-		//logic
+		// logic
 		OP_AND,
 		OP_OR,
 		OP_XOR,
 		OP_NOT,
 
-		//containment
+		// containment
 		OP_IN,
 		OP_MAX
 
@@ -177,6 +187,7 @@ public:
 	Variant(double p_double);
 
 	Variant(const String &p_string);
+	Variant(const StringName &p_string);
 
 	Variant(const char *const p_cstring);
 
@@ -190,7 +201,7 @@ public:
 
 	Variant(const Plane &p_plane);
 
-	Variant(const AABB &p_aabb);
+	Variant(const ::AABB &p_aabb);
 
 	Variant(const Quat &p_quat);
 
@@ -204,7 +215,7 @@ public:
 
 	Variant(const NodePath &p_path);
 
-	Variant(const RID &p_rid);
+	Variant(const ::RID &p_rid);
 
 	Variant(const Object *p_object);
 
@@ -244,11 +255,12 @@ public:
 
 	operator double() const;
 	operator String() const;
+	operator StringName() const;
 	operator Vector2() const;
 	operator Rect2() const;
 	operator Vector3() const;
 	operator Plane() const;
-	operator AABB() const;
+	operator ::AABB() const;
 	operator Quat() const;
 	operator Basis() const;
 	operator Transform() const;
@@ -257,7 +269,7 @@ public:
 	operator Color() const;
 
 	operator NodePath() const;
-	operator RID() const;
+	operator ::RID() const;
 	operator pandemonium_object *() const;
 
 	template <typename T>

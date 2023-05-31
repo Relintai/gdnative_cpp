@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  CoreTypes.hpp                                                        */
+/*  String.hpp                                                           */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,30 +28,45 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CORETYPES_H
-#define CORETYPES_H
+#ifndef STRING_NAME_H
+#define STRING_NAME_H
 
-#include "Defs.hpp"
+#include <gdn/string_name.h>
 
-#include "AABB.hpp"
-#include "Array.hpp"
-#include "Basis.hpp"
-#include "Color.hpp"
-#include "Dictionary.hpp"
-#include "NodePath.hpp"
-#include "Plane.hpp"
-#include "PoolArrays.hpp"
-#include "Quat.hpp"
-#include "RID.hpp"
-#include "Rect2.hpp"
-#include "String.hpp"
-#include "StringName.hpp"
-#include "Transform.hpp"
-#include "Transform2D.hpp"
-#include "Variant.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
+namespace godot {
 
-#include "Wrapped.hpp"
+class String;
 
-#endif // CORETYPES_H
+class StringName {
+	pandemonium_string_name _pandemonium_string_name;
+
+	friend class Dictionary;
+	friend class NodePath;
+	friend class Variant;
+	explicit inline StringName(pandemonium_string_name contents) :
+			_pandemonium_string_name(contents) {}
+
+public:
+	StringName();
+	StringName(const char *contents);
+	StringName(const String &other);
+
+	~StringName();
+
+	operator String();
+
+	uint32_t get_hash();
+	const void *get_data_unique_pointer();
+
+	bool operator==(const StringName &s) const;
+	bool operator!=(const StringName &s) const;
+
+	bool operator<(const StringName &s) const;
+	bool operator<=(const StringName &s) const;
+	bool operator>(const StringName &s) const;
+	bool operator>=(const StringName &s) const;
+};
+
+} // namespace godot
+
+#endif // STRING_H

@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  CoreTypes.hpp                                                        */
+/*  String.cpp                                                           */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,30 +28,60 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CORETYPES_H
-#define CORETYPES_H
-
-#include "Defs.hpp"
-
-#include "AABB.hpp"
-#include "Array.hpp"
-#include "Basis.hpp"
-#include "Color.hpp"
-#include "Dictionary.hpp"
-#include "NodePath.hpp"
-#include "Plane.hpp"
-#include "PoolArrays.hpp"
-#include "Quat.hpp"
-#include "RID.hpp"
-#include "Rect2.hpp"
-#include "String.hpp"
 #include "StringName.hpp"
-#include "Transform.hpp"
-#include "Transform2D.hpp"
+
+#include "Array.hpp"
+#include "GodotGlobal.hpp"
+#include "NodePath.hpp"
+#include "PoolArrays.hpp"
 #include "Variant.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
 
-#include "Wrapped.hpp"
+#include <gdn/string.h>
 
-#endif // CORETYPES_H
+#include <string.h>
+
+namespace godot {
+
+godot::StringName::StringName() {
+	godot::api->pandemonium_string_name_new(&_pandemonium_string_name);
+}
+
+StringName::StringName(const char *contents) {
+	godot::api->pandemonium_string_name_new_data_char(&_pandemonium_string_name, contents);
+}
+
+StringName::StringName(const String &other) {
+	godot::api->pandemonium_string_name_new_data_string(&_pandemonium_string_name, &other._pandemonium_string);
+}
+
+StringName::~StringName() {
+	godot::api->pandemonium_string_name_destroy(&_pandemonium_string_name);
+}
+
+
+bool StringName::operator==(const StringName &s) const {
+	return godot::api->pandemonium_string_name_operator_equal(&_pandemonium_string_name, &s._pandemonium_string_name);
+}
+
+bool StringName::operator!=(const StringName &s) const {
+	return !(*this == s);
+}
+
+bool StringName::operator<(const StringName &s) const {
+	return godot::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name);
+}
+
+bool StringName::operator<=(const StringName &s) const {
+	return godot::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name) ||
+		   (*this == s);
+}
+
+bool StringName::operator>(const StringName &s) const {
+	return !(*this <= s);
+}
+
+bool StringName::operator>=(const StringName &s) const {
+	return !(*this < s);
+}
+
+} // namespace godot
