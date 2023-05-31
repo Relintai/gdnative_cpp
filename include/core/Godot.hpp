@@ -56,7 +56,7 @@ namespace detail {
 // They all inherit `_Wrapped`.
 template <class T>
 T *get_wrapper(pandemonium_object *obj) {
-	return (T *)godot::nativescript_1_1_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, obj);
+	return (T *)godot::nativescript_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, obj);
 }
 
 // Custom class instances are not obtainable by just casting the pointer to the base class they inherit,
@@ -210,7 +210,7 @@ void register_class() {
 	godot::nativescript_api->pandemonium_nativescript_register_class(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), T::___get_base_class_name(), create, destroy);
 
-	godot::nativescript_1_1_api->pandemonium_nativescript_set_type_tag(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_set_type_tag(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), (const void *)T::___get_id());
 
 	T::_register_methods();
@@ -231,7 +231,7 @@ void register_tool_class() {
 	godot::nativescript_api->pandemonium_nativescript_register_tool_class(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), T::___get_base_class_name(), create, destroy);
 
-	godot::nativescript_1_1_api->pandemonium_nativescript_set_type_tag(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_set_type_tag(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), (const void *)T::___get_id());
 
 	T::_register_methods();
@@ -590,7 +590,7 @@ T *Object::cast_to(const Object *obj) {
 		return nullptr;
 
 	if (T::___CLASS_IS_SCRIPT) {
-		size_t have_tag = (size_t)godot::nativescript_1_1_api->pandemonium_nativescript_get_type_tag(obj->_owner);
+		size_t have_tag = (size_t)godot::nativescript_api->pandemonium_nativescript_get_type_tag(obj->_owner);
 		if (have_tag) {
 			if (!godot::_TagDB::is_type_known((size_t)have_tag)) {
 				have_tag = 0;
@@ -605,7 +605,7 @@ T *Object::cast_to(const Object *obj) {
 			return detail::get_custom_class_instance<T>(obj);
 		}
 	} else {
-		if (godot::core_1_2_api->pandemonium_object_cast_to(obj->_owner, (void *)T::___get_id())) {
+		if (godot::api->pandemonium_object_cast_to(obj->_owner, (void *)T::___get_id())) {
 			return (T *)obj;
 		}
 	}

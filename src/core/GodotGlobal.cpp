@@ -55,18 +55,13 @@ namespace godot {
 void *_RegisterState::nativescript_handle;
 int _RegisterState::language_index;
 
-const pandemonium_gdnative_core_api_struct *api = nullptr;
-const pandemonium_gdnative_core_1_1_api_struct *core_1_1_api = nullptr;
-const pandemonium_gdnative_core_1_2_api_struct *core_1_2_api = nullptr;
+const pandemonium_gdnative_api_struct *api = nullptr;
 
 const pandemonium_gdnative_ext_nativescript_api_struct *nativescript_api = nullptr;
-const pandemonium_gdnative_ext_nativescript_1_1_api_struct *nativescript_1_1_api = nullptr;
 const pandemonium_gdnative_ext_pluginscript_api_struct *pluginscript_api = nullptr;
 const pandemonium_gdnative_ext_android_api_struct *android_api = nullptr;
-const pandemonium_gdnative_ext_arvr_api_struct *arvr_api = nullptr;
 const pandemonium_gdnative_ext_videodecoder_api_struct *videodecoder_api = nullptr;
 const pandemonium_gdnative_ext_net_api_struct *net_api = nullptr;
-const pandemonium_gdnative_ext_net_3_2_api_struct *net_3_2_api = nullptr;
 
 const void *gdnlib = NULL;
 
@@ -121,6 +116,7 @@ void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
 
 	const pandemonium_gdnative_api_struct *core_extension = godot::api->next;
 
+	/*
 	while (core_extension) {
 		if (core_extension->version.major == 1 && core_extension->version.minor == 1) {
 			godot::core_1_1_api = (const pandemonium_gdnative_core_1_1_api_struct *)core_extension;
@@ -129,6 +125,7 @@ void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
 		}
 		core_extension = core_extension->next;
 	}
+	*/
 
 	// now find our extensions
 	for (int i = 0; i < godot::api->num_extensions; i++) {
@@ -136,15 +133,17 @@ void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
 			case GDNATIVE_EXT_NATIVESCRIPT: {
 				godot::nativescript_api = (const pandemonium_gdnative_ext_nativescript_api_struct *)godot::api->extensions[i];
 
+				/*
 				const pandemonium_gdnative_api_struct *extension = godot::nativescript_api->next;
 
 				while (extension) {
 					if (extension->version.major == 1 && extension->version.minor == 1) {
-						godot::nativescript_1_1_api = (const pandemonium_gdnative_ext_nativescript_1_1_api_struct *)extension;
+						//godot::nativescript_1_1_api = (const pandemonium_gdnative_ext_nativescript_1_1_api_struct *)extension;
 					}
 
 					extension = extension->next;
 				}
+				*/
 			} break;
 			case GDNATIVE_EXT_PLUGINSCRIPT: {
 				godot::pluginscript_api = (const pandemonium_gdnative_ext_pluginscript_api_struct *)godot::api->extensions[i];
@@ -152,15 +151,13 @@ void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
 			case GDNATIVE_EXT_ANDROID: {
 				godot::android_api = (const pandemonium_gdnative_ext_android_api_struct *)godot::api->extensions[i];
 			} break;
-			case GDNATIVE_EXT_ARVR: {
-				godot::arvr_api = (const pandemonium_gdnative_ext_arvr_api_struct *)godot::api->extensions[i];
-			} break;
 			case GDNATIVE_EXT_VIDEODECODER: {
 				godot::videodecoder_api = (const pandemonium_gdnative_ext_videodecoder_api_struct *)godot::api->extensions[i];
 			} break;
 			case GDNATIVE_EXT_NET: {
 				godot::net_api = (const pandemonium_gdnative_ext_net_api_struct *)godot::api->extensions[i];
 
+				/*
 				const pandemonium_gdnative_api_struct *extension = godot::net_api->next;
 
 				while (extension) {
@@ -170,6 +167,7 @@ void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
 
 					extension = extension->next;
 				}
+				*/
 			} break;
 
 			default:
@@ -182,7 +180,7 @@ void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
 	binding_funcs.alloc_instance_binding_data = wrapper_create;
 	binding_funcs.free_instance_binding_data = wrapper_destroy;
 
-	godot::_RegisterState::language_index = godot::nativescript_1_1_api->pandemonium_nativescript_register_instance_binding_data_functions(binding_funcs);
+	godot::_RegisterState::language_index = godot::nativescript_api->pandemonium_nativescript_register_instance_binding_data_functions(binding_funcs);
 
 	// register these now
 	___register_types();
@@ -194,7 +192,7 @@ void Godot::gdnative_terminate(pandemonium_gdnative_terminate_options *options) 
 }
 
 void Godot::gdnative_profiling_add_data(const char *p_signature, uint64_t p_time) {
-	godot::nativescript_1_1_api->pandemonium_nativescript_profiling_add_data(p_signature, p_time);
+	godot::nativescript_api->pandemonium_nativescript_profiling_add_data(p_signature, p_time);
 }
 
 void Godot::nativescript_init(void *handle) {
@@ -202,7 +200,7 @@ void Godot::nativescript_init(void *handle) {
 }
 
 void Godot::nativescript_terminate(void *handle) {
-	godot::nativescript_1_1_api->pandemonium_nativescript_unregister_instance_binding_data_functions(godot::_RegisterState::language_index);
+	godot::nativescript_api->pandemonium_nativescript_unregister_instance_binding_data_functions(godot::_RegisterState::language_index);
 }
 
 } // namespace godot

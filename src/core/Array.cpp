@@ -201,22 +201,22 @@ int Array::bsearch_custom(const Variant &value, const Object *obj,
 }
 
 Array Array::duplicate(const bool deep) const {
-	pandemonium_array arr = godot::core_1_1_api->pandemonium_array_duplicate(&_pandemonium_array, deep);
+	pandemonium_array arr = godot::api->pandemonium_array_duplicate(&_pandemonium_array, deep);
 	return Array(arr);
 }
 
 Variant Array::max() const {
-	pandemonium_variant v = godot::core_1_1_api->pandemonium_array_max(&_pandemonium_array);
+	pandemonium_variant v = godot::api->pandemonium_array_max(&_pandemonium_array);
 	return Variant(v);
 }
 
 Variant Array::min() const {
-	pandemonium_variant v = godot::core_1_1_api->pandemonium_array_min(&_pandemonium_array);
+	pandemonium_variant v = godot::api->pandemonium_array_min(&_pandemonium_array);
 	return Variant(v);
 }
 
 void Array::shuffle() {
-	godot::core_1_1_api->pandemonium_array_shuffle(&_pandemonium_array);
+	godot::api->pandemonium_array_shuffle(&_pandemonium_array);
 }
 
 Array::~Array() {

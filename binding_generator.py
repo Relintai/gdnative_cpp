@@ -244,7 +244,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
     )
 
     source.append(
-        "\tstatic inline Object *___get_from_variant(Variant a) { pandemonium_object *o = (pandemonium_object*) a; return (o) ? (Object *) godot::nativescript_1_1_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, o) : nullptr; }"
+        "\tstatic inline Object *___get_from_variant(Variant a) { pandemonium_object *o = (pandemonium_object*) a; return (o) ? (Object *) godot::nativescript_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, o) : nullptr; }"
     )
 
     enum_values = []
@@ -465,7 +465,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
     source.append("\tpandemonium_string_name class_name;")
     source.append('\tgodot::api->pandemonium_string_name_new_data(&class_name, "' + c["name"] + '");')
-    source.append("\t_detail_class_tag = godot::core_1_2_api->pandemonium_get_class_tag(&class_name);")
+    source.append("\t_detail_class_tag = godot::api->pandemonium_get_class_tag(&class_name);")
     source.append("\tgodot::api->pandemonium_string_name_destroy(&class_name);")
 
     source.append("}")
@@ -477,7 +477,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         source.append(
             "\treturn ("
             + class_name
-            + ' *) godot::nativescript_1_1_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, godot::api->pandemonium_get_class_constructor((char *)"'
+            + ' *) godot::nativescript_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, godot::api->pandemonium_get_class_constructor((char *)"'
             + c["name"]
             + '")());'
         )
@@ -739,7 +739,7 @@ def generate_icall_header(icalls):
             if is_class_type(ret_type):
                 source.append("\tif (ret) {")
                 source.append(
-                    "\t\treturn (Object *) godot::nativescript_1_1_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, ret);"
+                    "\t\treturn (Object *) godot::nativescript_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, ret);"
                 )
                 source.append("\t}")
                 source.append("")

@@ -494,28 +494,28 @@ signed char String::naturalnocasecmp_to(String p_str) const {
 }
 
 String String::dedent() const {
-	pandemonium_string s = godot::core_1_1_api->pandemonium_string_dedent(&_pandemonium_string);
+	pandemonium_string s = godot::api->pandemonium_string_dedent(&_pandemonium_string);
 	return String(s);
 }
 
 PoolStringArray String::rsplit(const String &divisor, const bool allow_empty, const int maxsplit) const {
 	pandemonium_pool_string_array arr =
-			godot::core_1_1_api->pandemonium_string_rsplit(&_pandemonium_string, &divisor._pandemonium_string, allow_empty, maxsplit);
+			godot::api->pandemonium_string_rsplit(&_pandemonium_string, &divisor._pandemonium_string, allow_empty, maxsplit);
 	return PoolStringArray(arr);
 }
 
 String String::rstrip(const String &chars) const {
-	pandemonium_string s = godot::core_1_1_api->pandemonium_string_rstrip(&_pandemonium_string, &chars._pandemonium_string);
+	pandemonium_string s = godot::api->pandemonium_string_rstrip(&_pandemonium_string, &chars._pandemonium_string);
 	return String(s);
 }
 
 String String::trim_prefix(const String &prefix) const {
-	pandemonium_string s = godot::core_1_1_api->pandemonium_string_trim_prefix(&_pandemonium_string, &prefix._pandemonium_string);
+	pandemonium_string s = godot::api->pandemonium_string_trim_prefix(&_pandemonium_string, &prefix._pandemonium_string);
 	return String(s);
 }
 
 String String::trim_suffix(const String &suffix) const {
-	pandemonium_string s = godot::core_1_1_api->pandemonium_string_trim_suffix(&_pandemonium_string, &suffix._pandemonium_string);
+	pandemonium_string s = godot::api->pandemonium_string_trim_suffix(&_pandemonium_string, &suffix._pandemonium_string);
 	return String(s);
 }
 

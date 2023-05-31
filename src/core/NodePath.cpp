@@ -82,7 +82,7 @@ bool NodePath::is_empty() const {
 }
 
 NodePath NodePath::get_as_property_path() const {
-	pandemonium_node_path path = godot::core_1_1_api->pandemonium_node_path_get_as_property_path(&_node_path);
+	pandemonium_node_path path = godot::api->pandemonium_node_path_get_as_property_path(&_node_path);
 	return NodePath(path);
 }
 String NodePath::get_concatenated_subnames() const {
