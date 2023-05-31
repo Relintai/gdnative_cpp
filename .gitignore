@@ -3,6 +3,8 @@ gen/*
 logs/*
 *.log
 
+pandemonium_headers/
+
 # The default cache directory
 .scons_cache/
 
