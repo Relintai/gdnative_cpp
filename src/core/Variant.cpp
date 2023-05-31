@@ -121,7 +121,7 @@ Variant::Variant(const Vector3 &p_vector3) {
 }
 
 Variant::Variant(const Vector3i &p_vector3i) {
-	godot::api->pandemonium_variant_new_vector3i(&_pandemonium_variant, (pandemonium_vector3 *)&p_vector3i);
+	godot::api->pandemonium_variant_new_vector3i(&_pandemonium_variant, (pandemonium_vector3i *)&p_vector3i);
 }
 
 Variant::Variant(const Vector4 &p_vector4) {
