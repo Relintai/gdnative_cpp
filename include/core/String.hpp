@@ -84,8 +84,8 @@ public:
 	static String md5(const uint8_t *p_md5);
 	static String hex_encode_buffer(const uint8_t *p_buffer, int p_len);
 
-	wchar_t &operator[](const int idx);
-	wchar_t operator[](const int idx) const;
+	char32_t &operator[](const int idx);
+	char32_t operator[](const int idx) const;
 
 	void operator=(const String &s);
 	void operator=(String &&s);
@@ -93,7 +93,7 @@ public:
 	bool operator!=(const String &s) const;
 	String operator+(const String &s) const;
 	void operator+=(const String &s);
-	void operator+=(const wchar_t c);
+	void operator+=(const char32_t c);
 	bool operator<(const String &s) const;
 	bool operator<=(const String &s) const;
 	bool operator>(const String &s) const;
@@ -102,7 +102,7 @@ public:
 	operator NodePath() const;
 
 	int length() const;
-	const wchar_t *unicode_str() const;
+	const char32_t *unicode_str() const;
 	char *alloc_c_string() const;
 	CharString utf8() const;
 	CharString ascii(bool p_extended = false) const;

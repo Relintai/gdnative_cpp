@@ -111,11 +111,11 @@ String::~String() {
 	godot::api->pandemonium_string_destroy(&_pandemonium_string);
 }
 
-wchar_t &String::operator[](const int idx) {
-	return *const_cast<wchar_t *>(godot::api->pandemonium_string_operator_index(&_pandemonium_string, idx));
+char32_t &String::operator[](const int idx) {
+	return *const_cast<char32_t *>(godot::api->pandemonium_string_operator_index(&_pandemonium_string, idx));
 }
 
-wchar_t String::operator[](const int idx) const {
+char32_t String::operator[](const int idx) const {
 	return *godot::api->pandemonium_string_operator_index((pandemonium_string *)&_pandemonium_string, idx);
 }
 
@@ -149,7 +149,7 @@ void String::operator+=(const String &s) {
 	*this = String(godot::api->pandemonium_string_operator_plus(&_pandemonium_string, &s._pandemonium_string));
 }
 
-void String::operator+=(const wchar_t c) {
+void String::operator+=(const char32_t c) {
 	String _to_be_added = String(c);
 	*this = String(godot::api->pandemonium_string_operator_plus(&_pandemonium_string, &_to_be_added._pandemonium_string));
 }
@@ -175,8 +175,8 @@ String::operator NodePath() const {
 	return NodePath(*this);
 }
 
-const wchar_t *String::unicode_str() const {
-	return godot::api->pandemonium_string_wide_str(&_pandemonium_string);
+const char32_t *String::unicode_str() const {
+	return godot::api->pandemonium_string_get_data(&_pandemonium_string);
 }
 
 char *String::alloc_c_string() const {
@@ -431,8 +431,8 @@ float String::similarity(String text) const {
 
 // TODO Suport allow_empty
 PoolStringArray String::split(String divisor, bool /*allow_empty*/) const {
-	pandemonium_array arr = godot::api->pandemonium_string_split(&_pandemonium_string, &divisor._pandemonium_string);
-	return Array(arr);
+	pandemonium_pool_string_array arr = godot::api->pandemonium_string_split(&_pandemonium_string, &divisor._pandemonium_string);
+	return PoolStringArray(arr);
 }
 
 // TODO Suport allow_empty
@@ -500,7 +500,7 @@ String String::dedent() const {
 
 PoolStringArray String::rsplit(const String &divisor, const bool allow_empty, const int maxsplit) const {
 	pandemonium_pool_string_array arr =
-			godot::api->pandemonium_string_rsplit(&_pandemonium_string, &divisor._pandemonium_string, allow_empty, maxsplit);
+			godot::api->pandemonium_string_rsplit_maxsplit(&_pandemonium_string, &divisor._pandemonium_string, allow_empty, maxsplit);
 	return PoolStringArray(arr);
 }
 

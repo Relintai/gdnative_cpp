@@ -41,7 +41,7 @@
 #include "NodePath.hpp"
 #include "Plane.hpp"
 #include "PoolArrays.hpp"
-#include "Quat.hpp"
+#include "Quaternion.hpp"
 #include "RID.hpp"
 #include "Rect2.hpp"
 #include "String.hpp"

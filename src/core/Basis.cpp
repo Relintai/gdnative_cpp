@@ -30,7 +30,7 @@
 
 #include "Basis.hpp"
 #include "Defs.hpp"
-#include "Quat.hpp"
+#include "Quaternion.hpp"
 #include "Vector3.hpp"
 
 #include <algorithm>
@@ -172,7 +172,7 @@ Vector3 Basis::get_scale() const {
 	// We are assuming M = R.S, and performing a polar decomposition to extract R and S.
 	// FIXME: We eventually need a proper polar decomposition.
 	// As a cheap workaround until then, to ensure that R is a proper rotation matrix with determinant +1
-	// (such that it can be represented by a Quat or Euler angles), we absorb the sign flip into the scaling matrix.
+	// (such that it can be represented by a Quaternion or Euler angles), we absorb the sign flip into the scaling matrix.
 	// As such, it works in conjuction with get_rotation().
 	real_t det_sign = determinant() > 0 ? 1 : -1;
 	return det_sign * Vector3(
@@ -185,8 +185,8 @@ Vector3 Basis::get_scale() const {
 Basis Basis::slerp(Basis b, float t) const {
 	ERR_FAIL_COND_V(!is_rotation(), Basis());
 	ERR_FAIL_COND_V(!b.is_rotation(), Basis());
-	Quat from(*this);
-	Quat to(b);
+	Quaternion from(*this);
+	Quaternion to(b);
 	return Basis(from.slerp(to, t));
 }
 
@@ -636,11 +636,11 @@ Basis::Basis(const Vector3 &p_euler) {
 
 } // namespace godot
 
-#include "Quat.hpp"
+#include "Quaternion.hpp"
 
 namespace godot {
 
-Basis::Basis(const Quat &p_quaternion) {
+Basis::Basis(const Quaternion &p_quaternion) {
 	real_t d = p_quaternion.length_squared();
 	real_t s = 2.0 / d;
 	real_t xs = p_quaternion.x * s, ys = p_quaternion.y * s, zs = p_quaternion.z * s;
@@ -673,9 +673,9 @@ Basis::Basis(const Vector3 &p_axis, real_t p_phi) {
 	elements[2][2] = axis_sq.z + cosine * (1.0 - axis_sq.z);
 }
 
-Basis::operator Quat() const {
+Basis::operator Quaternion() const {
 	//commenting this check because precision issues cause it to fail when it shouldn't
-	//ERR_FAIL_COND_V(is_rotation() == false, Quat());
+	//ERR_FAIL_COND_V(is_rotation() == false, Quaternion());
 
 	real_t trace = elements[0][0] + elements[1][1] + elements[2][2];
 	real_t temp[4];
@@ -704,7 +704,7 @@ Basis::operator Quat() const {
 		temp[k] = (elements[k][i] + elements[i][k]) * s;
 	}
 
-	return Quat(temp[0], temp[1], temp[2], temp[3]);
+	return Quaternion(temp[0], temp[1], temp[2], temp[3]);
 }
 
 } // namespace godot

@@ -423,18 +423,18 @@ struct _PropertyDefaultGetFunc {
 template <class T, class P>
 void register_property(const char *name, P(T::*var), P default_value,
 		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
-		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
-		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
+		pandemonium_property_usage_flags usage = PANDEMONIUM_PROPERTY_USAGE_DEFAULT,
+		pandemonium_property_hint hint = PANDEMONIUM_PROPERTY_HINT_NONE, String hint_string = "") {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
 	Variant def_val = default_value;
 
-	usage = (pandemonium_property_usage_flags)((int)usage | GODOT_PROPERTY_USAGE_SCRIPT_VARIABLE);
+	usage = (pandemonium_property_usage_flags)((int)usage | PANDEMONIUM_PROPERTY_USAGE_SCRIPT_VARIABLE);
 
 	if (def_val.get_type() == Variant::OBJECT) {
 		Object *o = detail::get_wrapper<Object>(def_val.operator pandemonium_object *());
 		if (o && o->is_class("Resource")) {
-			hint = (pandemonium_property_hint)((int)hint | GODOT_PROPERTY_HINT_RESOURCE_TYPE);
+			hint = (pandemonium_property_hint)((int)hint | PANDEMONIUM_PROPERTY_HINT_RESOURCE_TYPE);
 			hint_string = o->get_class();
 		}
 	}
@@ -479,8 +479,8 @@ void register_property(const char *name, P(T::*var), P default_value,
 template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(), P default_value,
 		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
-		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
-		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
+		pandemonium_property_usage_flags usage = PANDEMONIUM_PROPERTY_USAGE_DEFAULT,
+		pandemonium_property_hint hint = PANDEMONIUM_PROPERTY_HINT_NONE, String hint_string = "") {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
 	Variant def_val = default_value;
@@ -522,8 +522,8 @@ void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(),
 template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)() const, P default_value,
 		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
-		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
-		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
+		pandemonium_property_usage_flags usage = PANDEMONIUM_PROPERTY_USAGE_DEFAULT,
+		pandemonium_property_hint hint = PANDEMONIUM_PROPERTY_HINT_NONE, String hint_string = "") {
 	register_property(name, setter, (P(T::*)())getter, default_value, rpc_mode, usage, hint, hint_string);
 }
 

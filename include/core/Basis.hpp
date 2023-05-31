@@ -39,7 +39,7 @@
 
 namespace godot {
 
-class Quat;
+class Quaternion;
 
 class Basis {
 private:
@@ -332,7 +332,7 @@ public:
 		return *this;
 	}
 
-	Basis(const Quat &p_quaternion); // euler
+	Basis(const Quaternion &p_quaternion); // euler
 	Basis(const Vector3 &p_euler); // euler
 	Basis(const Vector3 &p_axis, real_t p_phi);
 
@@ -450,7 +450,7 @@ public:
 
 	Basis diagonalize();
 
-	operator Quat() const;
+	operator Quaternion() const;
 };
 
 } // namespace godot

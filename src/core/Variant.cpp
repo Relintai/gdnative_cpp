@@ -120,7 +120,7 @@ Variant::Variant(const godot::AABB &p_aabb) {
 	godot::api->pandemonium_variant_new_aabb(&_pandemonium_variant, (pandemonium_aabb *)&p_aabb);
 }
 
-Variant::Variant(const Quat &p_quaternion) {
+Variant::Variant(const Quaternion &p_quaternion) {
 	godot::api->pandemonium_variant_new_quaternion(&_pandemonium_variant, (pandemonium_quaternion *)&p_quaternion);
 }
 
@@ -265,9 +265,9 @@ Variant::operator godot::AABB() const {
 	pandemonium_aabb s = godot::api->pandemonium_variant_as_aabb(&_pandemonium_variant);
 	return *(godot::AABB *)&s;
 }
-Variant::operator Quat() const {
+Variant::operator Quaternion() const {
 	pandemonium_quaternion s = godot::api->pandemonium_variant_as_quaternion(&_pandemonium_variant);
-	return *(Quat *)&s;
+	return *(Quaternion *)&s;
 }
 Variant::operator Basis() const {
 	pandemonium_basis s = godot::api->pandemonium_variant_as_basis(&_pandemonium_variant);

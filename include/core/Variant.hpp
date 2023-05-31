@@ -41,7 +41,7 @@
 #include "NodePath.hpp"
 #include "Plane.hpp"
 #include "PoolArrays.hpp"
-#include "Quat.hpp"
+#include "Quaternion.hpp"
 #include "RID.hpp"
 #include "Rect2.hpp"
 #include "String.hpp"
@@ -203,7 +203,7 @@ public:
 
 	Variant(const godot::AABB &p_aabb);
 
-	Variant(const Quat &p_quaternion);
+	Variant(const Quaternion &p_quaternion);
 
 	Variant(const Basis &p_transform);
 
@@ -261,7 +261,7 @@ public:
 	operator Vector3() const;
 	operator Plane() const;
 	operator godot::AABB() const;
-	operator Quat() const;
+	operator Quaternion() const;
 	operator Basis() const;
 	operator Transform() const;
 	operator Transform2D() const;
