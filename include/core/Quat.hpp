@@ -93,8 +93,8 @@ public:
 	Quat operator*(const real_t &s) const;
 	Quat operator/(const real_t &s) const;
 
-	bool operator==(const Quat &p_quat) const;
-	bool operator!=(const Quat &p_quat) const;
+	bool operator==(const Quat &p_quaternion) const;
+	bool operator!=(const Quat &p_quaternion) const;
 
 	operator String() const;
 

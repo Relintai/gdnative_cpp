@@ -640,13 +640,13 @@ Basis::Basis(const Vector3 &p_euler) {
 
 namespace godot {
 
-Basis::Basis(const Quat &p_quat) {
-	real_t d = p_quat.length_squared();
+Basis::Basis(const Quat &p_quaternion) {
+	real_t d = p_quaternion.length_squared();
 	real_t s = 2.0 / d;
-	real_t xs = p_quat.x * s, ys = p_quat.y * s, zs = p_quat.z * s;
-	real_t wx = p_quat.w * xs, wy = p_quat.w * ys, wz = p_quat.w * zs;
-	real_t xx = p_quat.x * xs, xy = p_quat.x * ys, xz = p_quat.x * zs;
-	real_t yy = p_quat.y * ys, yz = p_quat.y * zs, zz = p_quat.z * zs;
+	real_t xs = p_quaternion.x * s, ys = p_quaternion.y * s, zs = p_quaternion.z * s;
+	real_t wx = p_quaternion.w * xs, wy = p_quaternion.w * ys, wz = p_quaternion.w * zs;
+	real_t xx = p_quaternion.x * xs, xy = p_quaternion.x * ys, xz = p_quaternion.x * zs;
+	real_t yy = p_quaternion.y * ys, yz = p_quaternion.y * zs, zz = p_quaternion.z * zs;
 	set(1.0 - (yy + zz), xy - wz, xz + wy,
 			xy + wz, 1.0 - (xx + zz), yz - wx,
 			xz - wy, yz + wx, 1.0 - (xx + yy));

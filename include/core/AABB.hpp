@@ -33,11 +33,11 @@
 
 #include "Vector3.hpp"
 
-#include "Plane.hpp"
-
 #include <cstdlib>
 
 namespace godot {
+
+class Plane;
 
 class AABB {
 public:

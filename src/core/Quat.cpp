@@ -341,12 +341,12 @@ Quat Quat::operator/(const real_t &s) const {
 	return *this * (1.0 / s);
 }
 
-bool Quat::operator==(const Quat &p_quat) const {
-	return x == p_quat.x && y == p_quat.y && z == p_quat.z && w == p_quat.w;
+bool Quat::operator==(const Quat &p_quaternion) const {
+	return x == p_quaternion.x && y == p_quaternion.y && z == p_quaternion.z && w == p_quaternion.w;
 }
 
-bool Quat::operator!=(const Quat &p_quat) const {
-	return x != p_quat.x || y != p_quat.y || z != p_quat.z || w != p_quat.w;
+bool Quat::operator!=(const Quat &p_quaternion) const {
+	return x != p_quaternion.x || y != p_quaternion.y || z != p_quaternion.z || w != p_quaternion.w;
 }
 
 } // namespace godot

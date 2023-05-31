@@ -31,11 +31,15 @@
 #ifndef GODOT_GLOBAL_HPP
 #define GODOT_GLOBAL_HPP
 
-#include "Array.hpp"
-#include "String.hpp"
 #include <gdnative_api_struct.gen.h>
 
+#include "Array.hpp"
+#include "String.hpp"
+
 namespace godot {
+
+class Array;
+class String;
 
 extern "C" const pandemonium_gdnative_core_api_struct *api;
 

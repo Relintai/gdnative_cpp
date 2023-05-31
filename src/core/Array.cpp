@@ -31,6 +31,7 @@
 #include "Array.hpp"
 #include "GodotGlobal.hpp"
 #include "Variant.hpp"
+#include "String.hpp"
 
 #include <cstdlib>
 
@@ -125,7 +126,7 @@ Variant Array::back() const {
 }
 
 int Array::find(const Variant &what, const int from) const {
-	return godot::api->pandemonium_array_find(&_pandemonium_array, (pandemonium_variant *)&what, from);
+	return godot::api->pandemonium_array_find_from(&_pandemonium_array, (pandemonium_variant *)&what, from);
 }
 
 int Array::find_last(const Variant &what) const {
@@ -179,7 +180,7 @@ void Array::resize(const int size) {
 }
 
 int Array::rfind(const Variant &what, const int from) const {
-	return godot::api->pandemonium_array_rfind(&_pandemonium_array, (pandemonium_variant *)&what, from);
+	return godot::api->pandemonium_array_rfind_from(&_pandemonium_array, (pandemonium_variant *)&what, from);
 }
 
 void Array::sort() {
@@ -201,7 +202,7 @@ int Array::bsearch_custom(const Variant &value, const Object *obj,
 }
 
 Array Array::duplicate(const bool deep) const {
-	pandemonium_array arr = godot::api->pandemonium_array_duplicate(&_pandemonium_array, deep);
+	pandemonium_array arr = godot::api->pandemonium_array_duplicate_deep(&_pandemonium_array, deep);
 	return Array(arr);
 }
 

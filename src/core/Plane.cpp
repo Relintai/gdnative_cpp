@@ -29,7 +29,8 @@
 /*************************************************************************/
 
 #include "Plane.hpp"
-#include "Vector3.hpp"
+
+#include "Mathp.hpp"
 
 #include <cmath>
 

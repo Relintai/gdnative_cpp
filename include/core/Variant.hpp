@@ -201,9 +201,9 @@ public:
 
 	Variant(const Plane &p_plane);
 
-	Variant(const ::AABB &p_aabb);
+	Variant(const godot::AABB &p_aabb);
 
-	Variant(const Quat &p_quat);
+	Variant(const Quat &p_quaternion);
 
 	Variant(const Basis &p_transform);
 
@@ -215,7 +215,7 @@ public:
 
 	Variant(const NodePath &p_path);
 
-	Variant(const ::RID &p_rid);
+	Variant(const godot::RID &p_rid);
 
 	Variant(const Object *p_object);
 
@@ -260,7 +260,7 @@ public:
 	operator Rect2() const;
 	operator Vector3() const;
 	operator Plane() const;
-	operator ::AABB() const;
+	operator godot::AABB() const;
 	operator Quat() const;
 	operator Basis() const;
 	operator Transform() const;
@@ -269,7 +269,7 @@ public:
 	operator Color() const;
 
 	operator NodePath() const;
-	operator ::RID() const;
+	operator godot::RID() const;
 	operator pandemonium_object *() const;
 
 	template <typename T>

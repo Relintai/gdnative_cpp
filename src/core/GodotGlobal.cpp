@@ -31,6 +31,7 @@
 #include "GodotGlobal.hpp"
 
 #include "String.hpp"
+#include "Array.hpp"
 
 #include "Wrapped.hpp"
 

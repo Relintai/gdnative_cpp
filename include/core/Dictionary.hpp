@@ -31,13 +31,14 @@
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
-#include "Variant.hpp"
-
 #include "Array.hpp"
+#include "Variant.hpp"
 
 #include <gdn/dictionary.h>
 
 namespace godot {
+
+class Variant;
 
 class Dictionary {
 	pandemonium_dictionary _pandemonium_dictionary;

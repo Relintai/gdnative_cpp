@@ -332,7 +332,7 @@ public:
 		return *this;
 	}
 
-	Basis(const Quat &p_quat); // euler
+	Basis(const Quat &p_quaternion); // euler
 	Basis(const Vector3 &p_euler); // euler
 	Basis(const Vector3 &p_axis, real_t p_phi);
 

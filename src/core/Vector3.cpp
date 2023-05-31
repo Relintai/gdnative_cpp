@@ -109,9 +109,9 @@ void Vector3::rotate(const Vector3 &p_axis, real_t p_phi) {
 }
 
 void Vector3::snap(real_t p_val) {
-	x = Math::stepify(x, p_val);
-	y = Math::stepify(y, p_val);
-	z = Math::stepify(z, p_val);
+	x = Mathp::stepify(x, p_val);
+	y = Mathp::stepify(y, p_val);
+	z = Mathp::stepify(z, p_val);
 }
 
 Vector3::operator String() const {

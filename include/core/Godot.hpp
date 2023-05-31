@@ -336,7 +336,7 @@ __pandemonium_wrapper_method ___get_wrapper_function(R (T::*f)(A...) const) {
 }
 
 template <class M>
-void register_method(const char *name, M method_ptr, pandemonium_method_rpc_mode rpc_type = GODOT_METHOD_RPC_MODE_DISABLED) {
+void register_method(const char *name, M method_ptr, pandemonium_method_rpc_mode rpc_type = PANDEMONIUM_METHOD_RPC_MODE_DISABLED) {
 	pandemonium_instance_method method = {};
 	method.method_data = ___make_wrapper_function(method_ptr);
 	method.free_func = godot::api->pandemonium_free;
@@ -352,7 +352,7 @@ void register_method(const char *name, M method_ptr, pandemonium_method_rpc_mode
 // User can specify a derived class D to register the method for, instead of it being inferred.
 template <class D, class B, class R, class... As>
 void register_method_explicit(const char *name, R (B::*method_ptr)(As...),
-		pandemonium_method_rpc_mode rpc_type = GODOT_METHOD_RPC_MODE_DISABLED) {
+		pandemonium_method_rpc_mode rpc_type = PANDEMONIUM_METHOD_RPC_MODE_DISABLED) {
 	static_assert(std::is_base_of<B, D>::value, "Explicit class must derive from method class");
 	register_method(name, static_cast<R (D::*)(As...)>(method_ptr), rpc_type);
 }
@@ -422,7 +422,7 @@ struct _PropertyDefaultGetFunc {
 
 template <class T, class P>
 void register_property(const char *name, P(T::*var), P default_value,
-		pandemonium_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
+		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
 		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
 		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
@@ -478,7 +478,7 @@ void register_property(const char *name, P(T::*var), P default_value,
 
 template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(), P default_value,
-		pandemonium_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
+		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
 		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
 		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
@@ -521,7 +521,7 @@ void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(),
 
 template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)() const, P default_value,
-		pandemonium_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
+		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
 		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
 		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
 	register_property(name, setter, (P(T::*)())getter, default_value, rpc_mode, usage, hint, hint_string);

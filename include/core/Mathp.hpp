@@ -35,7 +35,7 @@
 #include <cmath>
 
 namespace godot {
-namespace Math {
+namespace Mathp {
 
 // Functions reproduced as in Godot's source code `math_funcs.h`.
 // Some are overloads to automatically support changing real_t into either double or float in the way Godot does.
@@ -183,10 +183,10 @@ inline float inverse_lerp(float p_from, float p_to, float p_value) {
 }
 
 inline double range_lerp(double p_value, double p_istart, double p_istop, double p_ostart, double p_ostop) {
-	return Math::lerp(p_ostart, p_ostop, Math::inverse_lerp(p_istart, p_istop, p_value));
+	return Mathp::lerp(p_ostart, p_ostop, Mathp::inverse_lerp(p_istart, p_istop, p_value));
 }
 inline float range_lerp(float p_value, float p_istart, float p_istop, float p_ostart, float p_ostop) {
-	return Math::lerp(p_ostart, p_ostop, Math::inverse_lerp(p_istart, p_istop, p_value));
+	return Mathp::lerp(p_ostart, p_ostop, Mathp::inverse_lerp(p_istart, p_istop, p_value));
 }
 
 inline bool is_equal_approx(real_t a, real_t b) {

@@ -35,13 +35,12 @@
 
 #include "Defs.hpp"
 
-#include "String.hpp"
-
-#include <Math.hpp>
+#include <Mathp.hpp>
 
 namespace godot {
 
 class Basis;
+class String;
 
 struct Vector3 {
 	enum Axis {

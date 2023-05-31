@@ -92,11 +92,11 @@ String::String(const char *contents) {
 }
 
 String::String(const wchar_t *contents) {
-	godot::api->pandemonium_string_new_with_wide_string(&_pandemonium_string, contents, wcslen(contents));
+	godot::api->pandemonium_string_new_wchar_clip_to_len(&_pandemonium_string, contents, wcslen(contents));
 }
 
 String::String(const wchar_t c) {
-	godot::api->pandemonium_string_new_with_wide_string(&_pandemonium_string, &c, 1);
+	godot::api->pandemonium_string_new_wchar_clip_to_len(&_pandemonium_string, &c, 1);
 }
 
 String::String(const String &other) {

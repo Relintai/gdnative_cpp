@@ -31,11 +31,11 @@
 #ifndef NODEPATH_H
 #define NODEPATH_H
 
-#include "String.hpp"
-
 #include <gdn/node_path.h>
 
 namespace godot {
+
+class String;
 
 class NodePath {
 	pandemonium_node_path _node_path;

@@ -33,9 +33,9 @@
 
 #include <gdn/array.h>
 
-#include "String.hpp"
-
 namespace godot {
+
+class String;
 
 namespace helpers {
 template <typename T, typename ValueT>
