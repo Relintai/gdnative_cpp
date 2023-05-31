@@ -46,18 +46,18 @@ namespace godot {
 class Array;
 
 class PoolByteArray {
-	godot_pool_byte_array _godot_array;
+	pandemonium_pool_byte_array _pandemonium_array;
 
 	friend class String;
 	friend class Variant;
-	inline explicit PoolByteArray(godot_pool_byte_array a) {
-		_godot_array = a;
+	inline explicit PoolByteArray(pandemonium_pool_byte_array a) {
+		_pandemonium_array = a;
 	}
 
 public:
 	class Read {
 		friend class PoolByteArray;
-		godot_pool_byte_array_read_access *_read_access;
+		pandemonium_pool_byte_array_read_access *_read_access;
 
 	public:
 		inline Read() {
@@ -65,15 +65,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = godot::api->godot_pool_byte_array_read_access_copy(p_other._read_access);
+			_read_access = godot::api->pandemonium_pool_byte_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			godot::api->godot_pool_byte_array_read_access_destroy(_read_access);
+			godot::api->pandemonium_pool_byte_array_read_access_destroy(_read_access);
 		}
 
 		inline const uint8_t *ptr() const {
-			return godot::api->godot_pool_byte_array_read_access_ptr(_read_access);
+			return godot::api->pandemonium_pool_byte_array_read_access_ptr(_read_access);
 		}
 
 		inline const uint8_t &operator[](int p_idx) const {
@@ -81,13 +81,13 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			godot::api->godot_pool_byte_array_read_access_operator_assign(_read_access, p_other._read_access);
+			godot::api->pandemonium_pool_byte_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
 	class Write {
 		friend class PoolByteArray;
-		godot_pool_byte_array_write_access *_write_access;
+		pandemonium_pool_byte_array_write_access *_write_access;
 
 	public:
 		inline Write() {
@@ -95,15 +95,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = godot::api->godot_pool_byte_array_write_access_copy(p_other._write_access);
+			_write_access = godot::api->pandemonium_pool_byte_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			godot::api->godot_pool_byte_array_write_access_destroy(_write_access);
+			godot::api->pandemonium_pool_byte_array_write_access_destroy(_write_access);
 		}
 
 		inline uint8_t *ptr() const {
-			return godot::api->godot_pool_byte_array_write_access_ptr(_write_access);
+			return godot::api->pandemonium_pool_byte_array_write_access_ptr(_write_access);
 		}
 
 		inline uint8_t &operator[](int p_idx) const {
@@ -111,7 +111,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			godot::api->godot_pool_byte_array_write_access_operator_assign(_write_access, p_other._write_access);
+			godot::api->pandemonium_pool_byte_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -149,17 +149,17 @@ public:
 };
 
 class PoolIntArray {
-	godot_pool_int_array _godot_array;
+	pandemonium_pool_int_array _pandemonium_array;
 
 	friend class Variant;
-	explicit inline PoolIntArray(godot_pool_int_array a) {
-		_godot_array = a;
+	explicit inline PoolIntArray(pandemonium_pool_int_array a) {
+		_pandemonium_array = a;
 	}
 
 public:
 	class Read {
 		friend class PoolIntArray;
-		godot_pool_int_array_read_access *_read_access;
+		pandemonium_pool_int_array_read_access *_read_access;
 
 	public:
 		inline Read() {
@@ -167,15 +167,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = godot::api->godot_pool_int_array_read_access_copy(p_other._read_access);
+			_read_access = godot::api->pandemonium_pool_int_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			godot::api->godot_pool_int_array_read_access_destroy(_read_access);
+			godot::api->pandemonium_pool_int_array_read_access_destroy(_read_access);
 		}
 
 		inline const int *ptr() const {
-			return godot::api->godot_pool_int_array_read_access_ptr(_read_access);
+			return godot::api->pandemonium_pool_int_array_read_access_ptr(_read_access);
 		}
 
 		inline const int &operator[](int p_idx) const {
@@ -183,13 +183,13 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			godot::api->godot_pool_int_array_read_access_operator_assign(_read_access, p_other._read_access);
+			godot::api->pandemonium_pool_int_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
 	class Write {
 		friend class PoolIntArray;
-		godot_pool_int_array_write_access *_write_access;
+		pandemonium_pool_int_array_write_access *_write_access;
 
 	public:
 		inline Write() {
@@ -197,15 +197,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = godot::api->godot_pool_int_array_write_access_copy(p_other._write_access);
+			_write_access = godot::api->pandemonium_pool_int_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			godot::api->godot_pool_int_array_write_access_destroy(_write_access);
+			godot::api->pandemonium_pool_int_array_write_access_destroy(_write_access);
 		}
 
 		inline int *ptr() const {
-			return godot::api->godot_pool_int_array_write_access_ptr(_write_access);
+			return godot::api->pandemonium_pool_int_array_write_access_ptr(_write_access);
 		}
 
 		inline int &operator[](int p_idx) const {
@@ -213,7 +213,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			godot::api->godot_pool_int_array_write_access_operator_assign(_write_access, p_other._write_access);
+			godot::api->pandemonium_pool_int_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -251,17 +251,17 @@ public:
 };
 
 class PoolRealArray {
-	godot_pool_real_array _godot_array;
+	pandemonium_pool_real_array _pandemonium_array;
 
 	friend class Variant;
-	explicit inline PoolRealArray(godot_pool_real_array a) {
-		_godot_array = a;
+	explicit inline PoolRealArray(pandemonium_pool_real_array a) {
+		_pandemonium_array = a;
 	}
 
 public:
 	class Read {
 		friend class PoolRealArray;
-		godot_pool_real_array_read_access *_read_access;
+		pandemonium_pool_real_array_read_access *_read_access;
 
 	public:
 		inline Read() {
@@ -269,15 +269,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = godot::api->godot_pool_real_array_read_access_copy(p_other._read_access);
+			_read_access = godot::api->pandemonium_pool_real_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			godot::api->godot_pool_real_array_read_access_destroy(_read_access);
+			godot::api->pandemonium_pool_real_array_read_access_destroy(_read_access);
 		}
 
 		inline const real_t *ptr() const {
-			return godot::api->godot_pool_real_array_read_access_ptr(_read_access);
+			return godot::api->pandemonium_pool_real_array_read_access_ptr(_read_access);
 		}
 
 		inline const real_t &operator[](int p_idx) const {
@@ -285,13 +285,13 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			godot::api->godot_pool_real_array_read_access_operator_assign(_read_access, p_other._read_access);
+			godot::api->pandemonium_pool_real_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
 	class Write {
 		friend class PoolRealArray;
-		godot_pool_real_array_write_access *_write_access;
+		pandemonium_pool_real_array_write_access *_write_access;
 
 	public:
 		inline Write() {
@@ -299,15 +299,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = godot::api->godot_pool_real_array_write_access_copy(p_other._write_access);
+			_write_access = godot::api->pandemonium_pool_real_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			godot::api->godot_pool_real_array_write_access_destroy(_write_access);
+			godot::api->pandemonium_pool_real_array_write_access_destroy(_write_access);
 		}
 
 		inline real_t *ptr() const {
-			return godot::api->godot_pool_real_array_write_access_ptr(_write_access);
+			return godot::api->pandemonium_pool_real_array_write_access_ptr(_write_access);
 		}
 
 		inline real_t &operator[](int p_idx) const {
@@ -315,7 +315,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			godot::api->godot_pool_real_array_write_access_operator_assign(_write_access, p_other._write_access);
+			godot::api->pandemonium_pool_real_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -353,18 +353,18 @@ public:
 };
 
 class PoolStringArray {
-	godot_pool_string_array _godot_array;
+	pandemonium_pool_string_array _pandemonium_array;
 
 	friend class String;
 	friend class Variant;
-	explicit inline PoolStringArray(godot_pool_string_array a) {
-		_godot_array = a;
+	explicit inline PoolStringArray(pandemonium_pool_string_array a) {
+		_pandemonium_array = a;
 	}
 
 public:
 	class Read {
 		friend class PoolStringArray;
-		godot_pool_string_array_read_access *_read_access;
+		pandemonium_pool_string_array_read_access *_read_access;
 
 	public:
 		inline Read() {
@@ -372,15 +372,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = godot::api->godot_pool_string_array_read_access_copy(p_other._read_access);
+			_read_access = godot::api->pandemonium_pool_string_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			godot::api->godot_pool_string_array_read_access_destroy(_read_access);
+			godot::api->pandemonium_pool_string_array_read_access_destroy(_read_access);
 		}
 
 		inline const String *ptr() const {
-			return (const String *)godot::api->godot_pool_string_array_read_access_ptr(_read_access);
+			return (const String *)godot::api->pandemonium_pool_string_array_read_access_ptr(_read_access);
 		}
 
 		inline const String &operator[](int p_idx) const {
@@ -388,13 +388,13 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			godot::api->godot_pool_string_array_read_access_operator_assign(_read_access, p_other._read_access);
+			godot::api->pandemonium_pool_string_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
 	class Write {
 		friend class PoolStringArray;
-		godot_pool_string_array_write_access *_write_access;
+		pandemonium_pool_string_array_write_access *_write_access;
 
 	public:
 		inline Write() {
@@ -402,15 +402,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = godot::api->godot_pool_string_array_write_access_copy(p_other._write_access);
+			_write_access = godot::api->pandemonium_pool_string_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			godot::api->godot_pool_string_array_write_access_destroy(_write_access);
+			godot::api->pandemonium_pool_string_array_write_access_destroy(_write_access);
 		}
 
 		inline String *ptr() const {
-			return (String *)godot::api->godot_pool_string_array_write_access_ptr(_write_access);
+			return (String *)godot::api->pandemonium_pool_string_array_write_access_ptr(_write_access);
 		}
 
 		inline String &operator[](int p_idx) const {
@@ -418,7 +418,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			godot::api->godot_pool_string_array_write_access_operator_assign(_write_access, p_other._write_access);
+			godot::api->pandemonium_pool_string_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -456,17 +456,17 @@ public:
 };
 
 class PoolVector2Array {
-	godot_pool_vector2_array _godot_array;
+	pandemonium_pool_vector2_array _pandemonium_array;
 
 	friend class Variant;
-	explicit inline PoolVector2Array(godot_pool_vector2_array a) {
-		_godot_array = a;
+	explicit inline PoolVector2Array(pandemonium_pool_vector2_array a) {
+		_pandemonium_array = a;
 	}
 
 public:
 	class Read {
 		friend class PoolVector2Array;
-		godot_pool_vector2_array_read_access *_read_access;
+		pandemonium_pool_vector2_array_read_access *_read_access;
 
 	public:
 		inline Read() {
@@ -474,15 +474,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = godot::api->godot_pool_vector2_array_read_access_copy(p_other._read_access);
+			_read_access = godot::api->pandemonium_pool_vector2_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			godot::api->godot_pool_vector2_array_read_access_destroy(_read_access);
+			godot::api->pandemonium_pool_vector2_array_read_access_destroy(_read_access);
 		}
 
 		inline const Vector2 *ptr() const {
-			return (const Vector2 *)godot::api->godot_pool_vector2_array_read_access_ptr(_read_access);
+			return (const Vector2 *)godot::api->pandemonium_pool_vector2_array_read_access_ptr(_read_access);
 		}
 
 		inline const Vector2 &operator[](int p_idx) const {
@@ -490,13 +490,13 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			godot::api->godot_pool_vector2_array_read_access_operator_assign(_read_access, p_other._read_access);
+			godot::api->pandemonium_pool_vector2_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
 	class Write {
 		friend class PoolVector2Array;
-		godot_pool_vector2_array_write_access *_write_access;
+		pandemonium_pool_vector2_array_write_access *_write_access;
 
 	public:
 		inline Write() {
@@ -504,15 +504,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = godot::api->godot_pool_vector2_array_write_access_copy(p_other._write_access);
+			_write_access = godot::api->pandemonium_pool_vector2_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			godot::api->godot_pool_vector2_array_write_access_destroy(_write_access);
+			godot::api->pandemonium_pool_vector2_array_write_access_destroy(_write_access);
 		}
 
 		inline Vector2 *ptr() const {
-			return (Vector2 *)godot::api->godot_pool_vector2_array_write_access_ptr(_write_access);
+			return (Vector2 *)godot::api->pandemonium_pool_vector2_array_write_access_ptr(_write_access);
 		}
 
 		inline Vector2 &operator[](int p_idx) const {
@@ -520,7 +520,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			godot::api->godot_pool_vector2_array_write_access_operator_assign(_write_access, p_other._write_access);
+			godot::api->pandemonium_pool_vector2_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -558,17 +558,17 @@ public:
 };
 
 class PoolVector3Array {
-	godot_pool_vector3_array _godot_array;
+	pandemonium_pool_vector3_array _pandemonium_array;
 
 	friend class Variant;
-	explicit inline PoolVector3Array(godot_pool_vector3_array a) {
-		_godot_array = a;
+	explicit inline PoolVector3Array(pandemonium_pool_vector3_array a) {
+		_pandemonium_array = a;
 	}
 
 public:
 	class Read {
 		friend class PoolVector3Array;
-		godot_pool_vector3_array_read_access *_read_access;
+		pandemonium_pool_vector3_array_read_access *_read_access;
 
 	public:
 		inline Read() {
@@ -576,15 +576,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = godot::api->godot_pool_vector3_array_read_access_copy(p_other._read_access);
+			_read_access = godot::api->pandemonium_pool_vector3_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			godot::api->godot_pool_vector3_array_read_access_destroy(_read_access);
+			godot::api->pandemonium_pool_vector3_array_read_access_destroy(_read_access);
 		}
 
 		inline const Vector3 *ptr() const {
-			return (const Vector3 *)godot::api->godot_pool_vector3_array_read_access_ptr(_read_access);
+			return (const Vector3 *)godot::api->pandemonium_pool_vector3_array_read_access_ptr(_read_access);
 		}
 
 		inline const Vector3 &operator[](int p_idx) const {
@@ -592,13 +592,13 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			godot::api->godot_pool_vector3_array_read_access_operator_assign(_read_access, p_other._read_access);
+			godot::api->pandemonium_pool_vector3_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
 	class Write {
 		friend class PoolVector3Array;
-		godot_pool_vector3_array_write_access *_write_access;
+		pandemonium_pool_vector3_array_write_access *_write_access;
 
 	public:
 		inline Write() {
@@ -606,15 +606,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = godot::api->godot_pool_vector3_array_write_access_copy(p_other._write_access);
+			_write_access = godot::api->pandemonium_pool_vector3_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			godot::api->godot_pool_vector3_array_write_access_destroy(_write_access);
+			godot::api->pandemonium_pool_vector3_array_write_access_destroy(_write_access);
 		}
 
 		inline Vector3 *ptr() const {
-			return (Vector3 *)godot::api->godot_pool_vector3_array_write_access_ptr(_write_access);
+			return (Vector3 *)godot::api->pandemonium_pool_vector3_array_write_access_ptr(_write_access);
 		}
 
 		inline Vector3 &operator[](int p_idx) const {
@@ -622,7 +622,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			godot::api->godot_pool_vector3_array_write_access_operator_assign(_write_access, p_other._write_access);
+			godot::api->pandemonium_pool_vector3_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -660,17 +660,17 @@ public:
 };
 
 class PoolColorArray {
-	godot_pool_color_array _godot_array;
+	pandemonium_pool_color_array _pandemonium_array;
 
 	friend class Variant;
-	explicit inline PoolColorArray(godot_pool_color_array a) {
-		_godot_array = a;
+	explicit inline PoolColorArray(pandemonium_pool_color_array a) {
+		_pandemonium_array = a;
 	}
 
 public:
 	class Read {
 		friend class PoolColorArray;
-		godot_pool_color_array_read_access *_read_access;
+		pandemonium_pool_color_array_read_access *_read_access;
 
 	public:
 		inline Read() {
@@ -678,15 +678,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = godot::api->godot_pool_color_array_read_access_copy(p_other._read_access);
+			_read_access = godot::api->pandemonium_pool_color_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			godot::api->godot_pool_color_array_read_access_destroy(_read_access);
+			godot::api->pandemonium_pool_color_array_read_access_destroy(_read_access);
 		}
 
 		inline const Color *ptr() const {
-			return (const Color *)godot::api->godot_pool_color_array_read_access_ptr(_read_access);
+			return (const Color *)godot::api->pandemonium_pool_color_array_read_access_ptr(_read_access);
 		}
 
 		inline const Color &operator[](int p_idx) const {
@@ -694,13 +694,13 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			godot::api->godot_pool_color_array_read_access_operator_assign(_read_access, p_other._read_access);
+			godot::api->pandemonium_pool_color_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
 	class Write {
 		friend class PoolColorArray;
-		godot_pool_color_array_write_access *_write_access;
+		pandemonium_pool_color_array_write_access *_write_access;
 
 	public:
 		inline Write() {
@@ -708,15 +708,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = godot::api->godot_pool_color_array_write_access_copy(p_other._write_access);
+			_write_access = godot::api->pandemonium_pool_color_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			godot::api->godot_pool_color_array_write_access_destroy(_write_access);
+			godot::api->pandemonium_pool_color_array_write_access_destroy(_write_access);
 		}
 
 		inline Color *ptr() const {
-			return (Color *)godot::api->godot_pool_color_array_write_access_ptr(_write_access);
+			return (Color *)godot::api->pandemonium_pool_color_array_write_access_ptr(_write_access);
 		}
 
 		inline Color &operator[](int p_idx) const {
@@ -724,7 +724,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			godot::api->godot_pool_color_array_write_access_operator_assign(_write_access, p_other._write_access);
+			godot::api->pandemonium_pool_color_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 

@@ -48,12 +48,12 @@ def print_file_list(api_filepath, output_dir, headers=False, sources=False):
 def scons_emit_files(target, source, env):
     files = [env.File(f) for f in get_file_list(str(source[0]), target[0].abspath, True, True)]
     env.Clean(target, files)
-    env["godot_cpp_gen_dir"] = target[0].abspath
+    env["pandemonium_cpp_gen_dir"] = target[0].abspath
     return files, source
 
 
 def scons_generate_bindings(target, source, env):
-    generate_bindings(str(source[0]), env["generate_template_get_node"], env["godot_cpp_gen_dir"])
+    generate_bindings(str(source[0]), env["generate_template_get_node"], env["pandemonium_cpp_gen_dir"])
     return None
 
 
@@ -205,7 +205,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
     source.append("\tstruct ___method_bindings {")
 
     for method in c["methods"]:
-        source.append("\t\tgodot_method_bind *mb_" + method["name"] + ";")
+        source.append("\t\tpandemonium_method_bind *mb_" + method["name"] + ";")
 
     source.append("\t};")
     source.append("\tstatic ___method_bindings ___mb;")
@@ -229,22 +229,22 @@ def generate_class_header(used_classes, c, use_template_get_node):
         source.append("\t}")
         source.append("")
 
-        # godot::api->godot_global_get_singleton((char *) \"" + strip_name(c["name"]) + "\");"
+        # godot::api->pandemonium_global_get_singleton((char *) \"" + strip_name(c["name"]) + "\");"
 
     # class name:
     # Two versions needed needed because when the user implements a custom class,
-    # we want to override `___get_class_name` while `___get_godot_class_name` can keep returning the base name
+    # we want to override `___get_class_name` while `___get_pandemonium_class_name` can keep returning the base name
     source.append(
         '\tstatic inline const char *___get_class_name() { return (const char *) "' + strip_name(c["name"]) + '"; }'
     )
     source.append(
-        '\tstatic inline const char *___get_godot_class_name() { return (const char *) "'
+        '\tstatic inline const char *___get_pandemonium_class_name() { return (const char *) "'
         + strip_name(c["name"])
         + '"; }'
     )
 
     source.append(
-        "\tstatic inline Object *___get_from_variant(Variant a) { godot_object *o = (godot_object*) a; return (o) ? (Object *) godot::nativescript_1_1_api->godot_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, o) : nullptr; }"
+        "\tstatic inline Object *___get_from_variant(Variant a) { pandemonium_object *o = (pandemonium_object*) a; return (o) ? (Object *) godot::nativescript_1_1_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, o) : nullptr; }"
     )
 
     enum_values = []
@@ -437,7 +437,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
         # FIXME Test if inlining has a huge impact on binary size
         source.append(class_name + "::" + class_name + "() {")
-        source.append('\t_owner = godot::api->godot_global_get_singleton((char *) "' + strip_name(c["name"]) + '");')
+        source.append('\t_owner = godot::api->pandemonium_global_get_singleton((char *) "' + strip_name(c["name"]) + '");')
         source.append("}")
 
         source.append("")
@@ -456,17 +456,17 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         source.append(
             "\t___mb.mb_"
             + method["name"]
-            + ' = godot::api->godot_method_bind_get_method("'
+            + ' = godot::api->pandemonium_method_bind_get_method("'
             + c["name"]
             + '", "'
             + ("get_node" if use_template_get_node and method["name"] == "get_node_internal" else method["name"])
             + '");'
         )
 
-    source.append("\tgodot_string_name class_name;")
-    source.append('\tgodot::api->godot_string_name_new_data(&class_name, "' + c["name"] + '");')
-    source.append("\t_detail_class_tag = godot::core_1_2_api->godot_get_class_tag(&class_name);")
-    source.append("\tgodot::api->godot_string_name_destroy(&class_name);")
+    source.append("\tpandemonium_string_name class_name;")
+    source.append('\tgodot::api->pandemonium_string_name_new_data(&class_name, "' + c["name"] + '");')
+    source.append("\t_detail_class_tag = godot::core_1_2_api->pandemonium_get_class_tag(&class_name);")
+    source.append("\tgodot::api->pandemonium_string_name_destroy(&class_name);")
 
     source.append("}")
     source.append("")
@@ -477,7 +477,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         source.append(
             "\treturn ("
             + class_name
-            + ' *) godot::nativescript_1_1_api->godot_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, godot::api->godot_get_class_constructor((char *)"'
+            + ' *) godot::nativescript_1_1_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, godot::api->pandemonium_get_class_constructor((char *)"'
             + c["name"]
             + '")());'
         )
@@ -507,7 +507,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
         if method["name"] == "free":
             # dirty hack because Object::free is marked virtual but doesn't actually exist...
-            source.append("\tgodot::api->godot_object_destroy(_owner);")
+            source.append("\tgodot::api->pandemonium_object_destroy(_owner);")
             source.append("}")
             source.append("")
             continue
@@ -541,7 +541,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
                 source.append("\tVariant __given_args[" + str(len(method["arguments"])) + "];")
 
             for i, argument in enumerate(method["arguments"]):
-                source.append("\tgodot::api->godot_variant_new_nil((godot_variant *) &__given_args[" + str(i) + "]);")
+                source.append("\tgodot::api->pandemonium_variant_new_nil((pandemonium_variant *) &__given_args[" + str(i) + "]);")
 
             source.append("")
 
@@ -557,13 +557,13 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
                 size = "(" + str(len(method["arguments"])) + ")"
 
             source.append(
-                "\tgodot_variant **__args = (godot_variant **) alloca(sizeof(godot_variant *) * " + size + ");"
+                "\tpandemonium_variant **__args = (pandemonium_variant **) alloca(sizeof(pandemonium_variant *) * " + size + ");"
             )
 
             source.append("")
 
             for i, argument in enumerate(method["arguments"]):
-                source.append("\t__args[" + str(i) + "] = (godot_variant *) &__given_args[" + str(i) + "];")
+                source.append("\t__args[" + str(i) + "] = (pandemonium_variant *) &__given_args[" + str(i) + "];")
 
             source.append("")
 
@@ -572,7 +572,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
                 source.append(
                     "\t\t__args[i + "
                     + str(len(method["arguments"]))
-                    + "] = (godot_variant *) &((Array &) __var_args)[i];"
+                    + "] = (pandemonium_variant *) &((Array &) __var_args)[i];"
                 )
                 source.append("\t}")
 
@@ -580,11 +580,11 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
             source.append("\tVariant __result;")
             source.append(
-                "\t*(godot_variant *) &__result = godot::api->godot_method_bind_call(___mb.mb_"
+                "\t*(pandemonium_variant *) &__result = godot::api->pandemonium_method_bind_call(___mb.mb_"
                 + method["name"]
                 + ", ((const Object *) "
                 + core_object_name
-                + ")->_owner, (const godot_variant **) __args, "
+                + ")->_owner, (const pandemonium_variant **) __args, "
                 + size
                 + ", nullptr);"
             )
@@ -599,7 +599,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
                 source.append("")
 
             for i, argument in enumerate(method["arguments"]):
-                source.append("\tgodot::api->godot_variant_destroy((godot_variant *) &__given_args[" + str(i) + "]);")
+                source.append("\tgodot::api->pandemonium_variant_destroy((pandemonium_variant *) &__given_args[" + str(i) + "]);")
 
             source.append("")
 
@@ -683,7 +683,7 @@ def generate_icall_header(icalls):
         method_signature = "static inline "
 
         method_signature += (
-            get_icall_return_type(ret_type) + get_icall_name(icall) + "(godot_method_bind *mb, const Object *inst"
+            get_icall_return_type(ret_type) + get_icall_name(icall) + "(pandemonium_method_bind *mb, const Object *inst"
         )
 
         for i, arg in enumerate(args):
@@ -708,7 +708,7 @@ def generate_icall_header(icalls):
 
         if ret_type != "void":
             source.append(
-                "\t" + ("godot_object *" if is_class_type(ret_type) else get_icall_return_type(ret_type)) + "ret;"
+                "\t" + ("pandemonium_object *" if is_class_type(ret_type) else get_icall_return_type(ret_type)) + "ret;"
             )
             if is_class_type(ret_type):
                 source.append("\tret = nullptr;")
@@ -730,7 +730,7 @@ def generate_icall_header(icalls):
         source.append("")
 
         source.append(
-            "\tgodot::api->godot_method_bind_ptrcall(mb, inst->_owner, args, "
+            "\tgodot::api->pandemonium_method_bind_ptrcall(mb, inst->_owner, args, "
             + ("nullptr" if ret_type == "void" else "&ret")
             + ");"
         )
@@ -739,7 +739,7 @@ def generate_icall_header(icalls):
             if is_class_type(ret_type):
                 source.append("\tif (ret) {")
                 source.append(
-                    "\t\treturn (Object *) godot::nativescript_1_1_api->godot_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, ret);"
+                    "\t\treturn (Object *) godot::nativescript_1_1_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, ret);"
                 )
                 source.append("\t}")
                 source.append("")
@@ -844,7 +844,7 @@ def get_icall_name(sig):
     ret_type = sig[0]
     args = sig[1]
 
-    name = "___godot_icall_"
+    name = "___pandemonium_icall_"
     name += strip_name(ret_type)
     for arg in args:
         name += "_" + strip_name(arg)

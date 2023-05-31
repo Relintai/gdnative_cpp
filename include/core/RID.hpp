@@ -38,14 +38,14 @@ namespace godot {
 class Object;
 
 class RID {
-	godot_rid _godot_rid;
+	pandemonium_rid _pandemonium_rid;
 
 public:
 	RID();
 
 	RID(Object *p);
 
-	godot_rid _get_godot_rid() const;
+	pandemonium_rid _get_pandemonium_rid() const;
 
 	int32_t get_id() const;
 

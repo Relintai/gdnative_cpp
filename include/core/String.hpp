@@ -46,7 +46,7 @@ class String;
 class CharString {
 	friend class String;
 
-	godot_char_string _char_string;
+	pandemonium_char_string _char_string;
 
 public:
 	~CharString();
@@ -56,13 +56,13 @@ public:
 };
 
 class String {
-	godot_string _godot_string;
+	pandemonium_string _pandemonium_string;
 
 	friend class Dictionary;
 	friend class NodePath;
 	friend class Variant;
-	explicit inline String(godot_string contents) :
-			_godot_string(contents) {}
+	explicit inline String(pandemonium_string contents) :
+			_pandemonium_string(contents) {}
 
 public:
 	String();
@@ -78,7 +78,7 @@ public:
 	static String num_scientific(double p_num);
 	static String num_real(double p_num);
 	static String num_int64(int64_t p_num, int base = 10, bool capitalize_hex = false);
-	static String chr(godot_char_type p_char);
+	static String chr(pandemonium_char_type p_char);
 	static String md5(const uint8_t *p_md5);
 	static String hex_encode_buffer(const uint8_t *p_buffer, int p_len);
 

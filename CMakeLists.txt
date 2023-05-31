@@ -2,8 +2,8 @@
 # CMAKE_BUILD_TYPE:			Compilation target (Debug or Release defaults to Debug)
 #
 # godot-cpp cmake arguments
-# GODOT_HEADERS_DIR:		This is where the gdnative include folder is (godot_source/modules/gdn/include)
-# GODOT_CUSTOM_API_FILE:	This is if you have another path for the godot_api.json
+# GODOT_HEADERS_DIR:		This is where the gdnative include folder is (pandemonium_source/modules/gdn/include)
+# GODOT_CUSTOM_API_FILE:	This is if you have another path for the pandemonium_api.json
 #
 # Android cmake arguments
 # CMAKE_TOOLCHAIN_FILE:		The path to the android cmake toolchain ($ANDROID_NDK/build/cmake/android.toolchain.cmake)

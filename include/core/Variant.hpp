@@ -57,11 +57,11 @@ class Dictionary;
 class Array;
 
 class Variant {
-	godot_variant _godot_variant;
+	pandemonium_variant _pandemonium_variant;
 
 	friend class Array;
-	inline explicit Variant(godot_variant v) {
-		_godot_variant = v;
+	inline explicit Variant(pandemonium_variant v) {
+		_pandemonium_variant = v;
 	}
 
 public:
@@ -258,7 +258,7 @@ public:
 
 	operator NodePath() const;
 	operator RID() const;
-	operator godot_object *() const;
+	operator pandemonium_object *() const;
 
 	template <typename T>
 	operator T *() const { return static_cast<T *>(T::___get_from_variant(*this)); }

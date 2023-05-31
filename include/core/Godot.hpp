@@ -35,7 +35,7 @@
 #include <cstring>
 
 #include <gdnative_api_struct.gen.h>
-#include <nativescript/godot_nativescript.h>
+#include <nativescript/pandemonium_nativescript.h>
 #include <typeinfo>
 
 #include "CoreTypes.hpp"
@@ -55,8 +55,8 @@ namespace detail {
 // Godot classes are wrapped by heap-allocated instances mimicking them through the C API.
 // They all inherit `_Wrapped`.
 template <class T>
-T *get_wrapper(godot_object *obj) {
-	return (T *)godot::nativescript_1_1_api->godot_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, obj);
+T *get_wrapper(pandemonium_object *obj) {
+	return (T *)godot::nativescript_1_1_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, obj);
 }
 
 // Custom class instances are not obtainable by just casting the pointer to the base class they inherit,
@@ -64,7 +64,7 @@ T *get_wrapper(godot_object *obj) {
 // Yet we want to "fake" it as if they were the same entity.
 template <class T>
 T *get_custom_class_instance(const Object *obj) {
-	return (obj) ? (T *)godot::nativescript_api->godot_nativescript_get_userdata(obj->_owner) : nullptr;
+	return (obj) ? (T *)godot::nativescript_api->pandemonium_nativescript_get_userdata(obj->_owner) : nullptr;
 }
 
 template <class T>
@@ -77,24 +77,24 @@ inline T *create_custom_class_instance() {
 
 	// We cannot use wrappers because of https://github.com/godotengine/godot/issues/39181
 	//	godot::NativeScript *script = godot::NativeScript::_new();
-	//	script->set_library(get_wrapper<godot::GDNativeLibrary>((godot_object *)godot::gdnlib));
+	//	script->set_library(get_wrapper<godot::GDNativeLibrary>((pandemonium_object *)godot::gdnlib));
 	//	script->set_class_name(T::___get_class_name());
 
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
 	// So we use the C API directly.
-	static godot_class_constructor script_constructor = godot::api->godot_get_class_constructor("NativeScript");
-	static godot_method_bind *mb_set_library = godot::api->godot_method_bind_get_method("NativeScript", "set_library");
-	static godot_method_bind *mb_set_class_name = godot::api->godot_method_bind_get_method("NativeScript", "set_class_name");
-	godot_object *script = script_constructor();
+	static pandemonium_class_constructor script_constructor = godot::api->pandemonium_get_class_constructor("NativeScript");
+	static pandemonium_method_bind *mb_set_library = godot::api->pandemonium_method_bind_get_method("NativeScript", "set_library");
+	static pandemonium_method_bind *mb_set_class_name = godot::api->pandemonium_method_bind_get_method("NativeScript", "set_class_name");
+	pandemonium_object *script = script_constructor();
 	{
 		const void *args[] = { godot::gdnlib };
-		godot::api->godot_method_bind_ptrcall(mb_set_library, script, args, nullptr);
+		godot::api->pandemonium_method_bind_ptrcall(mb_set_library, script, args, nullptr);
 	}
 	{
 		const String class_name = T::___get_class_name();
 		const void *args[] = { &class_name };
-		godot::api->godot_method_bind_ptrcall(mb_set_class_name, script, args, nullptr);
+		godot::api->pandemonium_method_bind_ptrcall(mb_set_class_name, script, args, nullptr);
 	}
 
 	// Now to instanciate T, we initially did this, however in case of Reference it returns a variant with refcount
@@ -103,20 +103,20 @@ inline T *create_custom_class_instance() {
 	//T *instance = godot::get_custom_class_instance<T>(instance_variant);
 
 	// So we should do this instead, however while convenient, it uses unnecessary wrapper objects.
-	//	Object *base_obj = T::___new_godot_base();
+	//	Object *base_obj = T::___new_pandemonium_base();
 	//	base_obj->set_script(script);
 	//	return get_custom_class_instance<T>(base_obj);
 
 	// Again using the C API to do exactly what we have to do.
-	static godot_class_constructor base_constructor = godot::api->godot_get_class_constructor(T::___get_godot_class_name());
-	static godot_method_bind *mb_set_script = godot::api->godot_method_bind_get_method("Object", "set_script");
-	godot_object *base_obj = base_constructor();
+	static pandemonium_class_constructor base_constructor = godot::api->pandemonium_get_class_constructor(T::___get_pandemonium_class_name());
+	static pandemonium_method_bind *mb_set_script = godot::api->pandemonium_method_bind_get_method("Object", "set_script");
+	pandemonium_object *base_obj = base_constructor();
 	{
 		const void *args[] = { script };
-		godot::api->godot_method_bind_ptrcall(mb_set_script, base_obj, args, nullptr);
+		godot::api->pandemonium_method_bind_ptrcall(mb_set_script, base_obj, args, nullptr);
 	}
 
-	return (T *)godot::nativescript_api->godot_nativescript_get_userdata(base_obj);
+	return (T *)godot::nativescript_api->pandemonium_nativescript_get_userdata(base_obj);
 }
 
 } // namespace detail
@@ -127,7 +127,7 @@ inline T *create_custom_class_instance() {
 // Base:                       Name of the direct base class, with namespace if necessary
 //
 // ___get_class_name:          Name of the class
-// ___get_godot_class_name:    Name of the Godot base class this class inherits from (i.e not direct)
+// ___get_pandemonium_class_name:    Name of the Godot base class this class inherits from (i.e not direct)
 // _new:                       Creates a new instance of the class
 // ___get_id:                  Gets the unique ID of the class. Godot and custom classes are both within that set.
 // ___get_base_id:             Gets the ID of the direct base class, as returned by ___get_id
@@ -138,8 +138,8 @@ inline T *create_custom_class_instance() {
 public:                                                                                      \
 	inline static const char *___get_class_name() { return #Name; }                          \
 	enum { ___CLASS_IS_SCRIPT = 1 };                                                         \
-	inline static const char *___get_godot_class_name() {                                    \
-		return Base::___get_godot_class_name();                                              \
+	inline static const char *___get_pandemonium_class_name() {                                    \
+		return Base::___get_pandemonium_class_name();                                              \
 	}                                                                                        \
 	inline static Name *_new() {                                                             \
 		return godot::detail::create_custom_class_instance<Name>();                          \
@@ -181,7 +181,7 @@ struct _ArgCast<Variant> {
 // instance and destroy funcs
 
 template <class T>
-void *_godot_class_instance_func(godot_object *p, void * /*method_data*/) {
+void *_pandemonium_class_instance_func(pandemonium_object *p, void * /*method_data*/) {
 	T *d = new T();
 	d->_owner = p;
 	d->_type_tag = typeid(T).hash_code();
@@ -190,7 +190,7 @@ void *_godot_class_instance_func(godot_object *p, void * /*method_data*/) {
 }
 
 template <class T>
-void _godot_class_destroy_func(godot_object * /*p*/, void * /*method_data*/, void *data) {
+void _pandemonium_class_destroy_func(pandemonium_object * /*p*/, void * /*method_data*/, void *data) {
 	T *d = (T *)data;
 	delete d;
 }
@@ -199,18 +199,18 @@ template <class T>
 void register_class() {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
-	godot_instance_create_func create = {};
-	create.create_func = _godot_class_instance_func<T>;
+	pandemonium_instance_create_func create = {};
+	create.create_func = _pandemonium_class_instance_func<T>;
 
-	godot_instance_destroy_func destroy = {};
-	destroy.destroy_func = _godot_class_destroy_func<T>;
+	pandemonium_instance_destroy_func destroy = {};
+	destroy.destroy_func = _pandemonium_class_destroy_func<T>;
 
 	_TagDB::register_type(T::___get_id(), T::___get_base_id());
 
-	godot::nativescript_api->godot_nativescript_register_class(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_register_class(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), T::___get_base_class_name(), create, destroy);
 
-	godot::nativescript_1_1_api->godot_nativescript_set_type_tag(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_1_1_api->pandemonium_nativescript_set_type_tag(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), (const void *)T::___get_id());
 
 	T::_register_methods();
@@ -220,18 +220,18 @@ template <class T>
 void register_tool_class() {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
-	godot_instance_create_func create = {};
-	create.create_func = _godot_class_instance_func<T>;
+	pandemonium_instance_create_func create = {};
+	create.create_func = _pandemonium_class_instance_func<T>;
 
-	godot_instance_destroy_func destroy = {};
-	destroy.destroy_func = _godot_class_destroy_func<T>;
+	pandemonium_instance_destroy_func destroy = {};
+	destroy.destroy_func = _pandemonium_class_destroy_func<T>;
 
 	_TagDB::register_type(T::___get_id(), T::___get_base_id());
 
-	godot::nativescript_api->godot_nativescript_register_tool_class(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_register_tool_class(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), T::___get_base_class_name(), create, destroy);
 
-	godot::nativescript_1_1_api->godot_nativescript_set_type_tag(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_1_1_api->pandemonium_nativescript_set_type_tag(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), (const void *)T::___get_id());
 
 	T::_register_methods();
@@ -239,7 +239,7 @@ void register_tool_class() {
 
 // method registering
 
-typedef godot_variant (*__godot_wrapper_method)(godot_object *, void *, void *, int, godot_variant **);
+typedef pandemonium_variant (*__pandemonium_wrapper_method)(pandemonium_object *, void *, void *, int, pandemonium_variant **);
 
 template <class T, class R, class... args>
 const char *___get_method_class_name(R (T::*p)(args... a)) {
@@ -297,9 +297,9 @@ struct _WrappedMethod<T, void, As...> {
 };
 
 template <class T, class R, class... As>
-godot_variant __wrapped_method(godot_object *, void *method_data, void *user_data, int /*num_args*/, godot_variant **args) {
-	godot_variant v;
-	godot::api->godot_variant_new_nil(&v);
+pandemonium_variant __wrapped_method(pandemonium_object *, void *method_data, void *user_data, int /*num_args*/, pandemonium_variant **args) {
+	pandemonium_variant v;
+	godot::api->pandemonium_variant_new_nil(&v);
 
 	T *obj = (T *)user_data;
 	_WrappedMethod<T, R, As...> *method = (_WrappedMethod<T, R, As...> *)method_data;
@@ -315,14 +315,14 @@ godot_variant __wrapped_method(godot_object *, void *method_data, void *user_dat
 template <class T, class R, class... As>
 void *___make_wrapper_function(R (T::*f)(As...)) {
 	using MethodType = _WrappedMethod<T, R, As...>;
-	MethodType *p = (MethodType *)godot::api->godot_alloc(sizeof(MethodType));
+	MethodType *p = (MethodType *)godot::api->pandemonium_alloc(sizeof(MethodType));
 	p->f = f;
 	return (void *)p;
 }
 
 template <class T, class R, class... As>
-__godot_wrapper_method ___get_wrapper_function(R (T::* /*f*/)(As...)) {
-	return (__godot_wrapper_method)&__wrapped_method<T, R, As...>;
+__pandemonium_wrapper_method ___get_wrapper_function(R (T::* /*f*/)(As...)) {
+	return (__pandemonium_wrapper_method)&__wrapped_method<T, R, As...>;
 }
 
 template <class T, class R, class... A>
@@ -331,28 +331,28 @@ void *___make_wrapper_function(R (T::*f)(A...) const) {
 }
 
 template <class T, class R, class... A>
-__godot_wrapper_method ___get_wrapper_function(R (T::*f)(A...) const) {
+__pandemonium_wrapper_method ___get_wrapper_function(R (T::*f)(A...) const) {
 	return ___get_wrapper_function((R(T::*)(A...))f);
 }
 
 template <class M>
-void register_method(const char *name, M method_ptr, godot_method_rpc_mode rpc_type = GODOT_METHOD_RPC_MODE_DISABLED) {
-	godot_instance_method method = {};
+void register_method(const char *name, M method_ptr, pandemonium_method_rpc_mode rpc_type = GODOT_METHOD_RPC_MODE_DISABLED) {
+	pandemonium_instance_method method = {};
 	method.method_data = ___make_wrapper_function(method_ptr);
-	method.free_func = godot::api->godot_free;
-	method.method = (__godot_wrapper_method)___get_wrapper_function(method_ptr);
+	method.free_func = godot::api->pandemonium_free;
+	method.method = (__pandemonium_wrapper_method)___get_wrapper_function(method_ptr);
 
-	godot_method_attributes attr = {};
+	pandemonium_method_attributes attr = {};
 	attr.rpc_type = rpc_type;
 
-	godot::nativescript_api->godot_nativescript_register_method(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_register_method(godot::_RegisterState::nativescript_handle,
 			___get_method_class_name(method_ptr), name, attr, method);
 }
 
 // User can specify a derived class D to register the method for, instead of it being inferred.
 template <class D, class B, class R, class... As>
 void register_method_explicit(const char *name, R (B::*method_ptr)(As...),
-		godot_method_rpc_mode rpc_type = GODOT_METHOD_RPC_MODE_DISABLED) {
+		pandemonium_method_rpc_mode rpc_type = GODOT_METHOD_RPC_MODE_DISABLED) {
 	static_assert(std::is_base_of<B, D>::value, "Explicit class must derive from method class");
 	register_method(name, static_cast<R (D::*)(As...)>(method_ptr), rpc_type);
 }
@@ -360,7 +360,7 @@ void register_method_explicit(const char *name, R (B::*method_ptr)(As...),
 template <class T, class P>
 struct _PropertySetFunc {
 	void (T::*f)(P);
-	static void _wrapped_setter(godot_object * /*object*/, void *method_data, void *user_data, godot_variant *value) {
+	static void _wrapped_setter(pandemonium_object * /*object*/, void *method_data, void *user_data, pandemonium_variant *value) {
 		_PropertySetFunc<T, P> *set_func = (_PropertySetFunc<T, P> *)method_data;
 		T *obj = (T *)user_data;
 
@@ -374,12 +374,12 @@ template <class T, class P>
 struct _PropertyGetFunc {
 	P(T::*f)
 	();
-	static godot_variant _wrapped_getter(godot_object * /*object*/, void *method_data, void *user_data) {
+	static pandemonium_variant _wrapped_getter(pandemonium_object * /*object*/, void *method_data, void *user_data) {
 		_PropertyGetFunc<T, P> *get_func = (_PropertyGetFunc<T, P> *)method_data;
 		T *obj = (T *)user_data;
 
-		godot_variant var;
-		godot::api->godot_variant_new_nil(&var);
+		pandemonium_variant var;
+		godot::api->pandemonium_variant_new_nil(&var);
 
 		Variant *v = (Variant *)&var;
 
@@ -392,7 +392,7 @@ struct _PropertyGetFunc {
 template <class T, class P>
 struct _PropertyDefaultSetFunc {
 	P(T::*f);
-	static void _wrapped_setter(godot_object * /*object*/, void *method_data, void *user_data, godot_variant *value) {
+	static void _wrapped_setter(pandemonium_object * /*object*/, void *method_data, void *user_data, pandemonium_variant *value) {
 		_PropertyDefaultSetFunc<T, P> *set_func = (_PropertyDefaultSetFunc<T, P> *)method_data;
 		T *obj = (T *)user_data;
 
@@ -405,12 +405,12 @@ struct _PropertyDefaultSetFunc {
 template <class T, class P>
 struct _PropertyDefaultGetFunc {
 	P(T::*f);
-	static godot_variant _wrapped_getter(godot_object * /*object*/, void *method_data, void *user_data) {
+	static pandemonium_variant _wrapped_getter(pandemonium_object * /*object*/, void *method_data, void *user_data) {
 		_PropertyDefaultGetFunc<T, P> *get_func = (_PropertyDefaultGetFunc<T, P> *)method_data;
 		T *obj = (T *)user_data;
 
-		godot_variant var;
-		godot::api->godot_variant_new_nil(&var);
+		pandemonium_variant var;
+		godot::api->pandemonium_variant_new_nil(&var);
 
 		Variant *v = (Variant *)&var;
 
@@ -422,31 +422,31 @@ struct _PropertyDefaultGetFunc {
 
 template <class T, class P>
 void register_property(const char *name, P(T::*var), P default_value,
-		godot_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
-		godot_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
-		godot_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
+		pandemonium_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
+		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
+		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
 	Variant def_val = default_value;
 
-	usage = (godot_property_usage_flags)((int)usage | GODOT_PROPERTY_USAGE_SCRIPT_VARIABLE);
+	usage = (pandemonium_property_usage_flags)((int)usage | GODOT_PROPERTY_USAGE_SCRIPT_VARIABLE);
 
 	if (def_val.get_type() == Variant::OBJECT) {
-		Object *o = detail::get_wrapper<Object>(def_val.operator godot_object *());
+		Object *o = detail::get_wrapper<Object>(def_val.operator pandemonium_object *());
 		if (o && o->is_class("Resource")) {
-			hint = (godot_property_hint)((int)hint | GODOT_PROPERTY_HINT_RESOURCE_TYPE);
+			hint = (pandemonium_property_hint)((int)hint | GODOT_PROPERTY_HINT_RESOURCE_TYPE);
 			hint_string = o->get_class();
 		}
 	}
 
-	godot_string *_hint_string = (godot_string *)&hint_string;
+	pandemonium_string *_hint_string = (pandemonium_string *)&hint_string;
 
-	godot_property_attributes attr = {};
+	pandemonium_property_attributes attr = {};
 	if (def_val.get_type() == Variant::NIL) {
 		attr.type = Variant::OBJECT;
 	} else {
 		attr.type = def_val.get_type();
-		attr.default_value = *(godot_variant *)&def_val;
+		attr.default_value = *(pandemonium_variant *)&def_val;
 	}
 
 	attr.hint = hint;
@@ -455,75 +455,75 @@ void register_property(const char *name, P(T::*var), P default_value,
 	attr.hint_string = *_hint_string;
 
 	_PropertyDefaultSetFunc<T, P> *wrapped_set =
-			(_PropertyDefaultSetFunc<T, P> *)godot::api->godot_alloc(sizeof(_PropertyDefaultSetFunc<T, P>));
+			(_PropertyDefaultSetFunc<T, P> *)godot::api->pandemonium_alloc(sizeof(_PropertyDefaultSetFunc<T, P>));
 	wrapped_set->f = var;
 
 	_PropertyDefaultGetFunc<T, P> *wrapped_get =
-			(_PropertyDefaultGetFunc<T, P> *)godot::api->godot_alloc(sizeof(_PropertyDefaultGetFunc<T, P>));
+			(_PropertyDefaultGetFunc<T, P> *)godot::api->pandemonium_alloc(sizeof(_PropertyDefaultGetFunc<T, P>));
 	wrapped_get->f = var;
 
-	godot_property_set_func set_func = {};
+	pandemonium_property_set_func set_func = {};
 	set_func.method_data = (void *)wrapped_set;
-	set_func.free_func = godot::api->godot_free;
+	set_func.free_func = godot::api->pandemonium_free;
 	set_func.set_func = &_PropertyDefaultSetFunc<T, P>::_wrapped_setter;
 
-	godot_property_get_func get_func = {};
+	pandemonium_property_get_func get_func = {};
 	get_func.method_data = (void *)wrapped_get;
-	get_func.free_func = godot::api->godot_free;
+	get_func.free_func = godot::api->pandemonium_free;
 	get_func.get_func = &_PropertyDefaultGetFunc<T, P>::_wrapped_getter;
 
-	godot::nativescript_api->godot_nativescript_register_property(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_register_property(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), name, &attr, set_func, get_func);
 }
 
 template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(), P default_value,
-		godot_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
-		godot_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
-		godot_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
+		pandemonium_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
+		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
+		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
 	Variant def_val = default_value;
 
-	godot_string *_hint_string = (godot_string *)&hint_string;
+	pandemonium_string *_hint_string = (pandemonium_string *)&hint_string;
 
-	godot_property_attributes attr = {};
+	pandemonium_property_attributes attr = {};
 	if (def_val.get_type() == Variant::NIL) {
 		attr.type = Variant::OBJECT;
 	} else {
 		attr.type = def_val.get_type();
-		attr.default_value = *(godot_variant *)&def_val;
+		attr.default_value = *(pandemonium_variant *)&def_val;
 	}
 	attr.hint = hint;
 	attr.rset_type = rpc_mode;
 	attr.usage = usage;
 	attr.hint_string = *_hint_string;
 
-	_PropertySetFunc<T, P> *wrapped_set = (_PropertySetFunc<T, P> *)godot::api->godot_alloc(sizeof(_PropertySetFunc<T, P>));
+	_PropertySetFunc<T, P> *wrapped_set = (_PropertySetFunc<T, P> *)godot::api->pandemonium_alloc(sizeof(_PropertySetFunc<T, P>));
 	wrapped_set->f = setter;
 
-	_PropertyGetFunc<T, P> *wrapped_get = (_PropertyGetFunc<T, P> *)godot::api->godot_alloc(sizeof(_PropertyGetFunc<T, P>));
+	_PropertyGetFunc<T, P> *wrapped_get = (_PropertyGetFunc<T, P> *)godot::api->pandemonium_alloc(sizeof(_PropertyGetFunc<T, P>));
 	wrapped_get->f = getter;
 
-	godot_property_set_func set_func = {};
+	pandemonium_property_set_func set_func = {};
 	set_func.method_data = (void *)wrapped_set;
-	set_func.free_func = godot::api->godot_free;
+	set_func.free_func = godot::api->pandemonium_free;
 	set_func.set_func = &_PropertySetFunc<T, P>::_wrapped_setter;
 
-	godot_property_get_func get_func = {};
+	pandemonium_property_get_func get_func = {};
 	get_func.method_data = (void *)wrapped_get;
-	get_func.free_func = godot::api->godot_free;
+	get_func.free_func = godot::api->pandemonium_free;
 	get_func.get_func = &_PropertyGetFunc<T, P>::_wrapped_getter;
 
-	godot::nativescript_api->godot_nativescript_register_property(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_register_property(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), name, &attr, set_func, get_func);
 }
 
 template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)() const, P default_value,
-		godot_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
-		godot_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
-		godot_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
+		pandemonium_method_rpc_mode rpc_mode = GODOT_METHOD_RPC_MODE_DISABLED,
+		pandemonium_property_usage_flags usage = GODOT_PROPERTY_USAGE_DEFAULT,
+		pandemonium_property_hint hint = GODOT_PROPERTY_HINT_NONE, String hint_string = "") {
 	register_property(name, setter, (P(T::*)())getter, default_value, rpc_mode, usage, hint, hint_string);
 }
 
@@ -531,23 +531,23 @@ template <class T>
 void register_signal(String name, Dictionary args) {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
-	godot_signal signal = {};
-	signal.name = *(godot_string *)&name;
+	pandemonium_signal signal = {};
+	signal.name = *(pandemonium_string *)&name;
 	signal.num_args = args.size();
 	signal.num_default_args = 0;
 
 	// Need to check because malloc(0) is platform-dependent. Zero arguments will leave args to nullptr.
 	if (signal.num_args != 0) {
-		signal.args = (godot_signal_argument *)godot::api->godot_alloc(sizeof(godot_signal_argument) * signal.num_args);
-		memset((void *)signal.args, 0, sizeof(godot_signal_argument) * signal.num_args);
+		signal.args = (pandemonium_signal_argument *)godot::api->pandemonium_alloc(sizeof(pandemonium_signal_argument) * signal.num_args);
+		memset((void *)signal.args, 0, sizeof(pandemonium_signal_argument) * signal.num_args);
 	}
 
 	for (int i = 0; i < signal.num_args; i++) {
 		// Array entry = args[i];
 		// String name = entry[0];
 		String name = args.keys()[i];
-		godot_string *_key = (godot_string *)&name;
-		godot::api->godot_string_new_copy(&signal.args[i].name, _key);
+		pandemonium_string *_key = (pandemonium_string *)&name;
+		godot::api->pandemonium_string_new_copy(&signal.args[i].name, _key);
 
 		// if (entry.size() > 1) {
 		// 	signal.args[i].type = entry[1];
@@ -555,15 +555,15 @@ void register_signal(String name, Dictionary args) {
 		signal.args[i].type = args.values()[i];
 	}
 
-	godot::nativescript_api->godot_nativescript_register_signal(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_register_signal(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), &signal);
 
 	for (int i = 0; i < signal.num_args; i++) {
-		godot::api->godot_string_destroy(&signal.args[i].name);
+		godot::api->pandemonium_string_destroy(&signal.args[i].name);
 	}
 
 	if (signal.args) {
-		godot::api->godot_free(signal.args);
+		godot::api->pandemonium_free(signal.args);
 	}
 }
 
@@ -576,10 +576,10 @@ template <class T>
 void register_signal(String name) {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
-	godot_signal signal = {};
-	signal.name = *(godot_string *)&name;
+	pandemonium_signal signal = {};
+	signal.name = *(pandemonium_string *)&name;
 
-	godot::nativescript_api->godot_nativescript_register_signal(godot::_RegisterState::nativescript_handle,
+	godot::nativescript_api->pandemonium_nativescript_register_signal(godot::_RegisterState::nativescript_handle,
 			T::___get_class_name(), &signal);
 }
 
@@ -590,7 +590,7 @@ T *Object::cast_to(const Object *obj) {
 		return nullptr;
 
 	if (T::___CLASS_IS_SCRIPT) {
-		size_t have_tag = (size_t)godot::nativescript_1_1_api->godot_nativescript_get_type_tag(obj->_owner);
+		size_t have_tag = (size_t)godot::nativescript_1_1_api->pandemonium_nativescript_get_type_tag(obj->_owner);
 		if (have_tag) {
 			if (!godot::_TagDB::is_type_known((size_t)have_tag)) {
 				have_tag = 0;
@@ -605,7 +605,7 @@ T *Object::cast_to(const Object *obj) {
 			return detail::get_custom_class_instance<T>(obj);
 		}
 	} else {
-		if (godot::core_1_2_api->godot_object_cast_to(obj->_owner, (void *)T::___get_id())) {
+		if (godot::core_1_2_api->pandemonium_object_cast_to(obj->_owner, (void *)T::___get_id())) {
 			return (T *)obj;
 		}
 	}

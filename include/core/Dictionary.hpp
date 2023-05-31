@@ -40,11 +40,11 @@
 namespace godot {
 
 class Dictionary {
-	godot_dictionary _godot_dictionary;
+	pandemonium_dictionary _pandemonium_dictionary;
 
 	friend Variant::operator Dictionary() const;
-	inline explicit Dictionary(const godot_dictionary &other) {
-		_godot_dictionary = other;
+	inline explicit Dictionary(const pandemonium_dictionary &other) {
+		_pandemonium_dictionary = other;
 	}
 
 public:

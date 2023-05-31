@@ -85,13 +85,13 @@ class PoolColorArray;
 class Object;
 
 class Array {
-	godot_array _godot_array;
+	pandemonium_array _pandemonium_array;
 
 	friend class Variant;
 	friend class Dictionary;
 	friend class String;
-	inline explicit Array(const godot_array &other) {
-		_godot_array = other;
+	inline explicit Array(const pandemonium_array &other) {
+		_pandemonium_array = other;
 	}
 
 public:

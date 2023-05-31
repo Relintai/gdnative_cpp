@@ -38,10 +38,10 @@
 namespace godot {
 
 class NodePath {
-	godot_node_path _node_path;
+	pandemonium_node_path _node_path;
 
 	friend class Variant;
-	inline explicit NodePath(godot_node_path node_path) {
+	inline explicit NodePath(pandemonium_node_path node_path) {
 		_node_path = node_path;
 	}
 
