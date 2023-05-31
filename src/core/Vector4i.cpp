@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  CoreTypes.hpp                                                        */
+/*  Vector2.cpp                                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,36 +28,16 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CORETYPES_H
-#define CORETYPES_H
-
-#include "Defs.hpp"
-
-#include "AABB.hpp"
-#include "Array.hpp"
-#include "Basis.hpp"
-#include "Color.hpp"
-#include "Dictionary.hpp"
-#include "NodePath.hpp"
-#include "Plane.hpp"
-#include "PoolArrays.hpp"
-#include "Quaternion.hpp"
-#include "RID.hpp"
-#include "Rect2.hpp"
-#include "Rect2i.hpp"
-#include "String.hpp"
-#include "StringName.hpp"
-#include "Transform.hpp"
-#include "Transform2D.hpp"
-#include "Projection.hpp"
-#include "Variant.hpp"
-#include "Vector2.hpp"
-#include "Vector2i.hpp"
-#include "Vector3.hpp"
-#include "Vector3i.hpp"
-#include "Vector4.hpp"
 #include "Vector4i.hpp"
 
-#include "Wrapped.hpp"
+#include <gdn/vector4i.h>
 
-#endif // CORETYPES_H
+#include "String.hpp"
+
+namespace godot {
+
+Vector4i::operator String() const {
+	return String::num(x) + ", " + String::num(y) + ", " + String::num(z) + ", " + String::num(w);
+}
+
+} // namespace godot

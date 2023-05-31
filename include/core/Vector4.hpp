@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  CoreTypes.hpp                                                        */
+/*  Vector2.hpp                                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,36 +28,48 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CORETYPES_H
-#define CORETYPES_H
+#ifndef VECTOR4_H
+#define VECTOR4_H
+
+#include <gdn/vector4.h>
 
 #include "Defs.hpp"
 
-#include "AABB.hpp"
-#include "Array.hpp"
-#include "Basis.hpp"
-#include "Color.hpp"
-#include "Dictionary.hpp"
-#include "NodePath.hpp"
-#include "Plane.hpp"
-#include "PoolArrays.hpp"
-#include "Quaternion.hpp"
-#include "RID.hpp"
-#include "Rect2.hpp"
-#include "Rect2i.hpp"
-#include "String.hpp"
-#include "StringName.hpp"
-#include "Transform.hpp"
-#include "Transform2D.hpp"
-#include "Projection.hpp"
-#include "Variant.hpp"
-#include "Vector2.hpp"
-#include "Vector2i.hpp"
-#include "Vector3.hpp"
-#include "Vector3i.hpp"
-#include "Vector4.hpp"
-#include "Vector4i.hpp"
+#include <Mathp.hpp>
 
-#include "Wrapped.hpp"
+namespace godot {
 
-#endif // CORETYPES_H
+class String;
+
+struct Vector4 {
+	union {
+		struct {
+			real_t x;
+			real_t y;
+			real_t z;
+			real_t w;
+		};
+
+		real_t coord[4]; // Not for direct access, use [] operator instead
+	};
+
+	inline Vector4(real_t p_x, real_t p_y, real_t p_z, real_t p_w) {
+		x = p_x;
+		y = p_y;
+		z = p_z;
+		w = p_w;
+	}
+
+	inline Vector4() {
+		x = 0;
+		y = 0;
+		z = 0;
+		w = 0;
+	}
+
+	operator String() const;
+};
+
+} // namespace godot
+
+#endif // VECTOR2_H

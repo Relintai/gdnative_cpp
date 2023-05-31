@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  CoreTypes.hpp                                                        */
+/*  Rect2.hpp                                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,36 +28,39 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CORETYPES_H
-#define CORETYPES_H
+#ifndef RECT2I_H
+#define RECT2I_H
 
-#include "Defs.hpp"
-
-#include "AABB.hpp"
-#include "Array.hpp"
-#include "Basis.hpp"
-#include "Color.hpp"
-#include "Dictionary.hpp"
-#include "NodePath.hpp"
-#include "Plane.hpp"
-#include "PoolArrays.hpp"
-#include "Quaternion.hpp"
-#include "RID.hpp"
-#include "Rect2.hpp"
-#include "Rect2i.hpp"
-#include "String.hpp"
-#include "StringName.hpp"
-#include "Transform.hpp"
-#include "Transform2D.hpp"
-#include "Projection.hpp"
-#include "Variant.hpp"
-#include "Vector2.hpp"
 #include "Vector2i.hpp"
-#include "Vector3.hpp"
-#include "Vector3i.hpp"
-#include "Vector4.hpp"
-#include "Vector4i.hpp"
 
-#include "Wrapped.hpp"
+#include <cmath>
 
-#endif // CORETYPES_H
+#include <cstdlib>
+
+namespace godot {
+
+class String;
+
+typedef Vector2i Size2i;
+typedef Vector2i Point2i;
+
+struct Rect2i {
+	Point2i position;
+	Size2i size;
+
+	operator String() const;
+
+	inline Rect2i() {}
+	inline Rect2i(real_t p_x, real_t p_y, real_t p_width, real_t p_height) {
+		position = Point2i(p_x, p_y);
+		size = Size2i(p_width, p_height);
+	}
+	inline Rect2i(const Point2i &p_position, const Size2i &p_size) {
+		position = p_position;
+		size = p_size;
+	}
+};
+
+} // namespace godot
+
+#endif // RECT2_H

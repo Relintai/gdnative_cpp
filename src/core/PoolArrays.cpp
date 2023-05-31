@@ -34,6 +34,7 @@
 #include "GodotGlobal.hpp"
 #include "String.hpp"
 #include "Vector2.hpp"
+#include "Vector2i.hpp"
 #include "Vector3.hpp"
 
 #include <gdn/pool_arrays.h>
@@ -414,6 +415,82 @@ int PoolVector2Array::size() const {
 
 PoolVector2Array::~PoolVector2Array() {
 	godot::api->pandemonium_pool_vector2_array_destroy(&_pandemonium_array);
+}
+
+PoolVector2iArray::PoolVector2iArray() {
+	godot::api->pandemonium_pool_vector2i_array_new(&_pandemonium_array);
+}
+
+PoolVector2iArray::PoolVector2iArray(const PoolVector2iArray &p_other) {
+	godot::api->pandemonium_pool_vector2i_array_new_copy(&_pandemonium_array, &p_other._pandemonium_array);
+}
+
+PoolVector2iArray &PoolVector2iArray::operator=(const PoolVector2iArray &p_other) {
+	godot::api->pandemonium_pool_vector2i_array_destroy(&_pandemonium_array);
+	godot::api->pandemonium_pool_vector2i_array_new_copy(&_pandemonium_array, &p_other._pandemonium_array);
+	return *this;
+}
+
+PoolVector2iArray::PoolVector2iArray(const Array &array) {
+	godot::api->pandemonium_pool_vector2i_array_new_with_array(&_pandemonium_array, (pandemonium_array *)&array);
+}
+
+PoolVector2iArray::Read PoolVector2iArray::read() const {
+	Read read;
+	read._read_access = godot::api->pandemonium_pool_vector2i_array_read(&_pandemonium_array);
+	return read;
+}
+
+PoolVector2iArray::Write PoolVector2iArray::write() {
+	Write write;
+	write._write_access = godot::api->pandemonium_pool_vector2i_array_write(&_pandemonium_array);
+	return write;
+}
+
+void PoolVector2iArray::append(const Vector2i &data) {
+	godot::api->pandemonium_pool_vector2i_array_append(&_pandemonium_array, (pandemonium_vector2i *)&data);
+}
+
+void PoolVector2iArray::append_array(const PoolVector2iArray &array) {
+	godot::api->pandemonium_pool_vector2i_array_append_array(&_pandemonium_array, &array._pandemonium_array);
+}
+
+int PoolVector2iArray::insert(const int idx, const Vector2i &data) {
+	return godot::api->pandemonium_pool_vector2i_array_insert(&_pandemonium_array, idx, (pandemonium_vector2i *)&data);
+}
+
+void PoolVector2iArray::invert() {
+	godot::api->pandemonium_pool_vector2i_array_invert(&_pandemonium_array);
+}
+
+void PoolVector2iArray::push_back(const Vector2i &data) {
+	godot::api->pandemonium_pool_vector2i_array_push_back(&_pandemonium_array, (pandemonium_vector2i *)&data);
+}
+
+void PoolVector2iArray::remove(const int idx) {
+	godot::api->pandemonium_pool_vector2i_array_remove(&_pandemonium_array, idx);
+}
+
+void PoolVector2iArray::resize(const int size) {
+	godot::api->pandemonium_pool_vector2i_array_resize(&_pandemonium_array, size);
+}
+
+void PoolVector2iArray::set(const int idx, const Vector2i &data) {
+	godot::api->pandemonium_pool_vector2i_array_set(&_pandemonium_array, idx, (pandemonium_vector2i *)&data);
+}
+
+const Vector2i PoolVector2iArray::operator[](const int idx) {
+	Vector2i v;
+	*(pandemonium_vector2i *)&v = godot::api->pandemonium_pool_vector2i_array_get(&_pandemonium_array, idx);
+	return v;
+}
+
+int PoolVector2iArray::size() const {
+	return godot::api->pandemonium_pool_vector2i_array_size(&_pandemonium_array);
+}
+
+PoolVector2iArray::~PoolVector2iArray() {
+	godot::api->pandemonium_pool_vector2i_array_destroy(&_pandemonium_array);
 }
 
 PoolVector3Array::PoolVector3Array() {

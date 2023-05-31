@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  CoreTypes.hpp                                                        */
+/*  Vector2.hpp                                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,36 +28,42 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CORETYPES_H
-#define CORETYPES_H
+#ifndef VECTOR2I_H
+#define VECTOR2I_H
+
+#include <gdn/vector2i.h>
 
 #include "Defs.hpp"
 
-#include "AABB.hpp"
-#include "Array.hpp"
-#include "Basis.hpp"
-#include "Color.hpp"
-#include "Dictionary.hpp"
-#include "NodePath.hpp"
-#include "Plane.hpp"
-#include "PoolArrays.hpp"
-#include "Quaternion.hpp"
-#include "RID.hpp"
-#include "Rect2.hpp"
-#include "Rect2i.hpp"
-#include "String.hpp"
-#include "StringName.hpp"
-#include "Transform.hpp"
-#include "Transform2D.hpp"
-#include "Projection.hpp"
-#include "Variant.hpp"
-#include "Vector2.hpp"
-#include "Vector2i.hpp"
-#include "Vector3.hpp"
-#include "Vector3i.hpp"
-#include "Vector4.hpp"
-#include "Vector4i.hpp"
+#include <Mathp.hpp>
 
-#include "Wrapped.hpp"
+namespace godot {
 
-#endif // CORETYPES_H
+class String;
+
+struct Vector2i {
+	union {
+		int32_t x;
+		int32_t width;
+	};
+	union {
+		int32_t y;
+		int32_t height;
+	};
+
+	inline Vector2i(int p_x, int p_y) {
+		x = p_x;
+		y = p_y;
+	}
+
+	inline Vector2i() {
+		x = 0;
+		y = 0;
+	}
+
+	operator String() const;
+};
+
+} // namespace godot
+
+#endif // VECTOR2_H

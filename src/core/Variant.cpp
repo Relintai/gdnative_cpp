@@ -104,12 +104,32 @@ Variant::Variant(const Vector2 &p_vector2) {
 	godot::api->pandemonium_variant_new_vector2(&_pandemonium_variant, (pandemonium_vector2 *)&p_vector2);
 }
 
+Variant::Variant(const Vector2i &p_vector2i) {
+	godot::api->pandemonium_variant_new_vector2i(&_pandemonium_variant, (pandemonium_vector2i *)&p_vector2i);
+}
+
 Variant::Variant(const Rect2 &p_rect2) {
 	godot::api->pandemonium_variant_new_rect2(&_pandemonium_variant, (pandemonium_rect2 *)&p_rect2);
 }
 
+Variant::Variant(const Rect2i &p_rect2i) {
+	godot::api->pandemonium_variant_new_rect2i(&_pandemonium_variant, (pandemonium_rect2i *)&p_rect2i);
+}
+
 Variant::Variant(const Vector3 &p_vector3) {
 	godot::api->pandemonium_variant_new_vector3(&_pandemonium_variant, (pandemonium_vector3 *)&p_vector3);
+}
+
+Variant::Variant(const Vector3i &p_vector3i) {
+	godot::api->pandemonium_variant_new_vector3i(&_pandemonium_variant, (pandemonium_vector3 *)&p_vector3i);
+}
+
+Variant::Variant(const Vector4 &p_vector4) {
+	godot::api->pandemonium_variant_new_vector4(&_pandemonium_variant, (pandemonium_vector4 *)&p_vector4);
+}
+
+Variant::Variant(const Vector4i &p_vector4i) {
+	godot::api->pandemonium_variant_new_vector4i(&_pandemonium_variant, (pandemonium_vector4i *)&p_vector4i);
 }
 
 Variant::Variant(const Plane &p_plane) {
@@ -134,6 +154,10 @@ Variant::Variant(const Transform2D &p_transform) {
 
 Variant::Variant(const Transform &p_transform) {
 	godot::api->pandemonium_variant_new_transform(&_pandemonium_variant, (pandemonium_transform *)&p_transform);
+}
+
+Variant::Variant(const Projection &p_projection) {
+	godot::api->pandemonium_variant_new_projection(&_pandemonium_variant, (pandemonium_projection *)&p_projection);
 }
 
 Variant::Variant(const Color &p_color) {
@@ -249,13 +273,33 @@ Variant::operator Vector2() const {
 	pandemonium_vector2 s = godot::api->pandemonium_variant_as_vector2(&_pandemonium_variant);
 	return *(Vector2 *)&s;
 }
+Variant::operator Vector2i() const {
+	pandemonium_vector2i s = godot::api->pandemonium_variant_as_vector2i(&_pandemonium_variant);
+	return *(Vector2i *)&s;
+}
 Variant::operator Rect2() const {
 	pandemonium_rect2 s = godot::api->pandemonium_variant_as_rect2(&_pandemonium_variant);
 	return *(Rect2 *)&s;
 }
+Variant::operator Rect2i() const {
+	pandemonium_rect2i s = godot::api->pandemonium_variant_as_rect2i(&_pandemonium_variant);
+	return *(Rect2i *)&s;
+}
 Variant::operator Vector3() const {
 	pandemonium_vector3 s = godot::api->pandemonium_variant_as_vector3(&_pandemonium_variant);
 	return *(Vector3 *)&s;
+}
+Variant::operator Vector3i() const {
+	pandemonium_vector3i s = godot::api->pandemonium_variant_as_vector3i(&_pandemonium_variant);
+	return *(Vector3i *)&s;
+}
+Variant::operator Vector4() const {
+	pandemonium_vector4 s = godot::api->pandemonium_variant_as_vector4(&_pandemonium_variant);
+	return *(Vector4 *)&s;
+}
+Variant::operator Vector4i() const {
+	pandemonium_vector4i s = godot::api->pandemonium_variant_as_vector4i(&_pandemonium_variant);
+	return *(Vector4i *)&s;
 }
 Variant::operator Plane() const {
 	pandemonium_plane s = godot::api->pandemonium_variant_as_plane(&_pandemonium_variant);
@@ -280,6 +324,10 @@ Variant::operator Transform() const {
 Variant::operator Transform2D() const {
 	pandemonium_transform2d s = godot::api->pandemonium_variant_as_transform2d(&_pandemonium_variant);
 	return *(Transform2D *)&s;
+}
+Variant::operator Projection() const {
+	pandemonium_projection s = godot::api->pandemonium_variant_as_projection(&_pandemonium_variant);
+	return *(Projection *)&s;
 }
 
 Variant::operator Color() const {

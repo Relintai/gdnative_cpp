@@ -37,6 +37,7 @@
 #include "GodotGlobal.hpp"
 #include "String.hpp"
 #include "Vector2.hpp"
+#include "Vector2i.hpp"
 #include "Vector3.hpp"
 
 #include <gdn/pool_arrays.h>
@@ -555,6 +556,108 @@ public:
 	int size() const;
 
 	~PoolVector2Array();
+};
+
+class PoolVector2iArray {
+	pandemonium_pool_vector2i_array _pandemonium_array;
+
+	friend class Variant;
+	explicit inline PoolVector2iArray(pandemonium_pool_vector2i_array a) {
+		_pandemonium_array = a;
+	}
+
+public:
+	class Read {
+		friend class PoolVector2iArray;
+		pandemonium_pool_vector2i_array_read_access *_read_access;
+
+	public:
+		inline Read() {
+			_read_access = nullptr;
+		}
+
+		inline Read(const Read &p_other) {
+			_read_access = godot::api->pandemonium_pool_vector2i_array_read_access_copy(p_other._read_access);
+		}
+
+		inline ~Read() {
+			godot::api->pandemonium_pool_vector2i_array_read_access_destroy(_read_access);
+		}
+
+		inline const Vector2i *ptr() const {
+			return (const Vector2i *)godot::api->pandemonium_pool_vector2i_array_read_access_ptr(_read_access);
+		}
+
+		inline const Vector2i &operator[](int p_idx) const {
+			return ptr()[p_idx];
+		}
+
+		inline void operator=(const Read &p_other) {
+			godot::api->pandemonium_pool_vector2i_array_read_access_operator_assign(_read_access, p_other._read_access);
+		}
+	};
+
+	class Write {
+		friend class PoolVector2iArray;
+		pandemonium_pool_vector2i_array_write_access *_write_access;
+
+	public:
+		inline Write() {
+			_write_access = nullptr;
+		}
+
+		inline Write(const Write &p_other) {
+			_write_access = godot::api->pandemonium_pool_vector2i_array_write_access_copy(p_other._write_access);
+		}
+
+		inline ~Write() {
+			godot::api->pandemonium_pool_vector2i_array_write_access_destroy(_write_access);
+		}
+
+		inline Vector2i *ptr() const {
+			return (Vector2i *)godot::api->pandemonium_pool_vector2i_array_write_access_ptr(_write_access);
+		}
+
+		inline Vector2i &operator[](int p_idx) const {
+			return ptr()[p_idx];
+		}
+
+		inline void operator=(const Write &p_other) {
+			godot::api->pandemonium_pool_vector2i_array_write_access_operator_assign(_write_access, p_other._write_access);
+		}
+	};
+
+	PoolVector2iArray();
+	PoolVector2iArray(const PoolVector2iArray &p_other);
+	PoolVector2iArray &operator=(const PoolVector2iArray &p_other);
+
+	PoolVector2iArray(const Array &array);
+
+	Read read() const;
+
+	Write write();
+
+	void append(const Vector2i &data);
+
+	void append_array(const PoolVector2iArray &array);
+
+	int insert(const int idx, const Vector2i &data);
+
+	void invert();
+
+	void push_back(const Vector2i &data);
+
+	void remove(const int idx);
+
+	void resize(const int size);
+
+	void set(const int idx, const Vector2i &data);
+
+	const Vector2i operator[](const int idx);
+
+	int size() const;
+
+	~PoolVector2iArray();
 };
 
 class PoolVector3Array {

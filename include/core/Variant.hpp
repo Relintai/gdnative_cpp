@@ -41,14 +41,20 @@
 #include "NodePath.hpp"
 #include "Plane.hpp"
 #include "PoolArrays.hpp"
+#include "Projection.hpp"
 #include "Quaternion.hpp"
 #include "RID.hpp"
 #include "Rect2.hpp"
+#include "Rect2i.hpp"
 #include "String.hpp"
 #include "Transform.hpp"
 #include "Transform2D.hpp"
 #include "Vector2.hpp"
+#include "Vector2i.hpp"
 #include "Vector3.hpp"
+#include "Vector3i.hpp"
+#include "Vector4.hpp"
+#include "Vector4i.hpp"
 
 namespace godot {
 
@@ -194,10 +200,16 @@ public:
 	Variant(const wchar_t *p_wstring);
 
 	Variant(const Vector2 &p_vector2);
+	Variant(const Vector2i &p_vector2i);
 
 	Variant(const Rect2 &p_rect2);
+	Variant(const Rect2i &p_rect2i);
 
 	Variant(const Vector3 &p_vector3);
+	Variant(const Vector3i &p_vector3i);
+
+	Variant(const Vector4 &p_vector4);
+	Variant(const Vector4i &p_vector4i);
 
 	Variant(const Plane &p_plane);
 
@@ -210,6 +222,8 @@ public:
 	Variant(const Transform2D &p_transform);
 
 	Variant(const Transform &p_transform);
+
+	Variant(const Projection &p_projection);
 
 	Variant(const Color &p_color);
 
@@ -257,14 +271,20 @@ public:
 	operator String() const;
 	operator StringName() const;
 	operator Vector2() const;
+	operator Vector2i() const;
 	operator Rect2() const;
+	operator Rect2i() const;
 	operator Vector3() const;
+	operator Vector3i() const;
+	operator Vector4() const;
+	operator Vector4i() const;
 	operator Plane() const;
 	operator godot::AABB() const;
 	operator Quaternion() const;
 	operator Basis() const;
 	operator Transform() const;
 	operator Transform2D() const;
+	operator Projection() const;
 
 	operator Color() const;
 
