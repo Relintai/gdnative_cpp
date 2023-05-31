@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  CameraMatrix.hpp                                                     */
+/*  Projection.hpp                                                     */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -43,7 +43,7 @@ namespace {
 using namespace godot;
 } // namespace
 
-struct CameraMatrix {
+struct Projection {
 	enum Planes {
 		PLANE_NEAR,
 		PLANE_FAR,
@@ -93,9 +93,9 @@ struct CameraMatrix {
 	Vector2 get_viewport_half_extents() const;
 
 	void invert();
-	CameraMatrix inverse() const;
+	Projection inverse() const;
 
-	CameraMatrix operator*(const CameraMatrix &p_matrix) const;
+	Projection operator*(const Projection &p_matrix) const;
 
 	Plane xform4(const Plane &p_vec4) const;
 	inline Vector3 xform(const Vector3 &p_vec3) const;
@@ -107,12 +107,12 @@ struct CameraMatrix {
 	int get_pixels_per_meter(int p_for_pixel_width) const;
 	operator Transform() const;
 
-	CameraMatrix();
-	CameraMatrix(const Transform &p_transform);
-	~CameraMatrix();
+	Projection();
+	Projection(const Transform &p_transform);
+	~Projection();
 };
 
-Vector3 CameraMatrix::xform(const Vector3 &p_vec3) const {
+Vector3 Projection::xform(const Vector3 &p_vec3) const {
 	Vector3 ret;
 	ret.x = matrix[0][0] * p_vec3.x + matrix[1][0] * p_vec3.y + matrix[2][0] * p_vec3.z + matrix[3][0];
 	ret.y = matrix[0][1] * p_vec3.x + matrix[1][1] * p_vec3.y + matrix[2][1] * p_vec3.z + matrix[3][1];

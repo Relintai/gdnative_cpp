@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  CameraMatrix.cpp                                                     */
+/*  Projection.cpp                                                     */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "CameraMatrix.hpp"
+#include "Projection.hpp"
 
-void CameraMatrix::set_identity() {
+void Projection::set_identity() {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			matrix[i][j] = (i == j) ? 1 : 0;
@@ -38,7 +38,7 @@ void CameraMatrix::set_identity() {
 	}
 }
 
-void CameraMatrix::set_zero() {
+void Projection::set_zero() {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			matrix[i][j] = 0;
@@ -46,7 +46,7 @@ void CameraMatrix::set_zero() {
 	}
 }
 
-Plane CameraMatrix::xform4(const Plane &p_vec4) const {
+Plane Projection::xform4(const Plane &p_vec4) const {
 	Plane ret;
 
 	ret.normal.x = matrix[0][0] * p_vec4.normal.x + matrix[1][0] * p_vec4.normal.y + matrix[2][0] * p_vec4.normal.z + matrix[3][0] * p_vec4.d;
@@ -56,7 +56,7 @@ Plane CameraMatrix::xform4(const Plane &p_vec4) const {
 	return ret;
 }
 
-void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_t p_z_near, real_t p_z_far, bool p_flip_fov) {
+void Projection::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_t p_z_near, real_t p_z_far, bool p_flip_fov) {
 	if (p_flip_fov) {
 		p_fovy_degrees = get_fovy(p_fovy_degrees, 1.0 / p_aspect);
 	}
@@ -82,7 +82,7 @@ void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_
 	matrix[3][3] = 0;
 }
 
-void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_t p_z_near, real_t p_z_far, bool p_flip_fov, int p_eye, real_t p_intraocular_dist, real_t p_convergence_dist) {
+void Projection::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_t p_z_near, real_t p_z_far, bool p_flip_fov, int p_eye, real_t p_intraocular_dist, real_t p_convergence_dist) {
 	if (p_flip_fov) {
 		p_fovy_degrees = get_fovy(p_fovy_degrees, 1.0 / p_aspect);
 	}
@@ -114,13 +114,13 @@ void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_
 	set_frustum(left, right, -ymax, ymax, p_z_near, p_z_far);
 
 	// translate matrix by (modeltranslation, 0.0, 0.0)
-	CameraMatrix cm;
+	Projection cm;
 	cm.set_identity();
 	cm.matrix[3][0] = modeltranslation;
 	*this = *this * cm;
 }
 
-void CameraMatrix::set_for_hmd(int p_eye, real_t p_aspect, real_t p_intraocular_dist, real_t p_display_width, real_t p_display_to_lens, real_t p_oversample, real_t p_z_near, real_t p_z_far) {
+void Projection::set_for_hmd(int p_eye, real_t p_aspect, real_t p_intraocular_dist, real_t p_display_width, real_t p_display_to_lens, real_t p_oversample, real_t p_z_near, real_t p_z_far) {
 	// we first calculate our base frustum on our values without taking our lens magnification into account.
 	real_t f1 = (p_intraocular_dist * 0.5) / p_display_to_lens;
 	real_t f2 = ((p_display_width - p_intraocular_dist) * 0.5) / p_display_to_lens;
@@ -148,7 +148,7 @@ void CameraMatrix::set_for_hmd(int p_eye, real_t p_aspect, real_t p_intraocular_
 	};
 };
 
-void CameraMatrix::set_orthogonal(real_t p_left, real_t p_right, real_t p_bottom, real_t p_top, real_t p_znear, real_t p_zfar) {
+void Projection::set_orthogonal(real_t p_left, real_t p_right, real_t p_bottom, real_t p_top, real_t p_znear, real_t p_zfar) {
 	set_identity();
 
 	matrix[0][0] = 2.0 / (p_right - p_left);
@@ -160,7 +160,7 @@ void CameraMatrix::set_orthogonal(real_t p_left, real_t p_right, real_t p_bottom
 	matrix[3][3] = 1.0;
 }
 
-void CameraMatrix::set_orthogonal(real_t p_size, real_t p_aspect, real_t p_znear, real_t p_zfar, bool p_flip_fov) {
+void Projection::set_orthogonal(real_t p_size, real_t p_aspect, real_t p_znear, real_t p_zfar, bool p_flip_fov) {
 	if (!p_flip_fov) {
 		p_size *= p_aspect;
 	}
@@ -168,7 +168,7 @@ void CameraMatrix::set_orthogonal(real_t p_size, real_t p_aspect, real_t p_znear
 	set_orthogonal(-p_size / 2, +p_size / 2, -p_size / p_aspect / 2, +p_size / p_aspect / 2, p_znear, p_zfar);
 }
 
-void CameraMatrix::set_frustum(real_t p_left, real_t p_right, real_t p_bottom, real_t p_top, real_t p_near, real_t p_far) {
+void Projection::set_frustum(real_t p_left, real_t p_right, real_t p_bottom, real_t p_top, real_t p_near, real_t p_far) {
 	ERR_FAIL_COND(p_right <= p_left);
 	ERR_FAIL_COND(p_top <= p_bottom);
 	ERR_FAIL_COND(p_far <= p_near);
@@ -200,7 +200,7 @@ void CameraMatrix::set_frustum(real_t p_left, real_t p_right, real_t p_bottom, r
 	te[15] = 0;
 }
 
-void CameraMatrix::set_frustum(real_t p_size, real_t p_aspect, Vector2 p_offset, real_t p_near, real_t p_far, bool p_flip_fov) {
+void Projection::set_frustum(real_t p_size, real_t p_aspect, Vector2 p_offset, real_t p_near, real_t p_far, bool p_flip_fov) {
 	if (!p_flip_fov) {
 		p_size *= p_aspect;
 	}
@@ -208,7 +208,7 @@ void CameraMatrix::set_frustum(real_t p_size, real_t p_aspect, Vector2 p_offset,
 	set_frustum(-p_size / 2 + p_offset.x, +p_size / 2 + p_offset.x, -p_size / p_aspect / 2 + p_offset.y, +p_size / p_aspect / 2 + p_offset.y, p_near, p_far);
 }
 
-real_t CameraMatrix::get_z_far() const {
+real_t Projection::get_z_far() const {
 	const real_t *matrix = (const real_t *)this->matrix;
 	Plane new_plane = Plane(matrix[3] - matrix[2],
 			matrix[7] - matrix[6],
@@ -220,7 +220,7 @@ real_t CameraMatrix::get_z_far() const {
 
 	return new_plane.d;
 }
-real_t CameraMatrix::get_z_near() const {
+real_t Projection::get_z_near() const {
 	const real_t *matrix = (const real_t *)this->matrix;
 	Plane new_plane = Plane(matrix[3] + matrix[2],
 			matrix[7] + matrix[6],
@@ -231,7 +231,7 @@ real_t CameraMatrix::get_z_near() const {
 	return new_plane.d;
 }
 
-Vector2 CameraMatrix::get_viewport_half_extents() const {
+Vector2 Projection::get_viewport_half_extents() const {
 	const real_t *matrix = (const real_t *)this->matrix;
 	///////--- Near Plane ---///////
 	Plane near_plane = Plane(matrix[3] + matrix[2],
@@ -259,7 +259,7 @@ Vector2 CameraMatrix::get_viewport_half_extents() const {
 	return Vector2(res.x, res.y);
 }
 
-bool CameraMatrix::get_endpoints(const Transform &p_transform, Vector3 *p_8points) const {
+bool Projection::get_endpoints(const Transform &p_transform, Vector3 *p_8points) const {
 	std::vector<Plane> planes = get_projection_planes(Transform());
 	const Planes intersections[8][3] = {
 		{ PLANE_FAR, PLANE_LEFT, PLANE_TOP },
@@ -282,7 +282,7 @@ bool CameraMatrix::get_endpoints(const Transform &p_transform, Vector3 *p_8point
 	return true;
 }
 
-std::vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transform) const {
+std::vector<Plane> Projection::get_projection_planes(const Transform &p_transform) const {
 	/** Fast Plane Extraction from combined modelview/projection matrices.
 	 * References:
 	 * https://web.archive.org/web/20011221205252/http://www.markmorley.com/opengl/frustumculling.html
@@ -364,13 +364,13 @@ std::vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transf
 	return planes;
 }
 
-CameraMatrix CameraMatrix::inverse() const {
-	CameraMatrix cm = *this;
+Projection Projection::inverse() const {
+	Projection cm = *this;
 	cm.invert();
 	return cm;
 }
 
-void CameraMatrix::invert() {
+void Projection::invert() {
 	int i, j, k;
 	int pvt_i[4], pvt_j[4]; /* Locations of pivot matrix */
 	real_t pvt_val; /* Value of current pivot element */
@@ -466,12 +466,12 @@ void CameraMatrix::invert() {
 	}
 }
 
-CameraMatrix::CameraMatrix() {
+Projection::Projection() {
 	set_identity();
 }
 
-CameraMatrix CameraMatrix::operator*(const CameraMatrix &p_matrix) const {
-	CameraMatrix new_matrix;
+Projection Projection::operator*(const Projection &p_matrix) const {
+	Projection new_matrix;
 
 	for (int j = 0; j < 4; j++) {
 		for (int i = 0; i < 4; i++) {
@@ -485,7 +485,7 @@ CameraMatrix CameraMatrix::operator*(const CameraMatrix &p_matrix) const {
 	return new_matrix;
 }
 
-void CameraMatrix::set_light_bias() {
+void Projection::set_light_bias() {
 	real_t *m = &matrix[0][0];
 
 	m[0] = 0.5;
@@ -506,7 +506,7 @@ void CameraMatrix::set_light_bias() {
 	m[15] = 1.0;
 }
 
-void CameraMatrix::set_light_atlas_rect(const Rect2 &p_rect) {
+void Projection::set_light_atlas_rect(const Rect2 &p_rect) {
 	real_t *m = &matrix[0][0];
 
 	m[0] = p_rect.size.width;
@@ -527,7 +527,7 @@ void CameraMatrix::set_light_atlas_rect(const Rect2 &p_rect) {
 	m[15] = 1.0;
 }
 
-CameraMatrix::operator String() const {
+Projection::operator String() const {
 	String str;
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
@@ -536,22 +536,22 @@ CameraMatrix::operator String() const {
 	return str;
 }
 
-real_t CameraMatrix::get_aspect() const {
+real_t Projection::get_aspect() const {
 	Vector2 vp_he = get_viewport_half_extents();
 	return vp_he.x / vp_he.y;
 }
 
-int CameraMatrix::get_pixels_per_meter(int p_for_pixel_width) const {
+int Projection::get_pixels_per_meter(int p_for_pixel_width) const {
 	Vector3 result = xform(Vector3(1, 0, -1));
 
 	return int((result.x * 0.5 + 0.5) * p_for_pixel_width);
 }
 
-bool CameraMatrix::is_orthogonal() const {
+bool Projection::is_orthogonal() const {
 	return matrix[3][3] == 1.0;
 }
 
-real_t CameraMatrix::get_fov() const {
+real_t Projection::get_fov() const {
 	const real_t *matrix = (const real_t *)this->matrix;
 
 	Plane right_plane = Plane(matrix[3] - matrix[0],
@@ -574,14 +574,14 @@ real_t CameraMatrix::get_fov() const {
 	}
 }
 
-void CameraMatrix::make_scale(const Vector3 &p_scale) {
+void Projection::make_scale(const Vector3 &p_scale) {
 	set_identity();
 	matrix[0][0] = p_scale.x;
 	matrix[1][1] = p_scale.y;
 	matrix[2][2] = p_scale.z;
 }
 
-void CameraMatrix::scale_translate_to_fit(const AABB &p_aabb) {
+void Projection::scale_translate_to_fit(const AABB &p_aabb) {
 	Vector3 min = p_aabb.position;
 	Vector3 max = p_aabb.position + p_aabb.size;
 
@@ -606,7 +606,7 @@ void CameraMatrix::scale_translate_to_fit(const AABB &p_aabb) {
 	matrix[3][3] = 1;
 }
 
-CameraMatrix::operator Transform() const {
+Projection::operator Transform() const {
 	Transform tr;
 	const real_t *m = &matrix[0][0];
 
@@ -629,7 +629,7 @@ CameraMatrix::operator Transform() const {
 	return tr;
 }
 
-CameraMatrix::CameraMatrix(const Transform &p_transform) {
+Projection::Projection(const Transform &p_transform) {
 	const Transform &tr = p_transform;
 	real_t *m = &matrix[0][0];
 
@@ -651,5 +651,5 @@ CameraMatrix::CameraMatrix(const Transform &p_transform) {
 	m[15] = 1.0;
 }
 
-CameraMatrix::~CameraMatrix() {
+Projection::~Projection() {
 }
