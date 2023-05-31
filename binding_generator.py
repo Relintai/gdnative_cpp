@@ -305,8 +305,12 @@ def generate_class_header(used_classes, c, use_template_get_node):
                     return "Array()"
                 if _type in [
                     "PoolVector2Array",
+                    "PoolVector2iArray",
                     "PoolStringArray",
                     "PoolVector3Array",
+                    "PoolVector3iArray",
+                    "PoolVector4Array",
+                    "PoolVector4iArray",
                     "PoolColorArray",
                     "PoolIntArray",
                     "PoolRealArray",
@@ -315,14 +319,26 @@ def generate_class_header(used_classes, c, use_template_get_node):
                     return _type + "()"
                 if _type == "Vector2":
                     return "Vector2" + default_value
+                if _type == "Vector2i":
+                    return "Vector2i" + default_value
                 if _type == "Vector3":
                     return "Vector3" + default_value
+                if _type == "Vector3i":
+                    return "Vector3i" + default_value
+                if _type == "Vector4":
+                    return "Vector4" + default_value
+                if _type == "Vector4i":
+                    return "Vector4i" + default_value
                 if _type == "Transform":
                     return "Transform()"
                 if _type == "Transform2D":
                     return "Transform2D()"
+                if _type == "Projection":
+                    return "Transform2D()"
                 if _type == "Rect2":
-                    return "Rect2" + default_value
+                    return "Rect2" + default_value.replace('[P: (', "(").replace("), S: (", ", ").replace(")]", ")")
+                if _type == "Rect2i":
+                    return "Rect2i" + default_value.replace('[P: (', "(").replace("), S: (", ", ").replace(")]", ")")
                 if _type == "Variant":
                     return "Variant()" if default_value == "Null" else default_value
                 if _type == "String" or _type == "NodePath" or _type == "StringName":
