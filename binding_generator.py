@@ -298,7 +298,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
             # default arguments
             def escape_default_arg(_type, default_value):
                 if _type == "Color":
-                    return "Color(" + default_value + ")"
+                    return "Color" + default_value
                 if _type == "bool" or _type == "int":
                     return default_value.lower()
                 if _type == "Array":
@@ -325,7 +325,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
                     return "Rect2" + default_value
                 if _type == "Variant":
                     return "Variant()" if default_value == "Null" else default_value
-                if _type == "String" or _type == "NodePath":
+                if _type == "String" or _type == "NodePath" or type == "StringName":
                     return '"' + default_value + '"'
                 if _type == "RID":
                     return "RID()"
@@ -898,32 +898,42 @@ def is_class_type(name):
 
 def is_core_type(name):
     core_types = [
-        "Array",
-        "Basis",
-        "Color",
-        "Dictionary",
-        "Error",
-        "NodePath",
+        "String",
+        "Rect2",
+        "Rect2i",
+        "Vector2",
+        "Vector2i",
+        "Vector3",
+        "Vector3i",
+        "Vector4",
+        "Vector4i",
         "Plane",
+        "Quaternion",
+        "AABB",
+        "Basis",
+        "Transform",
+        "Transform2D",
+        "Projection",
+        "Color",
+        "NodePath",
+        "RID",
+#       Object
+        "StringName",
+        "Dictionary",
+        "Array",
         "PoolByteArray",
         "PoolIntArray",
         "PoolRealArray",
         "PoolStringArray",
         "PoolVector2Array",
+        "PoolVector2iArray",
         "PoolVector3Array",
+        "PoolVector3iArray",
+        "PoolVector4Array",
+        "PoolVector4iArray",
         "PoolColorArray",
-        "PoolIntArray",
-        "PoolRealArray",
-        "Quat",
-        "Rect2",
-        "AABB",
-        "RID",
-        "String",
-        "Transform",
-        "Transform2D",
+        "Error",
         "Variant",
-        "Vector2",
-        "Vector3",
     ]
     return name in core_types
 
