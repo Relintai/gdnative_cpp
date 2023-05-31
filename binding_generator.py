@@ -349,6 +349,9 @@ def generate_class_header(used_classes, c, use_template_get_node):
                 if default_value == "Null" or default_value == "[Object:null]":
                     return "nullptr"
 
+                if _type == 'float':
+                    return default_value.replace("inf", "Math_INF")
+
                 return default_value
 
             if argument["has_default_value"] or has_default_argument:
