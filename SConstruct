@@ -129,7 +129,7 @@ opts.Add(
     PathVariable(
         "headers_dir",
         "Path to the directory containing Godot headers",
-        "godot-headers",
+        "pandemonium_headers",
         PathVariable.PathIsDir,
     )
 )

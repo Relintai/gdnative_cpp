@@ -30,7 +30,7 @@
 
 #include "RID.hpp"
 
-#include <gdnative/rid.h>
+#include <gdn/rid.h>
 
 #include "GodotGlobal.hpp"
 

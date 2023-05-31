@@ -31,7 +31,7 @@
 #ifndef RID_H
 #define RID_H
 
-#include <gdnative/rid.h>
+#include <gdn/rid.h>
 
 namespace godot {
 

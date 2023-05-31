@@ -1,5 +1,5 @@
 GENERATE_BINDINGS = no
-HEADERS = godot-headers
+HEADERS = pandemonium_headers
 TARGET = debug
 USE_CLANG = no
 

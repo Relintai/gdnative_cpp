@@ -8,7 +8,7 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from binding_generator import get_file_list, generate_bindings
 
-api_filepath = "godot-headers/api.json"
+api_filepath = "pandemonium_headers/api.json"
 bits = "64"
 double = "float"
 output_dir = "self_test"

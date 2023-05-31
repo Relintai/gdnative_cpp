@@ -31,7 +31,7 @@
 #ifndef VARIANT_H
 #define VARIANT_H
 
-#include <gdnative/variant.h>
+#include <gdn/variant.h>
 
 #include "Defs.hpp"
 

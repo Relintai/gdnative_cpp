@@ -36,7 +36,7 @@
 #include "Vector2.hpp"
 #include "Vector3.hpp"
 
-#include <gdnative/pool_arrays.h>
+#include <gdn/pool_arrays.h>
 
 namespace godot {
 

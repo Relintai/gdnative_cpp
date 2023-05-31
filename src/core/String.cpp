@@ -36,7 +36,7 @@
 #include "PoolArrays.hpp"
 #include "Variant.hpp"
 
-#include <gdnative/string.h>
+#include <gdn/string.h>
 
 #include <string.h>
 

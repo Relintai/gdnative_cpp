@@ -26,7 +26,7 @@ Godot version.**
 
 > As the `master` and `3.x` branches are constantly getting updates, if you are
 > using `godot-cpp` against a more current version of Godot, see the instructions
-> in [**godot-headers**](https://github.com/godotengine/godot-headers) for
+> in [**pandemonium_headers**](https://github.com/godotengine/pandemonium_headers) for
 > updating the relevant files.
 
 ## Contributing
@@ -51,7 +51,7 @@ We recommend using Git for managing your project. The instructions below assume
 you're using Git. Alternatively, you can download the source code directly from
 GitHub. In this case, you need to download both
 [godot-cpp](https://github.com/godotengine/godot-cpp) and
-[godot-headers](https://github.com/godotengine/godot-headers).
+[pandemonium_headers](https://github.com/godotengine/pandemonium_headers).
 
 ```bash
 mkdir SimpleLibrary
@@ -79,7 +79,7 @@ Right now, our directory structure should look like this:
 ```text
 SimpleLibrary/
 ├─godot-cpp/
-| └─godot-headers/
+| └─pandemonium_headers/
 ├─bin/
 └─src/
 ```
@@ -91,7 +91,7 @@ Godot core. This metadata is required to generate the C++ binding classes for
 use in GDNative modules.
 
 This file is supplied with our
-[godot-headers](https://github.com/godotengine/godot-headers) repository
+[pandemonium_headers](https://github.com/godotengine/pandemonium_headers) repository
 for your convenience. However, if you're running a custom build of Godot and
 need access to classes that have recent changes, you must generate a new
 `api.json` file. You do this by starting your Godot executable with the
@@ -235,7 +235,7 @@ Once you've compiled the GDNative C++ bindings (see above), you can compile the 
 
 ```bash
 cd SimpleLibrary
-clang++ -fPIC -o src/init.o -c src/init.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/godot-headers
+clang++ -fPIC -o src/init.o -c src/init.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/pandemonium_headers
 clang++ -o bin/libtest.so -shared src/init.o -Lgodot-cpp/bin -l<name of the godot-cpp>
 ```
 
@@ -247,7 +247,7 @@ This creates the file `libtest.so` in your `SimpleLibrary/bin` directory.
 
 ```bash
 cd SimpleLibrary
-cl /Fosrc/init.obj /c src/init.cpp /nologo -EHsc -DNDEBUG /MDd /Igodot-cpp\include /Igodot-cpp\include\core /Igodot-cpp\include\gen /Igodot-cpp\godot-headers
+cl /Fosrc/init.obj /c src/init.cpp /nologo -EHsc -DNDEBUG /MDd /Igodot-cpp\include /Igodot-cpp\include\core /Igodot-cpp\include\gen /Igodot-cpp\pandemonium_headers
 link /nologo /dll /out:bin\libtest.dll /implib:bin\libsimple.lib src\init.obj godot-cpp\bin\<name of the godot-cpp>
 ```
 
@@ -270,7 +270,7 @@ submit a pull request :slightly_smiling_face:
 
 ```bash
 cd SimpleLibrary
-aarch64-linux-android29-clang++ -fPIC -o src/init.o -c src/init.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/godot-headers
+aarch64-linux-android29-clang++ -fPIC -o src/init.o -c src/init.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/pandemonium_headers
 aarch64-linux-android29-clang++ -o bin/libtest.so -shared src/init.o -Lgodot-cpp/bin -l<name of the godot-cpp>
 ```
 
@@ -284,7 +284,7 @@ GDNative isn't supported on iOS yet. This is because iOS only allows linking
 static libraries, not dynamic libraries. In theory, it would be possible to link
 a GDNative library statically, but some of GDNative's convenience would be lost
 in the process as one would have to recompile the engine on every change. See
-[issue #30](https://github.com/godotengine/godot-headers/issues/30) in the
+[issue #30](https://github.com/godotengine/pandemonium_headers/issues/30) in the
 Godot headers repository for more information.
 
 #### HTML5
@@ -295,7 +295,7 @@ To build GDNative libraries, you will need a recent version of [Emscripten](http
 
 ```bash
 cd SimpleLibrary
-emcc  -o bin/libtest.wasm -g -O3 -s SIDE_MODULE=1 src/init.cpp godot-cpp/bin/<name of the godot-cpp> -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/godot-headers
+emcc  -o bin/libtest.wasm -g -O3 -s SIDE_MODULE=1 src/init.cpp godot-cpp/bin/<name of the godot-cpp> -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/pandemonium_headers
 ```
 
 You'll need to replace `<name of the godot-cpp>` with the file that was created in [**Compiling the cpp bindings library**](#compiling-the-cpp-bindings-library).
@@ -305,7 +305,7 @@ This creates the file `libtest.so` in your `SimpleLibrary/bin` directory.
 ### Creating `.gdnlib` and `.gdns` files
 
 Follow the instructions in
-[godot-headers/README.md](https://github.com/godotengine/godot-headers/blob/master/README.md#how-do-i-use-native-scripts-from-the-editor)
+[pandemonium_headers/README.md](https://github.com/godotengine/pandemonium_headers/blob/master/README.md#how-do-i-use-native-scripts-from-the-editor)
 to create the `.gdns` file. This file contains paths to GDNative libraries for
 various platforms. This makes the library usable from Godot in a
 platform-independent manner.

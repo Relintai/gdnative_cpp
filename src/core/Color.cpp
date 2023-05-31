@@ -32,7 +32,7 @@
 #include "Defs.hpp"
 #include "String.hpp"
 
-#include <gdnative/color.h>
+#include <gdn/color.h>
 #include <cmath>
 
 namespace godot {

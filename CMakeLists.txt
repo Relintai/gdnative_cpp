@@ -2,7 +2,7 @@
 # CMAKE_BUILD_TYPE:			Compilation target (Debug or Release defaults to Debug)
 #
 # godot-cpp cmake arguments
-# GODOT_HEADERS_DIR:		This is where the gdnative include folder is (godot_source/modules/gdnative/include)
+# GODOT_HEADERS_DIR:		This is where the gdnative include folder is (godot_source/modules/gdn/include)
 # GODOT_CUSTOM_API_FILE:	This is if you have another path for the godot_api.json
 #
 # Android cmake arguments
@@ -75,8 +75,8 @@ if(NOT DEFINED BITS)
 endif()
 
 # Input from user for godot headers and the api file
-set(GODOT_HEADERS_DIR "godot-headers" CACHE STRING "")
-set(GODOT_CUSTOM_API_FILE "godot-headers/api.json" CACHE STRING "")
+set(GODOT_HEADERS_DIR "pandemonium_headers" CACHE STRING "")
+set(GODOT_CUSTOM_API_FILE "pandemonium_headers/api.json" CACHE STRING "")
 
 set(GODOT_COMPILE_FLAGS )
 set(GODOT_LINKER_FLAGS )

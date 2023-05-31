@@ -31,7 +31,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-#include <gdnative/array.h>
+#include <gdn/array.h>
 
 #include "String.hpp"
 

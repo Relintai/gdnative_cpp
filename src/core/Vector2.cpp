@@ -30,7 +30,7 @@
 
 #include "Vector2.hpp"
 
-#include <gdnative/vector2.h>
+#include <gdn/vector2.h>
 
 #include "String.hpp"
 

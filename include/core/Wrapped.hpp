@@ -31,7 +31,7 @@
 #ifndef WRAPPED_HPP
 #define WRAPPED_HPP
 
-#include <gdnative/gdnative.h>
+#include <gdn/gdnative.h>
 
 namespace godot {
 

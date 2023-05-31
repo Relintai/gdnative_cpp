@@ -31,7 +31,7 @@
 #ifndef BASIS_H
 #define BASIS_H
 
-#include <gdnative/basis.h>
+#include <gdn/basis.h>
 
 #include "Defs.hpp"
 

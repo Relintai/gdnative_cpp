@@ -30,7 +30,7 @@
 
 #include "Variant.hpp"
 
-#include <gdnative/variant.h>
+#include <gdn/variant.h>
 
 #include "CoreTypes.hpp"
 #include "Defs.hpp"

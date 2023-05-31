@@ -31,7 +31,7 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-#include <gdnative/vector2.h>
+#include <gdn/vector2.h>
 
 #include "Defs.hpp"
 

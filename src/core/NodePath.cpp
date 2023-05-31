@@ -32,7 +32,7 @@
 #include "GodotGlobal.hpp"
 #include "String.hpp"
 
-#include <gdnative/node_path.h>
+#include <gdn/node_path.h>
 
 namespace godot {
 

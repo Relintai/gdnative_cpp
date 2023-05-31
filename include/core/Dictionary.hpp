@@ -35,7 +35,7 @@
 
 #include "Array.hpp"
 
-#include <gdnative/dictionary.h>
+#include <gdn/dictionary.h>
 
 namespace godot {
 
