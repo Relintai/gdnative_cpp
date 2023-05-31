@@ -285,7 +285,7 @@ inline Vector2 operator*(real_t p_scalar, const Vector2 &p_vec) {
 	return p_vec * p_scalar;
 }
 
-namespace Math {
+namespace Mathp {
 
 // Convenience, since they exist in GDScript
 
