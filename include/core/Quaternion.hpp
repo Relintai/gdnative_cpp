@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef QUAT_H
-#define QUAT_H
+#ifndef QUATERNION_H
+#define QUATERNION_H
 
 #include <cmath>
 
