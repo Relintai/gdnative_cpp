@@ -37,7 +37,7 @@
 
 namespace godot {
 
-extern "C" const pandemonium_gdnative_api_struct *api;
+extern "C" const pandemonium_gdnative_core_api_struct *api;
 
 extern "C" const pandemonium_gdnative_ext_nativescript_api_struct *nativescript_api;
 extern "C" const pandemonium_gdnative_ext_pluginscript_api_struct *pluginscript_api;

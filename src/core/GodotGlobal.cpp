@@ -55,7 +55,7 @@ namespace godot {
 void *_RegisterState::nativescript_handle;
 int _RegisterState::language_index;
 
-const pandemonium_gdnative_api_struct *api = nullptr;
+const pandemonium_gdnative_core_api_struct *api = nullptr;
 
 const pandemonium_gdnative_ext_nativescript_api_struct *nativescript_api = nullptr;
 const pandemonium_gdnative_ext_pluginscript_api_struct *pluginscript_api = nullptr;
