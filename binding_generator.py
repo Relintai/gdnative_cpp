@@ -196,7 +196,6 @@ def generate_class_header(used_classes, c, use_template_get_node):
     if c["base_class"] != "":
         source.append('#include "' + class_name_to_file_name(strip_name(c["base_class"])) + '.h"')
 
-    source.append("namespace pandemonium {")
     source.append("")
 
     for used_type in used_classes:
@@ -256,7 +255,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
         source.append("\t}")
         source.append("")
 
-        # pandemonium::api->pandemonium_global_get_singleton((char *) \"" + strip_name(c["name"]) + "\");"
+        # Pandemonium::api->pandemonium_global_get_singleton((char *) \"" + strip_name(c["name"]) + "\");"
 
     # class name:
     # Two versions needed needed because when the user implements a custom class,
@@ -271,7 +270,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
     )
 
     source.append(
-        "\tstatic inline Object *___get_from_variant(Variant a) { pandemonium_object *o = (pandemonium_object*) a; return (o) ? (Object *) pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(pandemonium::_RegisterState::language_index, o) : nullptr; }"
+        "\tstatic inline Object *___get_from_variant(Variant a) { pandemonium_object *o = (pandemonium_object*) a; return (o) ? (Object *) Pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(_RegisterState::language_index, o) : nullptr; }"
     )
 
     enum_values = []
@@ -431,7 +430,6 @@ def generate_class_header(used_classes, c, use_template_get_node):
         source.append("};")
         source.append("")
 
-    source.append("}")
     source.append("")
 
     source.append("#endif")
@@ -469,8 +467,6 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
     source.append("")
     source.append("")
 
-    source.append("namespace pandemonium {")
-
     core_object_name = "this"
 
     source.append("")
@@ -483,7 +479,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
         # FIXME Test if inlining has a huge impact on binary size
         source.append(class_name + "::" + class_name + "() {")
-        source.append('\t_owner = pandemonium::api->pandemonium_global_get_singleton((char *) "' + strip_name(c["name"]) + '");')
+        source.append('\t_owner = Pandemonium::api->pandemonium_global_get_singleton((char *) "' + strip_name(c["name"]) + '");')
         source.append("}")
 
         source.append("")
@@ -502,7 +498,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         source.append(
             "\t___mb.mb_"
             + method["name"]
-            + ' = pandemonium::api->pandemonium_method_bind_get_method("'
+            + ' = Pandemonium::api->pandemonium_method_bind_get_method("'
             + c["name"]
             + '", "'
             + ("get_node" if use_template_get_node and method["name"] == "get_node_internal" else method["name"])
@@ -510,9 +506,9 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         )
 
     source.append("\tpandemonium_string_name class_name;")
-    source.append('\tpandemonium::api->pandemonium_string_name_new_data_char(&class_name, "' + c["name"] + '");')
-    source.append("\t_detail_class_tag = pandemonium::api->pandemonium_get_class_tag(&class_name);")
-    source.append("\tpandemonium::api->pandemonium_string_name_destroy(&class_name);")
+    source.append('\tPandemonium::api->pandemonium_string_name_new_data_char(&class_name, "' + c["name"] + '");')
+    source.append("\t_detail_class_tag = Pandemonium::api->pandemonium_get_class_tag(&class_name);")
+    source.append("\tPandemonium::api->pandemonium_string_name_destroy(&class_name);")
 
     source.append("}")
     source.append("")
@@ -523,7 +519,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         source.append(
             "\treturn ("
             + class_name
-            + ' *) pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(pandemonium::_RegisterState::language_index, pandemonium::api->pandemonium_get_class_constructor((char *)"'
+            + ' *) Pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(_RegisterState::language_index, Pandemonium::api->pandemonium_get_class_constructor((char *)"'
             + c["name"]
             + '")());'
         )
@@ -553,7 +549,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
         if method["name"] == "free":
             # dirty hack because Object::free is marked virtual but doesn't actually exist...
-            source.append("\tpandemonium::api->pandemonium_object_destroy(_owner);")
+            source.append("\tPandemonium::api->pandemonium_object_destroy(_owner);")
             source.append("}")
             source.append("")
             continue
@@ -587,7 +583,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
                 source.append("\tVariant __given_args[" + str(len(method["arguments"])) + "];")
 
             for i, argument in enumerate(method["arguments"]):
-                source.append("\tpandemonium::api->pandemonium_variant_new_nil((pandemonium_variant *) &__given_args[" + str(i) + "]);")
+                source.append("\tPandemonium::api->pandemonium_variant_new_nil((pandemonium_variant *) &__given_args[" + str(i) + "]);")
 
             source.append("")
 
@@ -626,7 +622,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
             source.append("\tVariant __result;")
             source.append(
-                "\t*(pandemonium_variant *) &__result = pandemonium::api->pandemonium_method_bind_call(___mb.mb_"
+                "\t*(pandemonium_variant *) &__result = Pandemonium::api->pandemonium_method_bind_call(___mb.mb_"
                 + method["name"]
                 + ", ((const Object *) "
                 + core_object_name
@@ -645,7 +641,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
                 source.append("")
 
             for i, argument in enumerate(method["arguments"]):
-                source.append("\tpandemonium::api->pandemonium_variant_destroy((pandemonium_variant *) &__given_args[" + str(i) + "]);")
+                source.append("\tPandemonium::api->pandemonium_variant_destroy((pandemonium_variant *) &__given_args[" + str(i) + "]);")
 
             source.append("")
 
@@ -696,8 +692,6 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         source.append("}")
         source.append("")
 
-    source.append("}")
-
     return "\n".join(source)
 
 
@@ -719,7 +713,6 @@ def generate_icall_header(icalls):
     source.append("")
     source.append("")
 
-    source.append("namespace pandemonium {")
     source.append("")
 
     for icall in icalls:
@@ -776,7 +769,7 @@ def generate_icall_header(icalls):
         source.append("")
 
         source.append(
-            "\tpandemonium::api->pandemonium_method_bind_ptrcall(mb, inst->_owner, args, "
+            "\tPandemonium::api->pandemonium_method_bind_ptrcall(mb, inst->_owner, args, "
             + ("nullptr" if ret_type == "void" else "&ret")
             + ");"
         )
@@ -785,7 +778,7 @@ def generate_icall_header(icalls):
             if is_class_type(ret_type):
                 source.append("\tif (ret) {")
                 source.append(
-                    "\t\treturn (Object *) pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(pandemonium::_RegisterState::language_index, ret);"
+                    "\t\treturn (Object *) Pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(_RegisterState::language_index, ret);"
                 )
                 source.append("\t}")
                 source.append("")
@@ -796,7 +789,6 @@ def generate_icall_header(icalls):
         source.append("}")
         source.append("")
 
-    source.append("}")
     source.append("")
 
     source.append("#endif")
@@ -817,8 +809,6 @@ def generate_type_registry(classes):
     source.append("")
     source.append("")
 
-    source.append("namespace pandemonium {")
-
     source.append("void ___register_types()")
     source.append("{")
 
@@ -834,7 +824,7 @@ def generate_type_registry(classes):
             base_class_type_hash = "0"
 
         source.append(
-            '\tpandemonium::_TagDB::register_global_type("'
+            '\t_TagDB::register_global_type("'
             + c["name"]
             + '", '
             + class_type_hash
@@ -846,7 +836,6 @@ def generate_type_registry(classes):
     source.append("}")
 
     source.append("")
-    source.append("}")
 
     return "\n".join(source)
 
@@ -860,8 +849,6 @@ def generate_init_method_bindings(classes):
     source.append("")
     source.append("")
 
-    source.append("namespace pandemonium {")
-
     source.append("void ___init_method_bindings()")
     source.append("{")
 
@@ -871,7 +858,6 @@ def generate_init_method_bindings(classes):
     source.append("}")
 
     source.append("")
-    source.append("}")
 
     return "\n".join(source)
 

@@ -34,7 +34,7 @@
 
 #include <algorithm>
 
-namespace pandemonium {
+
 
 bool AABB::intersects(const AABB &p_aabb) const {
 	if (position.x >= (p_aabb.position.x + p_aabb.size.x))
@@ -601,4 +601,4 @@ AABB::operator String() const {
 	return String() + position + " - " + size;
 }
 
-} // namespace pandemonium
+

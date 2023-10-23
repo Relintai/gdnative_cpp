@@ -43,20 +43,18 @@
 #include "pool_arrays.h"
 #include "projection.h"
 #include "quaternion.h"
-#include "rid.h"
 #include "rect2.h"
 #include "rect2i.h"
-#include "ustring.h"
+#include "rid.h"
 #include "transform.h"
 #include "transform_2d.h"
+#include "ustring.h"
 #include "vector2.h"
 #include "vector2i.h"
 #include "vector3.h"
 #include "vector3i.h"
 #include "vector4.h"
 #include "vector4i.h"
-
-namespace pandemonium {
 
 class Dictionary;
 
@@ -213,7 +211,7 @@ public:
 
 	Variant(const Plane &p_plane);
 
-	Variant(const pandemonium::AABB &p_aabb);
+	Variant(const ::AABB &p_aabb);
 
 	Variant(const Quaternion &p_quaternion);
 
@@ -229,7 +227,7 @@ public:
 
 	Variant(const NodePath &p_path);
 
-	Variant(const pandemonium::RID &p_rid);
+	Variant(const ::RID &p_rid);
 
 	Variant(const Object *p_object);
 
@@ -279,7 +277,7 @@ public:
 	operator Vector4() const;
 	operator Vector4i() const;
 	operator Plane() const;
-	operator pandemonium::AABB() const;
+	operator ::AABB() const;
 	operator Quaternion() const;
 	operator Basis() const;
 	operator Transform() const;
@@ -289,7 +287,7 @@ public:
 	operator Color() const;
 
 	operator NodePath() const;
-	operator pandemonium::RID() const;
+	operator ::RID() const;
 	operator pandemonium_object *() const;
 
 	template <typename T>
@@ -330,7 +328,5 @@ public:
 
 	~Variant();
 };
-
-} // namespace pandemonium
 
 #endif // VARIANT_H

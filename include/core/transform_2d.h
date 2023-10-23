@@ -33,7 +33,7 @@
 
 #include "vector2.h"
 
-namespace pandemonium {
+
 
 typedef Vector2 Size2;
 
@@ -131,6 +131,6 @@ struct Transform2D {
 	}
 };
 
-} // namespace pandemonium
+
 
 #endif // TRANSFORM2D_H

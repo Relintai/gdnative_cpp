@@ -33,7 +33,7 @@
 
 #include <gdn/string_name.h>
 
-namespace pandemonium {
+
 
 class String;
 
@@ -67,6 +67,6 @@ public:
 	bool operator>=(const StringName &s) const;
 };
 
-} // namespace pandemonium
+
 
 #endif // STRING_H

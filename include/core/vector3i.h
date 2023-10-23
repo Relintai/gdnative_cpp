@@ -37,7 +37,7 @@
 
 #include <math_funcs.h>
 
-namespace pandemonium {
+
 
 class String;
 
@@ -67,6 +67,6 @@ struct Vector3i {
 	operator String() const;
 };
 
-} // namespace pandemonium
+
 
 #endif // VECTOR2_H

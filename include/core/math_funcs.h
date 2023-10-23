@@ -34,7 +34,7 @@
 #include "defs.h"
 #include <cmath>
 
-namespace pandemonium {
+
 namespace Mathp {
 
 // Functions reproduced as in Pandemonium's source code `math_funcs.h`.
@@ -297,6 +297,6 @@ inline unsigned int next_power_of_2(unsigned int x) {
 }
 
 } // namespace Math
-} // namespace pandemonium
+
 
 #endif // PANDEMONIUM_MATH_H

@@ -37,7 +37,7 @@
 
 #include "quaternion.h"
 
-namespace pandemonium {
+
 
 const Transform Transform::IDENTITY = Transform();
 const Transform Transform::FLIP_X = Transform(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0);
@@ -302,4 +302,4 @@ Transform::Transform(const Basis &p_basis, const Vector3 &p_origin) {
 	origin = p_origin;
 }
 
-} // namespace pandemonium
+

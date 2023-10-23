@@ -35,7 +35,7 @@
 
 #include <cmath>
 
-namespace pandemonium {
+
 
 #ifndef MAX
 #define MAX(a, b) (a > b ? a : b)
@@ -320,4 +320,4 @@ next4:
 	return true;
 }
 
-} // namespace pandemonium
+

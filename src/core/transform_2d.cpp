@@ -35,7 +35,7 @@
 
 #include <algorithm>
 
-namespace pandemonium {
+
 
 const Transform2D Transform2D::IDENTITY;
 const Transform2D Transform2D::FLIP_X = Transform2D(-1, 0, 0, 1, 0, 0);
@@ -329,4 +329,4 @@ Transform2D::operator String() const {
 	return String(String() + elements[0] + ", " + elements[1] + ", " + elements[2]);
 }
 
-} // namespace pandemonium
+

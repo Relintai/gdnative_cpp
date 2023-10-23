@@ -37,7 +37,7 @@
 
 #include "vector3.h"
 
-namespace pandemonium {
+
 
 class Quaternion;
 
@@ -453,6 +453,6 @@ public:
 	operator Quaternion() const;
 };
 
-} // namespace pandemonium
+
 
 #endif // BASIS_H

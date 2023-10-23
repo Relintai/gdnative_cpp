@@ -35,7 +35,7 @@
 
 #include <algorithm>
 
-namespace pandemonium {
+
 
 const Basis Basis::IDENTITY = Basis();
 const Basis Basis::FLIP_X = Basis(-1, 0, 0, 0, 1, 0, 0, 0, 1);
@@ -634,11 +634,11 @@ Basis::Basis(const Vector3 &p_euler) {
 	set_euler(p_euler);
 }
 
-} // namespace pandemonium
+
 
 #include "quaternion.h"
 
-namespace pandemonium {
+
 
 Basis::Basis(const Quaternion &p_quaternion) {
 	real_t d = p_quaternion.length_squared();
@@ -707,4 +707,4 @@ Basis::operator Quaternion() const {
 	return Quaternion(temp[0], temp[1], temp[2], temp[3]);
 }
 
-} // namespace pandemonium
+

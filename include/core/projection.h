@@ -40,7 +40,7 @@
 #include <vector>
 
 namespace {
-using namespace pandemonium;
+
 } // namespace
 
 struct Projection {

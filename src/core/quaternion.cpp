@@ -35,7 +35,7 @@
 
 #include <cmath>
 
-namespace pandemonium {
+
 
 const Quaternion Quaternion::IDENTITY = Quaternion();
 
@@ -349,4 +349,4 @@ bool Quaternion::operator!=(const Quaternion &p_quaternion) const {
 	return x != p_quaternion.x || y != p_quaternion.y || z != p_quaternion.z || w != p_quaternion.w;
 }
 
-} // namespace pandemonium
+

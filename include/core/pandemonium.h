@@ -49,14 +49,13 @@
 
 #include <type_traits>
 
-namespace pandemonium {
 namespace detail {
 
 // Pandemonium classes are wrapped by heap-allocated instances mimicking them through the C API.
 // They all inherit `_Wrapped`.
 template <class T>
 T *get_wrapper(pandemonium_object *obj) {
-	return (T *)pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(pandemonium::_RegisterState::language_index, obj);
+	return (T *)Pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(_RegisterState::language_index, obj);
 }
 
 // Custom class instances are not obtainable by just casting the pointer to the base class they inherit,
@@ -64,7 +63,7 @@ T *get_wrapper(pandemonium_object *obj) {
 // Yet we want to "fake" it as if they were the same entity.
 template <class T>
 T *get_custom_class_instance(const Object *obj) {
-	return (obj) ? (T *)pandemonium::nativescript_api->pandemonium_nativescript_get_userdata(obj->_owner) : nullptr;
+	return (obj) ? (T *)Pandemonium::nativescript_api->pandemonium_nativescript_get_userdata(obj->_owner) : nullptr;
 }
 
 template <class T>
@@ -76,31 +75,31 @@ inline T *create_custom_class_instance() {
 	// individually attached to the script instances.
 
 	// We cannot use wrappers because of https://github.com/pandemoniumengine/pandemonium/issues/39181
-	//	pandemonium::NativeScript *script = pandemonium::NativeScript::_new();
-	//	script->set_library(get_wrapper<pandemonium::GDNativeLibrary>((pandemonium_object *)pandemonium::gdnlib));
+	//	Pandemonium::NativeScript *script = Pandemonium::NativeScript::_new();
+	//	script->set_library(get_wrapper<Pandemonium::GDNativeLibrary>((pandemonium_object *)Pandemonium::gdnlib));
 	//	script->set_class_name(T::___get_class_name());
 
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
 
 	// So we use the C API directly.
-	static pandemonium_class_constructor script_constructor = pandemonium::api->pandemonium_get_class_constructor("NativeScript");
-	static pandemonium_method_bind *mb_set_library = pandemonium::api->pandemonium_method_bind_get_method("NativeScript", "set_library");
-	static pandemonium_method_bind *mb_set_class_name = pandemonium::api->pandemonium_method_bind_get_method("NativeScript", "set_class_name");
+	static pandemonium_class_constructor script_constructor = Pandemonium::api->pandemonium_get_class_constructor("NativeScript");
+	static pandemonium_method_bind *mb_set_library = Pandemonium::api->pandemonium_method_bind_get_method("NativeScript", "set_library");
+	static pandemonium_method_bind *mb_set_class_name = Pandemonium::api->pandemonium_method_bind_get_method("NativeScript", "set_class_name");
 	pandemonium_object *script = script_constructor();
 	{
-		const void *args[] = { pandemonium::gdnlib };
-		pandemonium::api->pandemonium_method_bind_ptrcall(mb_set_library, script, args, nullptr);
+		const void *args[] = { Pandemonium::gdnlib };
+		Pandemonium::api->pandemonium_method_bind_ptrcall(mb_set_library, script, args, nullptr);
 	}
 	{
 		const String class_name = T::___get_class_name();
 		const void *args[] = { &class_name };
-		pandemonium::api->pandemonium_method_bind_ptrcall(mb_set_class_name, script, args, nullptr);
+		Pandemonium::api->pandemonium_method_bind_ptrcall(mb_set_class_name, script, args, nullptr);
 	}
 
 	// Now to instanciate T, we initially did this, however in case of Reference it returns a variant with refcount
 	// already initialized, which woud cause inconsistent behavior compared to other classes (we still have to return a pointer).
-	//Variant instance_variant = script->new_();
-	//T *instance = pandemonium::get_custom_class_instance<T>(instance_variant);
+	// Variant instance_variant = script->new_();
+	// T *instance = Pandemonium::get_custom_class_instance<T>(instance_variant);
 
 	// So we should do this instead, however while convenient, it uses unnecessary wrapper objects.
 	//	Object *base_obj = T::___new_pandemonium_base();
@@ -108,15 +107,15 @@ inline T *create_custom_class_instance() {
 	//	return get_custom_class_instance<T>(base_obj);
 
 	// Again using the C API to do exactly what we have to do.
-	static pandemonium_class_constructor base_constructor = pandemonium::api->pandemonium_get_class_constructor(T::___get_pandemonium_class_name());
-	static pandemonium_method_bind *mb_set_script = pandemonium::api->pandemonium_method_bind_get_method("Object", "set_script");
+	static pandemonium_class_constructor base_constructor = Pandemonium::api->pandemonium_get_class_constructor(T::___get_pandemonium_class_name());
+	static pandemonium_method_bind *mb_set_script = Pandemonium::api->pandemonium_method_bind_get_method("Object", "set_script");
 	pandemonium_object *base_obj = base_constructor();
 	{
 		const void *args[] = { script };
-		pandemonium::api->pandemonium_method_bind_ptrcall(mb_set_script, base_obj, args, nullptr);
+		Pandemonium::api->pandemonium_method_bind_ptrcall(mb_set_script, base_obj, args, nullptr);
 	}
 
-	return (T *)pandemonium::nativescript_api->pandemonium_nativescript_get_userdata(base_obj);
+	return (T *)Pandemonium::nativescript_api->pandemonium_nativescript_get_userdata(base_obj);
 }
 
 } // namespace detail
@@ -133,25 +132,33 @@ inline T *create_custom_class_instance() {
 // ___get_base_id:             Gets the ID of the direct base class, as returned by ___get_id
 // ___get_base_class_name:     Name of the direct base class
 // ___get_from_variant:        Converts a Variant into an Object*. Will be non-null if the class matches.
-#define PANDEMONIUM_CLASS(Name, Base)                                                              \
-                                                                                             \
-public:                                                                                      \
-	inline static const char *___get_class_name() { return #Name; }                          \
-	enum { ___CLASS_IS_SCRIPT = 1 };                                                         \
-	inline static const char *___get_pandemonium_class_name() {                                    \
-		return Base::___get_pandemonium_class_name();                                              \
-	}                                                                                        \
-	inline static Name *_new() {                                                             \
-		return pandemonium::detail::create_custom_class_instance<Name>();                          \
-	}                                                                                        \
-	inline static size_t ___get_id() { return typeid(Name).hash_code(); }                    \
-	inline static size_t ___get_base_id() { return Base::___get_id(); }                      \
-	inline static const char *___get_base_class_name() { return Base::___get_class_name(); } \
-	inline static pandemonium::Object *___get_from_variant(pandemonium::Variant a) {                     \
-		return (pandemonium::Object *)pandemonium::detail::get_custom_class_instance<Name>(              \
-				pandemonium::Object::___get_from_variant(a));                                      \
-	}                                                                                        \
-                                                                                             \
+#define PANDEMONIUM_CLASS(Name, Base)                                                       \
+                                                                                            \
+public:                                                                                     \
+	inline static const char *___get_class_name() {                                         \
+		return #Name;                                                                       \
+	}                                                                                       \
+	enum { ___CLASS_IS_SCRIPT = 1 };                                                        \
+	inline static const char *___get_pandemonium_class_name() {                             \
+		return Base::___get_pandemonium_class_name();                                       \
+	}                                                                                       \
+	inline static Name *_new() {                                                            \
+		return Pandemonium::detail::create_custom_class_instance<Name>();                   \
+	}                                                                                       \
+	inline static size_t ___get_id() {                                                      \
+		return typeid(Name).hash_code();                                                    \
+	}                                                                                       \
+	inline static size_t ___get_base_id() {                                                 \
+		return Base::___get_id();                                                           \
+	}                                                                                       \
+	inline static const char *___get_base_class_name() {                                    \
+		return Base::___get_class_name();                                                   \
+	}                                                                                       \
+	inline static Pandemonium::Object *___get_from_variant(Pandemonium::Variant a) {        \
+		return (Pandemonium::Object *)Pandemonium::detail::get_custom_class_instance<Name>( \
+				Pandemonium::Object::___get_from_variant(a));                               \
+	}                                                                                       \
+                                                                                            \
 private:
 
 // Legacy compatibility
@@ -207,10 +214,10 @@ void register_class() {
 
 	_TagDB::register_type(T::___get_id(), T::___get_base_id());
 
-	pandemonium::nativescript_api->pandemonium_nativescript_register_class(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_register_class(_RegisterState::nativescript_handle,
 			T::___get_class_name(), T::___get_base_class_name(), create, destroy);
 
-	pandemonium::nativescript_api->pandemonium_nativescript_set_type_tag(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_set_type_tag(_RegisterState::nativescript_handle,
 			T::___get_class_name(), (const void *)T::___get_id());
 
 	T::_register_methods();
@@ -228,10 +235,10 @@ void register_tool_class() {
 
 	_TagDB::register_type(T::___get_id(), T::___get_base_id());
 
-	pandemonium::nativescript_api->pandemonium_nativescript_register_tool_class(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_register_tool_class(_RegisterState::nativescript_handle,
 			T::___get_class_name(), T::___get_base_class_name(), create, destroy);
 
-	pandemonium::nativescript_api->pandemonium_nativescript_set_type_tag(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_set_type_tag(_RegisterState::nativescript_handle,
 			T::___get_class_name(), (const void *)T::___get_id());
 
 	T::_register_methods();
@@ -299,7 +306,7 @@ struct _WrappedMethod<T, void, As...> {
 template <class T, class R, class... As>
 pandemonium_variant __wrapped_method(pandemonium_object *, void *method_data, void *user_data, int /*num_args*/, pandemonium_variant **args) {
 	pandemonium_variant v;
-	pandemonium::api->pandemonium_variant_new_nil(&v);
+	Pandemonium::api->pandemonium_variant_new_nil(&v);
 
 	T *obj = (T *)user_data;
 	_WrappedMethod<T, R, As...> *method = (_WrappedMethod<T, R, As...> *)method_data;
@@ -315,7 +322,7 @@ pandemonium_variant __wrapped_method(pandemonium_object *, void *method_data, vo
 template <class T, class R, class... As>
 void *___make_wrapper_function(R (T::*f)(As...)) {
 	using MethodType = _WrappedMethod<T, R, As...>;
-	MethodType *p = (MethodType *)pandemonium::api->pandemonium_alloc(sizeof(MethodType));
+	MethodType *p = (MethodType *)Pandemonium::api->pandemonium_alloc(sizeof(MethodType));
 	p->f = f;
 	return (void *)p;
 }
@@ -339,13 +346,13 @@ template <class M>
 void register_method(const char *name, M method_ptr, pandemonium_method_rpc_mode rpc_type = PANDEMONIUM_METHOD_RPC_MODE_DISABLED) {
 	pandemonium_instance_method method = {};
 	method.method_data = ___make_wrapper_function(method_ptr);
-	method.free_func = pandemonium::api->pandemonium_free;
+	method.free_func = Pandemonium::api->pandemonium_free;
 	method.method = (__pandemonium_wrapper_method)___get_wrapper_function(method_ptr);
 
 	pandemonium_method_attributes attr = {};
 	attr.rpc_type = rpc_type;
 
-	pandemonium::nativescript_api->pandemonium_nativescript_register_method(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_register_method(_RegisterState::nativescript_handle,
 			___get_method_class_name(method_ptr), name, attr, method);
 }
 
@@ -379,7 +386,7 @@ struct _PropertyGetFunc {
 		T *obj = (T *)user_data;
 
 		pandemonium_variant var;
-		pandemonium::api->pandemonium_variant_new_nil(&var);
+		Pandemonium::api->pandemonium_variant_new_nil(&var);
 
 		Variant *v = (Variant *)&var;
 
@@ -410,7 +417,7 @@ struct _PropertyDefaultGetFunc {
 		T *obj = (T *)user_data;
 
 		pandemonium_variant var;
-		pandemonium::api->pandemonium_variant_new_nil(&var);
+		Pandemonium::api->pandemonium_variant_new_nil(&var);
 
 		Variant *v = (Variant *)&var;
 
@@ -455,24 +462,24 @@ void register_property(const char *name, P(T::*var), P default_value,
 	attr.hint_string = *_hint_string;
 
 	_PropertyDefaultSetFunc<T, P> *wrapped_set =
-			(_PropertyDefaultSetFunc<T, P> *)pandemonium::api->pandemonium_alloc(sizeof(_PropertyDefaultSetFunc<T, P>));
+			(_PropertyDefaultSetFunc<T, P> *)Pandemonium::api->pandemonium_alloc(sizeof(_PropertyDefaultSetFunc<T, P>));
 	wrapped_set->f = var;
 
 	_PropertyDefaultGetFunc<T, P> *wrapped_get =
-			(_PropertyDefaultGetFunc<T, P> *)pandemonium::api->pandemonium_alloc(sizeof(_PropertyDefaultGetFunc<T, P>));
+			(_PropertyDefaultGetFunc<T, P> *)Pandemonium::api->pandemonium_alloc(sizeof(_PropertyDefaultGetFunc<T, P>));
 	wrapped_get->f = var;
 
 	pandemonium_property_set_func set_func = {};
 	set_func.method_data = (void *)wrapped_set;
-	set_func.free_func = pandemonium::api->pandemonium_free;
+	set_func.free_func = Pandemonium::api->pandemonium_free;
 	set_func.set_func = &_PropertyDefaultSetFunc<T, P>::_wrapped_setter;
 
 	pandemonium_property_get_func get_func = {};
 	get_func.method_data = (void *)wrapped_get;
-	get_func.free_func = pandemonium::api->pandemonium_free;
+	get_func.free_func = Pandemonium::api->pandemonium_free;
 	get_func.get_func = &_PropertyDefaultGetFunc<T, P>::_wrapped_getter;
 
-	pandemonium::nativescript_api->pandemonium_nativescript_register_property(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_register_property(_RegisterState::nativescript_handle,
 			T::___get_class_name(), name, &attr, set_func, get_func);
 }
 
@@ -499,23 +506,23 @@ void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(),
 	attr.usage = usage;
 	attr.hint_string = *_hint_string;
 
-	_PropertySetFunc<T, P> *wrapped_set = (_PropertySetFunc<T, P> *)pandemonium::api->pandemonium_alloc(sizeof(_PropertySetFunc<T, P>));
+	_PropertySetFunc<T, P> *wrapped_set = (_PropertySetFunc<T, P> *)Pandemonium::api->pandemonium_alloc(sizeof(_PropertySetFunc<T, P>));
 	wrapped_set->f = setter;
 
-	_PropertyGetFunc<T, P> *wrapped_get = (_PropertyGetFunc<T, P> *)pandemonium::api->pandemonium_alloc(sizeof(_PropertyGetFunc<T, P>));
+	_PropertyGetFunc<T, P> *wrapped_get = (_PropertyGetFunc<T, P> *)Pandemonium::api->pandemonium_alloc(sizeof(_PropertyGetFunc<T, P>));
 	wrapped_get->f = getter;
 
 	pandemonium_property_set_func set_func = {};
 	set_func.method_data = (void *)wrapped_set;
-	set_func.free_func = pandemonium::api->pandemonium_free;
+	set_func.free_func = Pandemonium::api->pandemonium_free;
 	set_func.set_func = &_PropertySetFunc<T, P>::_wrapped_setter;
 
 	pandemonium_property_get_func get_func = {};
 	get_func.method_data = (void *)wrapped_get;
-	get_func.free_func = pandemonium::api->pandemonium_free;
+	get_func.free_func = Pandemonium::api->pandemonium_free;
 	get_func.get_func = &_PropertyGetFunc<T, P>::_wrapped_getter;
 
-	pandemonium::nativescript_api->pandemonium_nativescript_register_property(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_register_property(_RegisterState::nativescript_handle,
 			T::___get_class_name(), name, &attr, set_func, get_func);
 }
 
@@ -538,7 +545,7 @@ void register_signal(String name, Dictionary args) {
 
 	// Need to check because malloc(0) is platform-dependent. Zero arguments will leave args to nullptr.
 	if (signal.num_args != 0) {
-		signal.args = (pandemonium_signal_argument *)pandemonium::api->pandemonium_alloc(sizeof(pandemonium_signal_argument) * signal.num_args);
+		signal.args = (pandemonium_signal_argument *)Pandemonium::api->pandemonium_alloc(sizeof(pandemonium_signal_argument) * signal.num_args);
 		memset((void *)signal.args, 0, sizeof(pandemonium_signal_argument) * signal.num_args);
 	}
 
@@ -547,7 +554,7 @@ void register_signal(String name, Dictionary args) {
 		// String name = entry[0];
 		String name = args.keys()[i];
 		pandemonium_string *_key = (pandemonium_string *)&name;
-		pandemonium::api->pandemonium_string_new_copy(&signal.args[i].name, _key);
+		Pandemonium::api->pandemonium_string_new_copy(&signal.args[i].name, _key);
 
 		// if (entry.size() > 1) {
 		// 	signal.args[i].type = entry[1];
@@ -555,15 +562,15 @@ void register_signal(String name, Dictionary args) {
 		signal.args[i].type = args.values()[i];
 	}
 
-	pandemonium::nativescript_api->pandemonium_nativescript_register_signal(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_register_signal(_RegisterState::nativescript_handle,
 			T::___get_class_name(), &signal);
 
 	for (int i = 0; i < signal.num_args; i++) {
-		pandemonium::api->pandemonium_string_destroy(&signal.args[i].name);
+		Pandemonium::api->pandemonium_string_destroy(&signal.args[i].name);
 	}
 
 	if (signal.args) {
-		pandemonium::api->pandemonium_free(signal.args);
+		Pandemonium::api->pandemonium_free(signal.args);
 	}
 }
 
@@ -579,7 +586,7 @@ void register_signal(String name) {
 	pandemonium_signal signal = {};
 	signal.name = *(pandemonium_string *)&name;
 
-	pandemonium::nativescript_api->pandemonium_nativescript_register_signal(pandemonium::_RegisterState::nativescript_handle,
+	Pandemonium::nativescript_api->pandemonium_nativescript_register_signal(_RegisterState::nativescript_handle,
 			T::___get_class_name(), &signal);
 }
 
@@ -590,9 +597,9 @@ T *Object::cast_to(const Object *obj) {
 		return nullptr;
 
 	if (T::___CLASS_IS_SCRIPT) {
-		size_t have_tag = (size_t)pandemonium::nativescript_api->pandemonium_nativescript_get_type_tag(obj->_owner);
+		size_t have_tag = (size_t)Pandemonium::nativescript_api->pandemonium_nativescript_get_type_tag(obj->_owner);
 		if (have_tag) {
-			if (!pandemonium::_TagDB::is_type_known((size_t)have_tag)) {
+			if (!_TagDB::is_type_known((size_t)have_tag)) {
 				have_tag = 0;
 			}
 		}
@@ -601,11 +608,11 @@ T *Object::cast_to(const Object *obj) {
 			have_tag = obj->_type_tag;
 		}
 
-		if (pandemonium::_TagDB::is_type_compatible(T::___get_id(), have_tag)) {
+		if (_TagDB::is_type_compatible(T::___get_id(), have_tag)) {
 			return detail::get_custom_class_instance<T>(obj);
 		}
 	} else {
-		if (pandemonium::api->pandemonium_object_cast_to(obj->_owner, (void *)T::___get_id())) {
+		if (Pandemonium::api->pandemonium_object_cast_to(obj->_owner, (void *)T::___get_id())) {
 			return (T *)obj;
 		}
 	}
@@ -613,7 +620,5 @@ T *Object::cast_to(const Object *obj) {
 	return nullptr;
 }
 #endif
-
-} // namespace pandemonium
 
 #endif // PANDEMONIUM_H

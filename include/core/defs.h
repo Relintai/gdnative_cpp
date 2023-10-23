@@ -31,7 +31,7 @@
 #ifndef DEFS_H
 #define DEFS_H
 
-namespace pandemonium {
+
 
 enum class Error {
 	OK,
@@ -85,7 +85,7 @@ enum class Error {
 	ERR_PRINTER_ON_FIRE, /// the parallel port printer is engulfed in flames
 };
 
-} // namespace pandemonium
+
 
 #include <pandemonium_global.h>
 
@@ -132,7 +132,7 @@ typedef float real_t;
 
 // ERR/WARN macros
 #ifndef WARN_PRINT
-#define WARN_PRINT(msg) pandemonium::Pandemonium::print_warning(msg, __func__, __FILE__, __LINE__)
+#define WARN_PRINT(msg) Pandemonium::print_warning(msg, __func__, __FILE__, __LINE__)
 #endif
 
 #ifndef WARN_PRINTS
@@ -140,7 +140,7 @@ typedef float real_t;
 #endif
 
 #ifndef ERR_PRINT
-#define ERR_PRINT(msg) pandemonium::Pandemonium::print_error(msg, __func__, __FILE__, __LINE__)
+#define ERR_PRINT(msg) Pandemonium::print_error(msg, __func__, __FILE__, __LINE__)
 #endif
 
 #ifndef ERR_PRINTS
@@ -148,19 +148,19 @@ typedef float real_t;
 #endif
 
 #ifndef FATAL_PRINT
-#define FATAL_PRINT(msg) ERR_PRINT(pandemonium::String("FATAL: ") + (msg))
+#define FATAL_PRINT(msg) ERR_PRINT(String("FATAL: ") + (msg))
 #endif
 
 #ifndef ERR_MSG_INDEX
-#define ERR_MSG_INDEX(index, size) (pandemonium::String("Index ") + #index + "=" + pandemonium::String::num_int64(index) + " out of size (" + #size + "=" + pandemonium::String::num_int64(size) + ")")
+#define ERR_MSG_INDEX(index, size) (String("Index ") + #index + "=" + String::num_int64(index) + " out of size (" + #size + "=" + String::num_int64(size) + ")")
 #endif
 
 #ifndef ERR_MSG_NULL
-#define ERR_MSG_NULL(param) (pandemonium::String("Parameter '") + #param + "' is null.")
+#define ERR_MSG_NULL(param) (String("Parameter '") + #param + "' is null.")
 #endif
 
 #ifndef ERR_MSG_COND
-#define ERR_MSG_COND(cond) (pandemonium::String("Condition '") + #cond + "' is true.")
+#define ERR_MSG_COND(cond) (String("Condition '") + #cond + "' is true.")
 #endif
 
 #ifndef ERR_FAIL_INDEX

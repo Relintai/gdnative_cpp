@@ -36,20 +36,8 @@
 #include "array.h"
 #include "ustring.h"
 
-namespace pandemonium {
-
 class Array;
 class String;
-
-extern "C" const pandemonium_gdnative_core_api_struct *api;
-
-extern "C" const pandemonium_gdnative_ext_nativescript_api_struct *nativescript_api;
-extern "C" const pandemonium_gdnative_ext_pluginscript_api_struct *pluginscript_api;
-extern "C" const pandemonium_gdnative_ext_android_api_struct *android_api;
-extern "C" const pandemonium_gdnative_ext_videodecoder_api_struct *videodecoder_api;
-extern "C" const pandemonium_gdnative_ext_net_api_struct *net_api;
-
-extern "C" const void *gdnlib;
 
 class Pandemonium {
 public:
@@ -68,13 +56,21 @@ public:
 	static void print(const String &fmt, Args... values) {
 		print(fmt.format(Array::make(values...)));
 	}
+
+	static const pandemonium_gdnative_core_api_struct *api;
+
+	static const pandemonium_gdnative_ext_nativescript_api_struct *nativescript_api;
+	static const pandemonium_gdnative_ext_pluginscript_api_struct *pluginscript_api;
+	static const pandemonium_gdnative_ext_android_api_struct *android_api;
+	static const pandemonium_gdnative_ext_videodecoder_api_struct *videodecoder_api;
+	static const pandemonium_gdnative_ext_net_api_struct *net_api;
+
+	static const void *gdnlib;
 };
 
 struct _RegisterState {
 	static void *nativescript_handle;
 	static int language_index;
 };
-
-} // namespace pandemonium
 
 #endif

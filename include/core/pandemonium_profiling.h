@@ -33,7 +33,7 @@
 
 #include "defs.h"
 
-namespace pandemonium {
+
 
 class FunctionProfiling {
 	char signature[1024];
@@ -44,7 +44,7 @@ public:
 	~FunctionProfiling();
 };
 
-} // namespace pandemonium
+
 
 #ifdef DEBUG_ENABLED
 #define PANDEMONIUM_PROFILING_FUNCTION FunctionProfiling __function_profiling(__FUNCTION__, __LINE__);

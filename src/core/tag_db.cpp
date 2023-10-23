@@ -34,7 +34,7 @@
 
 #include <pandemonium_global.h>
 
-namespace pandemonium {
+
 
 namespace _TagDB {
 
@@ -52,7 +52,7 @@ bool is_type_known(size_t type_tag) {
 }
 
 void register_global_type(const char *name, size_t type_tag, size_t base_type_tag) {
-	pandemonium::nativescript_api->pandemonium_nativescript_set_global_type_tag(pandemonium::_RegisterState::language_index, name, (const void *)type_tag);
+	Pandemonium::nativescript_api->pandemonium_nativescript_set_global_type_tag(_RegisterState::language_index, name, (const void *)type_tag);
 
 	register_type(type_tag, base_type_tag);
 }
@@ -75,4 +75,4 @@ bool is_type_compatible(size_t ask_tag, size_t have_tag) {
 
 } // namespace _TagDB
 
-} // namespace pandemonium
+

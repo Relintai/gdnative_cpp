@@ -35,7 +35,7 @@
 #include <gdn/color.h>
 #include <cmath>
 
-namespace pandemonium {
+
 
 #define MIN(a, b) (a < b ? a : b)
 #define MAX(a, b) (a > b ? a : b)
@@ -652,4 +652,4 @@ Color Color::operator-() const {
 			1.0 - a);
 }
 
-} // namespace pandemonium
+

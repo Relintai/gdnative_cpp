@@ -33,7 +33,7 @@
 
 #include <gdn/rid.h>
 
-namespace pandemonium {
+
 
 class Object;
 
@@ -62,6 +62,6 @@ public:
 	bool operator>=(const RID &p_other) const;
 };
 
-} // namespace pandemonium
+
 
 #endif // RID_H

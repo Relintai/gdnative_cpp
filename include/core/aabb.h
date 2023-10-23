@@ -35,7 +35,7 @@
 
 #include <cstdlib>
 
-namespace pandemonium {
+
 
 class Plane;
 
@@ -105,6 +105,6 @@ public:
 	}
 };
 
-} // namespace pandemonium
+
 
 #endif // RECT3_H

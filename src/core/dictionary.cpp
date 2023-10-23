@@ -33,78 +33,78 @@
 #include "pandemonium_global.h"
 #include "variant.h"
 
-namespace pandemonium {
+
 
 Dictionary::Dictionary() {
-	pandemonium::api->pandemonium_dictionary_new(&_pandemonium_dictionary);
+	Pandemonium::api->pandemonium_dictionary_new(&_pandemonium_dictionary);
 }
 
 Dictionary::Dictionary(const Dictionary &other) {
-	pandemonium::api->pandemonium_dictionary_new_copy(&_pandemonium_dictionary, &other._pandemonium_dictionary);
+	Pandemonium::api->pandemonium_dictionary_new_copy(&_pandemonium_dictionary, &other._pandemonium_dictionary);
 }
 
 Dictionary &Dictionary::operator=(const Dictionary &other) {
-	pandemonium::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
-	pandemonium::api->pandemonium_dictionary_new_copy(&_pandemonium_dictionary, &other._pandemonium_dictionary);
+	Pandemonium::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
+	Pandemonium::api->pandemonium_dictionary_new_copy(&_pandemonium_dictionary, &other._pandemonium_dictionary);
 	return *this;
 }
 
 void Dictionary::clear() {
-	pandemonium::api->pandemonium_dictionary_clear(&_pandemonium_dictionary);
+	Pandemonium::api->pandemonium_dictionary_clear(&_pandemonium_dictionary);
 }
 
 bool Dictionary::empty() const {
-	return pandemonium::api->pandemonium_dictionary_empty(&_pandemonium_dictionary);
+	return Pandemonium::api->pandemonium_dictionary_empty(&_pandemonium_dictionary);
 }
 
 void Dictionary::erase(const Variant &key) {
-	pandemonium::api->pandemonium_dictionary_erase(&_pandemonium_dictionary, (pandemonium_variant *)&key);
+	Pandemonium::api->pandemonium_dictionary_erase(&_pandemonium_dictionary, (pandemonium_variant *)&key);
 }
 
 bool Dictionary::has(const Variant &key) const {
-	return pandemonium::api->pandemonium_dictionary_has(&_pandemonium_dictionary, (pandemonium_variant *)&key);
+	return Pandemonium::api->pandemonium_dictionary_has(&_pandemonium_dictionary, (pandemonium_variant *)&key);
 }
 
 bool Dictionary::has_all(const Array &keys) const {
-	return pandemonium::api->pandemonium_dictionary_has_all(&_pandemonium_dictionary, (pandemonium_array *)&keys);
+	return Pandemonium::api->pandemonium_dictionary_has_all(&_pandemonium_dictionary, (pandemonium_array *)&keys);
 }
 
 uint32_t Dictionary::hash() const {
-	return pandemonium::api->pandemonium_dictionary_hash(&_pandemonium_dictionary);
+	return Pandemonium::api->pandemonium_dictionary_hash(&_pandemonium_dictionary);
 }
 
 Array Dictionary::keys() const {
-	pandemonium_array a = pandemonium::api->pandemonium_dictionary_keys(&_pandemonium_dictionary);
+	pandemonium_array a = Pandemonium::api->pandemonium_dictionary_keys(&_pandemonium_dictionary);
 	return Array(a);
 }
 
 Variant &Dictionary::operator[](const Variant &key) {
-	pandemonium_variant *v = pandemonium::api->pandemonium_dictionary_operator_index(&_pandemonium_dictionary, (pandemonium_variant *)&key);
+	pandemonium_variant *v = Pandemonium::api->pandemonium_dictionary_operator_index(&_pandemonium_dictionary, (pandemonium_variant *)&key);
 	return *reinterpret_cast<Variant *>(v);
 }
 
 const Variant &Dictionary::operator[](const Variant &key) const {
 	// oops I did it again
-	pandemonium_variant *v = pandemonium::api->pandemonium_dictionary_operator_index((pandemonium_dictionary *)&_pandemonium_dictionary, (pandemonium_variant *)&key);
+	pandemonium_variant *v = Pandemonium::api->pandemonium_dictionary_operator_index((pandemonium_dictionary *)&_pandemonium_dictionary, (pandemonium_variant *)&key);
 	return *reinterpret_cast<Variant *>(v);
 }
 
 int Dictionary::size() const {
-	return pandemonium::api->pandemonium_dictionary_size(&_pandemonium_dictionary);
+	return Pandemonium::api->pandemonium_dictionary_size(&_pandemonium_dictionary);
 }
 
 String Dictionary::to_json() const {
-	pandemonium_string s = pandemonium::api->pandemonium_dictionary_to_json(&_pandemonium_dictionary);
+	pandemonium_string s = Pandemonium::api->pandemonium_dictionary_to_json(&_pandemonium_dictionary);
 	return String(s);
 }
 
 Array Dictionary::values() const {
-	pandemonium_array a = pandemonium::api->pandemonium_dictionary_values(&_pandemonium_dictionary);
+	pandemonium_array a = Pandemonium::api->pandemonium_dictionary_values(&_pandemonium_dictionary);
 	return Array(a);
 }
 
 Dictionary::~Dictionary() {
-	pandemonium::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
+	Pandemonium::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
 }
 
-} // namespace pandemonium
+

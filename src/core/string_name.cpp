@@ -40,27 +40,27 @@
 
 #include <string.h>
 
-namespace pandemonium {
 
-pandemonium::StringName::StringName() {
-	pandemonium::api->pandemonium_string_name_new(&_pandemonium_string_name);
+
+StringName::StringName() {
+	Pandemonium::api->pandemonium_string_name_new(&_pandemonium_string_name);
 }
 
 StringName::StringName(const char *contents) {
-	pandemonium::api->pandemonium_string_name_new_data_char(&_pandemonium_string_name, contents);
+	Pandemonium::api->pandemonium_string_name_new_data_char(&_pandemonium_string_name, contents);
 }
 
 StringName::StringName(const String &other) {
-	pandemonium::api->pandemonium_string_name_new_data_string(&_pandemonium_string_name, &other._pandemonium_string);
+	Pandemonium::api->pandemonium_string_name_new_data_string(&_pandemonium_string_name, &other._pandemonium_string);
 }
 
 StringName::~StringName() {
-	pandemonium::api->pandemonium_string_name_destroy(&_pandemonium_string_name);
+	Pandemonium::api->pandemonium_string_name_destroy(&_pandemonium_string_name);
 }
 
 
 bool StringName::operator==(const StringName &s) const {
-	return pandemonium::api->pandemonium_string_name_operator_equal(&_pandemonium_string_name, &s._pandemonium_string_name);
+	return Pandemonium::api->pandemonium_string_name_operator_equal(&_pandemonium_string_name, &s._pandemonium_string_name);
 }
 
 bool StringName::operator!=(const StringName &s) const {
@@ -68,11 +68,11 @@ bool StringName::operator!=(const StringName &s) const {
 }
 
 bool StringName::operator<(const StringName &s) const {
-	return pandemonium::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name);
+	return Pandemonium::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name);
 }
 
 bool StringName::operator<=(const StringName &s) const {
-	return pandemonium::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name) ||
+	return Pandemonium::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name) ||
 		   (*this == s);
 }
 
@@ -84,4 +84,4 @@ bool StringName::operator>=(const StringName &s) const {
 	return !(*this < s);
 }
 
-} // namespace pandemonium
+

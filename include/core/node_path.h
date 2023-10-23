@@ -33,7 +33,7 @@
 
 #include <gdn/node_path.h>
 
-namespace pandemonium {
+
 
 class String;
 
@@ -79,6 +79,6 @@ public:
 	~NodePath();
 };
 
-} // namespace pandemonium
+
 
 #endif // NODEPATH_H

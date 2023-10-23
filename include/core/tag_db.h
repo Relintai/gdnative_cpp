@@ -33,7 +33,7 @@
 
 #include <stddef.h>
 
-namespace pandemonium {
+
 
 namespace _TagDB {
 
@@ -44,6 +44,6 @@ bool is_type_compatible(size_t type_tag, size_t base_type_tag);
 
 } // namespace _TagDB
 
-} // namespace pandemonium
+
 
 #endif // TAGDB_H

@@ -33,7 +33,7 @@
 
 #include <gdn/array.h>
 
-namespace pandemonium {
+
 
 class String;
 
@@ -186,6 +186,6 @@ public:
 	~Array();
 };
 
-} // namespace pandemonium
+
 
 #endif // ARRAY_H

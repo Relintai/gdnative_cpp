@@ -35,7 +35,7 @@
 
 #include <cmath>
 
-namespace pandemonium {
+
 
 enum ClockDirection {
 
@@ -93,6 +93,6 @@ public:
 	Plane(const Vector3 &p_point1, const Vector3 &p_point2, const Vector3 &p_point3, ClockDirection p_dir = CLOCKWISE);
 };
 
-} // namespace pandemonium
+
 
 #endif // PLANE_H

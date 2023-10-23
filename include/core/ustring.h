@@ -33,8 +33,6 @@
 
 #include <gdn/string.h>
 
-namespace pandemonium {
-
 class NodePath;
 class Variant;
 class PoolByteArray;
@@ -192,7 +190,5 @@ public:
 
 String operator+(const char *a, const String &b);
 String operator+(const wchar_t *a, const String &b);
-
-} // namespace pandemonium
 
 #endif // STRING_H

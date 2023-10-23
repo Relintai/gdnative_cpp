@@ -5,7 +5,7 @@
 
 #include <cstdio>
 
-namespace pandemonium {
+
 
 FunctionProfiling::FunctionProfiling(const char *p_function, const int p_line) {
 	snprintf(signature, 1024, "::%d::%s", p_line, p_function);
@@ -19,4 +19,3 @@ FunctionProfiling::~FunctionProfiling() {
 	}
 }
 
-} // namespace pandemonium

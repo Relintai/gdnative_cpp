@@ -38,7 +38,7 @@
 #include "defs.h"
 #include "ustring.h"
 
-namespace pandemonium {
+
 
 struct Color {
 private:
@@ -166,6 +166,6 @@ public:
 	}
 };
 
-} // namespace pandemonium
+
 
 #endif // COLOR_H

@@ -31,7 +31,7 @@
 #include <pandemonium.h>
 #include <Reference.h>
 
-using namespace pandemonium;
+
 
 class SimpleClass : public Reference {
 	PANDEMONIUM_CLASS(SimpleClass, Reference);
@@ -69,7 +69,7 @@ public:
 		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
 
 		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
+		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'Pandemonium::register_signal': ambiguous call to overloaded function
 		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
 	}
 
@@ -87,17 +87,17 @@ public:
 
 /** GDNative Initialize **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
+	Pandemonium::gdnative_init(o);
 }
 
 /** GDNative Terminate **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
+	Pandemonium::gdnative_terminate(o);
 }
 
 /** NativeScript Initialize **/
 extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
+	Pandemonium::nativescript_init(handle);
 
-	pandemonium::register_class<SimpleClass>();
+	Pandemonium::register_class<SimpleClass>();
 }

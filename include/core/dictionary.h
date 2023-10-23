@@ -36,7 +36,7 @@
 
 #include <gdn/dictionary.h>
 
-namespace pandemonium {
+
 
 class Variant;
 
@@ -85,6 +85,6 @@ public:
 	~Dictionary();
 };
 
-} // namespace pandemonium
+
 
 #endif // DICTIONARY_H

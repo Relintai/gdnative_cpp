@@ -37,7 +37,7 @@
 
 #include <math_funcs.h>
 
-namespace pandemonium {
+
 
 class Basis;
 class String;
@@ -336,6 +336,6 @@ inline Vector3 vec3_cross(const Vector3 &p_a, const Vector3 &p_b) {
 	return p_a.cross(p_b);
 }
 
-} // namespace pandemonium
+
 
 #endif // VECTOR3_H

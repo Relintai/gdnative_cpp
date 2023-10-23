@@ -159,7 +159,7 @@ Create `init.cpp` under `SimpleLibrary/src/` and add the following code:
 #include <pandemonium.h>
 #include <Reference.h>
 
-using namespace pandemonium;
+
 
 class SimpleClass : public Reference {
     PANDEMONIUM_CLASS(SimpleClass, Reference);
@@ -211,19 +211,19 @@ public:
 
 /** GDNative Initialize **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-    pandemonium::Pandemonium::gdnative_init(o);
+    Pandemonium::gdnative_init(o);
 }
 
 /** GDNative Terminate **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-    pandemonium::Pandemonium::gdnative_terminate(o);
+    Pandemonium::gdnative_terminate(o);
 }
 
 /** NativeScript Initialize **/
 extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-    pandemonium::Pandemonium::nativescript_init(handle);
+    Pandemonium::nativescript_init(handle);
 
-    pandemonium::register_class<SimpleClass>();
+    Pandemonium::register_class<SimpleClass>();
 }
 ```
 

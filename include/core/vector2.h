@@ -37,7 +37,7 @@
 
 #include <math_funcs.h>
 
-namespace pandemonium {
+
 
 class String;
 
@@ -301,6 +301,6 @@ inline Vector2 polar2cartesian(Vector2 v) {
 
 } // namespace Math
 
-} // namespace pandemonium
+
 
 #endif // VECTOR2_H

@@ -37,7 +37,7 @@
 
 // #include "basis.h"
 
-namespace pandemonium {
+
 
 class Quaternion {
 public:
@@ -120,6 +120,6 @@ public:
 	}
 };
 
-} // namespace pandemonium
+
 
 #endif // QUAT_H

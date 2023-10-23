@@ -34,7 +34,7 @@
 
 #include <cmath>
 
-namespace pandemonium {
+
 
 void Plane::set_normal(const Vector3 &p_normal) {
 	this->normal = p_normal;
@@ -201,4 +201,4 @@ bool Plane::operator!=(const Plane &p_plane) const {
 	return normal != p_plane.normal || d != p_plane.d;
 }
 
-} // namespace pandemonium
+

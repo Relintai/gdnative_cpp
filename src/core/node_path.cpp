@@ -34,81 +34,81 @@
 
 #include <gdn/node_path.h>
 
-namespace pandemonium {
+
 
 NodePath::NodePath() {
 	String from = "";
-	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
+	Pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
 }
 
 NodePath::NodePath(const NodePath &other) {
 	String from = other;
-	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
+	Pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
 }
 
 NodePath::NodePath(const String &from) {
-	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
+	Pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
 }
 
 NodePath::NodePath(const char *contents) {
 	String from = contents;
-	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
+	Pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
 }
 
 String NodePath::get_name(const int idx) const {
-	pandemonium_string str = pandemonium::api->pandemonium_node_path_get_name(&_node_path, idx);
+	pandemonium_string str = Pandemonium::api->pandemonium_node_path_get_name(&_node_path, idx);
 	return String(str);
 }
 
 int NodePath::get_name_count() const {
-	return pandemonium::api->pandemonium_node_path_get_name_count(&_node_path);
+	return Pandemonium::api->pandemonium_node_path_get_name_count(&_node_path);
 }
 
 String NodePath::get_subname(const int idx) const {
-	pandemonium_string str = pandemonium::api->pandemonium_node_path_get_subname(&_node_path, idx);
+	pandemonium_string str = Pandemonium::api->pandemonium_node_path_get_subname(&_node_path, idx);
 	return String(str);
 }
 
 int NodePath::get_subname_count() const {
-	return pandemonium::api->pandemonium_node_path_get_subname_count(&_node_path);
+	return Pandemonium::api->pandemonium_node_path_get_subname_count(&_node_path);
 }
 
 bool NodePath::is_absolute() const {
-	return pandemonium::api->pandemonium_node_path_is_absolute(&_node_path);
+	return Pandemonium::api->pandemonium_node_path_is_absolute(&_node_path);
 }
 
 bool NodePath::is_empty() const {
-	return pandemonium::api->pandemonium_node_path_is_empty(&_node_path);
+	return Pandemonium::api->pandemonium_node_path_is_empty(&_node_path);
 }
 
 NodePath NodePath::get_as_property_path() const {
-	pandemonium_node_path path = pandemonium::api->pandemonium_node_path_get_as_property_path(&_node_path);
+	pandemonium_node_path path = Pandemonium::api->pandemonium_node_path_get_as_property_path(&_node_path);
 	return NodePath(path);
 }
 String NodePath::get_concatenated_subnames() const {
-	pandemonium_string str = pandemonium::api->pandemonium_node_path_get_concatenated_subnames(&_node_path);
+	pandemonium_string str = Pandemonium::api->pandemonium_node_path_get_concatenated_subnames(&_node_path);
 	return String(str);
 }
 
 NodePath::operator String() const {
-	pandemonium_string str = pandemonium::api->pandemonium_node_path_as_string(&_node_path);
+	pandemonium_string str = Pandemonium::api->pandemonium_node_path_as_string(&_node_path);
 	return String(str);
 }
 
 bool NodePath::operator==(const NodePath &other) {
-	return pandemonium::api->pandemonium_node_path_operator_equal(&_node_path, &other._node_path);
+	return Pandemonium::api->pandemonium_node_path_operator_equal(&_node_path, &other._node_path);
 }
 
 void NodePath::operator=(const NodePath &other) {
-	pandemonium::api->pandemonium_node_path_destroy(&_node_path);
+	Pandemonium::api->pandemonium_node_path_destroy(&_node_path);
 
 	String other_string = (String)other;
 
-	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&other_string);
+	Pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&other_string);
 }
 
 NodePath::~NodePath() {
-	pandemonium::api->pandemonium_node_path_destroy(&_node_path);
+	Pandemonium::api->pandemonium_node_path_destroy(&_node_path);
 }
 
-} // namespace pandemonium
+

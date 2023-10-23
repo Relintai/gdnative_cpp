@@ -34,14 +34,14 @@
 
 #include "pandemonium_global.h"
 
-namespace pandemonium {
+
 
 RID::RID() {
-	pandemonium::api->pandemonium_rid_new(&_pandemonium_rid);
+	Pandemonium::api->pandemonium_rid_new(&_pandemonium_rid);
 }
 
 RID::RID(Object *p) {
-	pandemonium::api->pandemonium_rid_new_with_resource(&_pandemonium_rid, (const pandemonium_object *)p);
+	Pandemonium::api->pandemonium_rid_new_with_resource(&_pandemonium_rid, (const pandemonium_object *)p);
 }
 
 pandemonium_rid RID::_get_pandemonium_rid() const {
@@ -49,11 +49,11 @@ pandemonium_rid RID::_get_pandemonium_rid() const {
 }
 
 int32_t RID::get_id() const {
-	return pandemonium::api->pandemonium_rid_get_id(&_pandemonium_rid);
+	return Pandemonium::api->pandemonium_rid_get_id(&_pandemonium_rid);
 }
 
 bool RID::operator==(const RID &p_other) const {
-	return pandemonium::api->pandemonium_rid_operator_equal(&_pandemonium_rid, &p_other._pandemonium_rid);
+	return Pandemonium::api->pandemonium_rid_operator_equal(&_pandemonium_rid, &p_other._pandemonium_rid);
 }
 
 bool RID::operator!=(const RID &p_other) const {
@@ -61,7 +61,7 @@ bool RID::operator!=(const RID &p_other) const {
 }
 
 bool RID::operator<(const RID &p_other) const {
-	return pandemonium::api->pandemonium_rid_operator_less(&_pandemonium_rid, &p_other._pandemonium_rid);
+	return Pandemonium::api->pandemonium_rid_operator_less(&_pandemonium_rid, &p_other._pandemonium_rid);
 }
 
 bool RID::operator>(const RID &p_other) const {
@@ -76,4 +76,4 @@ bool RID::operator>=(const RID &p_other) const {
 	return !(*this < p_other);
 }
 
-} // namespace pandemonium
+

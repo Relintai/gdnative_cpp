@@ -34,10 +34,10 @@
 
 #include "ustring.h"
 
-namespace pandemonium {
+
 
 Vector2i::operator String() const {
 	return String::num(x) + ", " + String::num(y);
 }
 
-} // namespace pandemonium
+

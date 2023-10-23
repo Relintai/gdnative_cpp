@@ -37,7 +37,7 @@
 
 #include <cstdlib>
 
-namespace pandemonium {
+
 
 class String;
 
@@ -155,6 +155,6 @@ struct Rect2 {
 	}
 };
 
-} // namespace pandemonium
+
 
 #endif // RECT2_H

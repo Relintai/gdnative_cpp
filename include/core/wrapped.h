@@ -33,15 +33,11 @@
 
 #include <gdn/gdnative.h>
 
-namespace pandemonium {
-
 // This is an internal base class used by the bindings. You should not need to access its members.
 class _Wrapped {
 public:
 	pandemonium_object *_owner;
 	size_t _type_tag;
 };
-
-} // namespace pandemonium
 
 #endif // WRAPPED_H

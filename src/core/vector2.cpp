@@ -34,7 +34,7 @@
 
 #include "ustring.h"
 
-namespace pandemonium {
+
 
 const Vector2 Vector2::ZERO = Vector2();
 const Vector2 Vector2::ONE = Vector2(1, 1);
@@ -97,4 +97,4 @@ Vector2::operator String() const {
 	return String::num(x) + ", " + String::num(y);
 }
 
-} // namespace pandemonium
+

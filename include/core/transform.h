@@ -36,7 +36,7 @@
 #include "aabb.h"
 #include "plane.h"
 
-namespace pandemonium {
+
 
 class Transform {
 public:
@@ -116,6 +116,6 @@ public:
 	inline Transform() {}
 };
 
-} // namespace pandemonium
+
 
 #endif // TRANSFORM_H

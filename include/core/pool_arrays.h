@@ -42,7 +42,7 @@
 
 #include <gdn/pool_arrays.h>
 
-namespace pandemonium {
+
 
 class Array;
 
@@ -66,15 +66,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = pandemonium::api->pandemonium_pool_byte_array_read_access_copy(p_other._read_access);
+			_read_access = Pandemonium::api->pandemonium_pool_byte_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			pandemonium::api->pandemonium_pool_byte_array_read_access_destroy(_read_access);
+			Pandemonium::api->pandemonium_pool_byte_array_read_access_destroy(_read_access);
 		}
 
 		inline const uint8_t *ptr() const {
-			return pandemonium::api->pandemonium_pool_byte_array_read_access_ptr(_read_access);
+			return Pandemonium::api->pandemonium_pool_byte_array_read_access_ptr(_read_access);
 		}
 
 		inline const uint8_t &operator[](int p_idx) const {
@@ -82,7 +82,7 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			pandemonium::api->pandemonium_pool_byte_array_read_access_operator_assign(_read_access, p_other._read_access);
+			Pandemonium::api->pandemonium_pool_byte_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
@@ -96,15 +96,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = pandemonium::api->pandemonium_pool_byte_array_write_access_copy(p_other._write_access);
+			_write_access = Pandemonium::api->pandemonium_pool_byte_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			pandemonium::api->pandemonium_pool_byte_array_write_access_destroy(_write_access);
+			Pandemonium::api->pandemonium_pool_byte_array_write_access_destroy(_write_access);
 		}
 
 		inline uint8_t *ptr() const {
-			return pandemonium::api->pandemonium_pool_byte_array_write_access_ptr(_write_access);
+			return Pandemonium::api->pandemonium_pool_byte_array_write_access_ptr(_write_access);
 		}
 
 		inline uint8_t &operator[](int p_idx) const {
@@ -112,7 +112,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			pandemonium::api->pandemonium_pool_byte_array_write_access_operator_assign(_write_access, p_other._write_access);
+			Pandemonium::api->pandemonium_pool_byte_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -168,15 +168,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = pandemonium::api->pandemonium_pool_int_array_read_access_copy(p_other._read_access);
+			_read_access = Pandemonium::api->pandemonium_pool_int_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			pandemonium::api->pandemonium_pool_int_array_read_access_destroy(_read_access);
+			Pandemonium::api->pandemonium_pool_int_array_read_access_destroy(_read_access);
 		}
 
 		inline const int *ptr() const {
-			return pandemonium::api->pandemonium_pool_int_array_read_access_ptr(_read_access);
+			return Pandemonium::api->pandemonium_pool_int_array_read_access_ptr(_read_access);
 		}
 
 		inline const int &operator[](int p_idx) const {
@@ -184,7 +184,7 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			pandemonium::api->pandemonium_pool_int_array_read_access_operator_assign(_read_access, p_other._read_access);
+			Pandemonium::api->pandemonium_pool_int_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
@@ -198,15 +198,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = pandemonium::api->pandemonium_pool_int_array_write_access_copy(p_other._write_access);
+			_write_access = Pandemonium::api->pandemonium_pool_int_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			pandemonium::api->pandemonium_pool_int_array_write_access_destroy(_write_access);
+			Pandemonium::api->pandemonium_pool_int_array_write_access_destroy(_write_access);
 		}
 
 		inline int *ptr() const {
-			return pandemonium::api->pandemonium_pool_int_array_write_access_ptr(_write_access);
+			return Pandemonium::api->pandemonium_pool_int_array_write_access_ptr(_write_access);
 		}
 
 		inline int &operator[](int p_idx) const {
@@ -214,7 +214,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			pandemonium::api->pandemonium_pool_int_array_write_access_operator_assign(_write_access, p_other._write_access);
+			Pandemonium::api->pandemonium_pool_int_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -270,15 +270,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = pandemonium::api->pandemonium_pool_real_array_read_access_copy(p_other._read_access);
+			_read_access = Pandemonium::api->pandemonium_pool_real_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			pandemonium::api->pandemonium_pool_real_array_read_access_destroy(_read_access);
+			Pandemonium::api->pandemonium_pool_real_array_read_access_destroy(_read_access);
 		}
 
 		inline const real_t *ptr() const {
-			return pandemonium::api->pandemonium_pool_real_array_read_access_ptr(_read_access);
+			return Pandemonium::api->pandemonium_pool_real_array_read_access_ptr(_read_access);
 		}
 
 		inline const real_t &operator[](int p_idx) const {
@@ -286,7 +286,7 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			pandemonium::api->pandemonium_pool_real_array_read_access_operator_assign(_read_access, p_other._read_access);
+			Pandemonium::api->pandemonium_pool_real_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
@@ -300,15 +300,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = pandemonium::api->pandemonium_pool_real_array_write_access_copy(p_other._write_access);
+			_write_access = Pandemonium::api->pandemonium_pool_real_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			pandemonium::api->pandemonium_pool_real_array_write_access_destroy(_write_access);
+			Pandemonium::api->pandemonium_pool_real_array_write_access_destroy(_write_access);
 		}
 
 		inline real_t *ptr() const {
-			return pandemonium::api->pandemonium_pool_real_array_write_access_ptr(_write_access);
+			return Pandemonium::api->pandemonium_pool_real_array_write_access_ptr(_write_access);
 		}
 
 		inline real_t &operator[](int p_idx) const {
@@ -316,7 +316,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			pandemonium::api->pandemonium_pool_real_array_write_access_operator_assign(_write_access, p_other._write_access);
+			Pandemonium::api->pandemonium_pool_real_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -373,15 +373,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = pandemonium::api->pandemonium_pool_string_array_read_access_copy(p_other._read_access);
+			_read_access = Pandemonium::api->pandemonium_pool_string_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			pandemonium::api->pandemonium_pool_string_array_read_access_destroy(_read_access);
+			Pandemonium::api->pandemonium_pool_string_array_read_access_destroy(_read_access);
 		}
 
 		inline const String *ptr() const {
-			return (const String *)pandemonium::api->pandemonium_pool_string_array_read_access_ptr(_read_access);
+			return (const String *)Pandemonium::api->pandemonium_pool_string_array_read_access_ptr(_read_access);
 		}
 
 		inline const String &operator[](int p_idx) const {
@@ -389,7 +389,7 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			pandemonium::api->pandemonium_pool_string_array_read_access_operator_assign(_read_access, p_other._read_access);
+			Pandemonium::api->pandemonium_pool_string_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
@@ -403,15 +403,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = pandemonium::api->pandemonium_pool_string_array_write_access_copy(p_other._write_access);
+			_write_access = Pandemonium::api->pandemonium_pool_string_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			pandemonium::api->pandemonium_pool_string_array_write_access_destroy(_write_access);
+			Pandemonium::api->pandemonium_pool_string_array_write_access_destroy(_write_access);
 		}
 
 		inline String *ptr() const {
-			return (String *)pandemonium::api->pandemonium_pool_string_array_write_access_ptr(_write_access);
+			return (String *)Pandemonium::api->pandemonium_pool_string_array_write_access_ptr(_write_access);
 		}
 
 		inline String &operator[](int p_idx) const {
@@ -419,7 +419,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			pandemonium::api->pandemonium_pool_string_array_write_access_operator_assign(_write_access, p_other._write_access);
+			Pandemonium::api->pandemonium_pool_string_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -475,15 +475,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = pandemonium::api->pandemonium_pool_vector2_array_read_access_copy(p_other._read_access);
+			_read_access = Pandemonium::api->pandemonium_pool_vector2_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			pandemonium::api->pandemonium_pool_vector2_array_read_access_destroy(_read_access);
+			Pandemonium::api->pandemonium_pool_vector2_array_read_access_destroy(_read_access);
 		}
 
 		inline const Vector2 *ptr() const {
-			return (const Vector2 *)pandemonium::api->pandemonium_pool_vector2_array_read_access_ptr(_read_access);
+			return (const Vector2 *)Pandemonium::api->pandemonium_pool_vector2_array_read_access_ptr(_read_access);
 		}
 
 		inline const Vector2 &operator[](int p_idx) const {
@@ -491,7 +491,7 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			pandemonium::api->pandemonium_pool_vector2_array_read_access_operator_assign(_read_access, p_other._read_access);
+			Pandemonium::api->pandemonium_pool_vector2_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
@@ -505,15 +505,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = pandemonium::api->pandemonium_pool_vector2_array_write_access_copy(p_other._write_access);
+			_write_access = Pandemonium::api->pandemonium_pool_vector2_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			pandemonium::api->pandemonium_pool_vector2_array_write_access_destroy(_write_access);
+			Pandemonium::api->pandemonium_pool_vector2_array_write_access_destroy(_write_access);
 		}
 
 		inline Vector2 *ptr() const {
-			return (Vector2 *)pandemonium::api->pandemonium_pool_vector2_array_write_access_ptr(_write_access);
+			return (Vector2 *)Pandemonium::api->pandemonium_pool_vector2_array_write_access_ptr(_write_access);
 		}
 
 		inline Vector2 &operator[](int p_idx) const {
@@ -521,7 +521,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			pandemonium::api->pandemonium_pool_vector2_array_write_access_operator_assign(_write_access, p_other._write_access);
+			Pandemonium::api->pandemonium_pool_vector2_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -577,15 +577,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = pandemonium::api->pandemonium_pool_vector2i_array_read_access_copy(p_other._read_access);
+			_read_access = Pandemonium::api->pandemonium_pool_vector2i_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			pandemonium::api->pandemonium_pool_vector2i_array_read_access_destroy(_read_access);
+			Pandemonium::api->pandemonium_pool_vector2i_array_read_access_destroy(_read_access);
 		}
 
 		inline const Vector2i *ptr() const {
-			return (const Vector2i *)pandemonium::api->pandemonium_pool_vector2i_array_read_access_ptr(_read_access);
+			return (const Vector2i *)Pandemonium::api->pandemonium_pool_vector2i_array_read_access_ptr(_read_access);
 		}
 
 		inline const Vector2i &operator[](int p_idx) const {
@@ -593,7 +593,7 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			pandemonium::api->pandemonium_pool_vector2i_array_read_access_operator_assign(_read_access, p_other._read_access);
+			Pandemonium::api->pandemonium_pool_vector2i_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
@@ -607,15 +607,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = pandemonium::api->pandemonium_pool_vector2i_array_write_access_copy(p_other._write_access);
+			_write_access = Pandemonium::api->pandemonium_pool_vector2i_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			pandemonium::api->pandemonium_pool_vector2i_array_write_access_destroy(_write_access);
+			Pandemonium::api->pandemonium_pool_vector2i_array_write_access_destroy(_write_access);
 		}
 
 		inline Vector2i *ptr() const {
-			return (Vector2i *)pandemonium::api->pandemonium_pool_vector2i_array_write_access_ptr(_write_access);
+			return (Vector2i *)Pandemonium::api->pandemonium_pool_vector2i_array_write_access_ptr(_write_access);
 		}
 
 		inline Vector2i &operator[](int p_idx) const {
@@ -623,7 +623,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			pandemonium::api->pandemonium_pool_vector2i_array_write_access_operator_assign(_write_access, p_other._write_access);
+			Pandemonium::api->pandemonium_pool_vector2i_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -679,15 +679,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = pandemonium::api->pandemonium_pool_vector3_array_read_access_copy(p_other._read_access);
+			_read_access = Pandemonium::api->pandemonium_pool_vector3_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			pandemonium::api->pandemonium_pool_vector3_array_read_access_destroy(_read_access);
+			Pandemonium::api->pandemonium_pool_vector3_array_read_access_destroy(_read_access);
 		}
 
 		inline const Vector3 *ptr() const {
-			return (const Vector3 *)pandemonium::api->pandemonium_pool_vector3_array_read_access_ptr(_read_access);
+			return (const Vector3 *)Pandemonium::api->pandemonium_pool_vector3_array_read_access_ptr(_read_access);
 		}
 
 		inline const Vector3 &operator[](int p_idx) const {
@@ -695,7 +695,7 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			pandemonium::api->pandemonium_pool_vector3_array_read_access_operator_assign(_read_access, p_other._read_access);
+			Pandemonium::api->pandemonium_pool_vector3_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
@@ -709,15 +709,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = pandemonium::api->pandemonium_pool_vector3_array_write_access_copy(p_other._write_access);
+			_write_access = Pandemonium::api->pandemonium_pool_vector3_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			pandemonium::api->pandemonium_pool_vector3_array_write_access_destroy(_write_access);
+			Pandemonium::api->pandemonium_pool_vector3_array_write_access_destroy(_write_access);
 		}
 
 		inline Vector3 *ptr() const {
-			return (Vector3 *)pandemonium::api->pandemonium_pool_vector3_array_write_access_ptr(_write_access);
+			return (Vector3 *)Pandemonium::api->pandemonium_pool_vector3_array_write_access_ptr(_write_access);
 		}
 
 		inline Vector3 &operator[](int p_idx) const {
@@ -725,7 +725,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			pandemonium::api->pandemonium_pool_vector3_array_write_access_operator_assign(_write_access, p_other._write_access);
+			Pandemonium::api->pandemonium_pool_vector3_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -781,15 +781,15 @@ public:
 		}
 
 		inline Read(const Read &p_other) {
-			_read_access = pandemonium::api->pandemonium_pool_color_array_read_access_copy(p_other._read_access);
+			_read_access = Pandemonium::api->pandemonium_pool_color_array_read_access_copy(p_other._read_access);
 		}
 
 		inline ~Read() {
-			pandemonium::api->pandemonium_pool_color_array_read_access_destroy(_read_access);
+			Pandemonium::api->pandemonium_pool_color_array_read_access_destroy(_read_access);
 		}
 
 		inline const Color *ptr() const {
-			return (const Color *)pandemonium::api->pandemonium_pool_color_array_read_access_ptr(_read_access);
+			return (const Color *)Pandemonium::api->pandemonium_pool_color_array_read_access_ptr(_read_access);
 		}
 
 		inline const Color &operator[](int p_idx) const {
@@ -797,7 +797,7 @@ public:
 		}
 
 		inline void operator=(const Read &p_other) {
-			pandemonium::api->pandemonium_pool_color_array_read_access_operator_assign(_read_access, p_other._read_access);
+			Pandemonium::api->pandemonium_pool_color_array_read_access_operator_assign(_read_access, p_other._read_access);
 		}
 	};
 
@@ -811,15 +811,15 @@ public:
 		}
 
 		inline Write(const Write &p_other) {
-			_write_access = pandemonium::api->pandemonium_pool_color_array_write_access_copy(p_other._write_access);
+			_write_access = Pandemonium::api->pandemonium_pool_color_array_write_access_copy(p_other._write_access);
 		}
 
 		inline ~Write() {
-			pandemonium::api->pandemonium_pool_color_array_write_access_destroy(_write_access);
+			Pandemonium::api->pandemonium_pool_color_array_write_access_destroy(_write_access);
 		}
 
 		inline Color *ptr() const {
-			return (Color *)pandemonium::api->pandemonium_pool_color_array_write_access_ptr(_write_access);
+			return (Color *)Pandemonium::api->pandemonium_pool_color_array_write_access_ptr(_write_access);
 		}
 
 		inline Color &operator[](int p_idx) const {
@@ -827,7 +827,7 @@ public:
 		}
 
 		inline void operator=(const Write &p_other) {
-			pandemonium::api->pandemonium_pool_color_array_write_access_operator_assign(_write_access, p_other._write_access);
+			Pandemonium::api->pandemonium_pool_color_array_write_access_operator_assign(_write_access, p_other._write_access);
 		}
 	};
 
@@ -864,6 +864,6 @@ public:
 	~PoolColorArray();
 };
 
-} // namespace pandemonium
+
 
 #endif // POOLARRAYS_H

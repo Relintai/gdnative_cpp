@@ -32,10 +32,10 @@
 #include "ustring.h"
 #include "vector2i.h"
 
-namespace pandemonium {
+
 
 Rect2i::operator String() const {
 	return String(position) + ", " + String(size);
 }
 
-} // namespace pandemonium
+

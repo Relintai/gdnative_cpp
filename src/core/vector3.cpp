@@ -36,7 +36,7 @@
 
 #include "basis.h"
 
-namespace pandemonium {
+
 
 const Vector3 Vector3::ZERO = Vector3();
 const Vector3 Vector3::ONE = Vector3(1, 1, 1);
@@ -118,4 +118,4 @@ Vector3::operator String() const {
 	return String::num(x) + ", " + String::num(y) + ", " + String::num(z);
 }
 
-} // namespace pandemonium
+
