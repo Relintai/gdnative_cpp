@@ -32,9 +32,10 @@
 /**************************************************************************/
 
 #include "core/containers/hashfuncs.h"
+#include "core/containers/list.h"
 #include "core/containers/paged_allocator.h"
 #include "core/containers/pair.h"
-#include "core/math/math_funcs.h"
+#include "core/math_funcs.h"
 #include "core/os/memory.h"
 
 /**

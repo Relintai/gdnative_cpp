@@ -30,23 +30,22 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "core/math/aabb.h"
-#include "core/math/math_defs.h"
-#include "core/math/math_funcs.h"
-#include "core/math/rect2.h"
-#include "core/math/rect2i.h"
-#include "core/math/vector2.h"
-#include "core/math/vector2i.h"
-#include "core/math/vector3.h"
-#include "core/math/vector3i.h"
-#include "core/math/vector4.h"
-#include "core/math/vector4i.h"
-#include "core/object/object_id.h"
-#include "core/string/node_path.h"
-#include "core/string/string_name.h"
-#include "core/string/ustring.h"
-#include "core/containers/rid.h"
+#include "core/aabb.h"
+#include "core/defs.h"
+#include "core/math_funcs.h"
+#include "core/node_path.h"
+#include "core/rect2.h"
+#include "core/rect2i.h"
+#include "core/rid.h"
+#include "core/string_name.h"
 #include "core/typedefs.h"
+#include "core/ustring.h"
+#include "core/vector2.h"
+#include "core/vector2i.h"
+#include "core/vector3.h"
+#include "core/vector3i.h"
+#include "core/vector4.h"
+#include "core/vector4i.h"
 
 /**
  * Hashing functions
@@ -322,7 +321,7 @@ struct HashMapHasherDefault {
 	static _FORCE_INLINE_ uint32_t hash(const RID &p_rid) { return hash_one_uint64(p_rid.get_id()); }
 	static _FORCE_INLINE_ uint32_t hash(const StringName &p_string_name) { return p_string_name.hash(); }
 	static _FORCE_INLINE_ uint32_t hash(const NodePath &p_path) { return p_path.hash(); }
-	//static _FORCE_INLINE_ uint32_t hash(const ObjectID &p_id) { return hash_one_uint64(p_id); }
+	// static _FORCE_INLINE_ uint32_t hash(const ObjectID &p_id) { return hash_one_uint64(p_id); }
 
 	static _FORCE_INLINE_ uint32_t hash(const uint64_t p_int) { return hash_one_uint64(p_int); }
 	static _FORCE_INLINE_ uint32_t hash(const int64_t p_int) { return hash_one_uint64(p_int); }
@@ -334,7 +333,7 @@ struct HashMapHasherDefault {
 	static _FORCE_INLINE_ uint32_t hash(const int16_t p_int) { return hash_fmix32(p_int); }
 	static _FORCE_INLINE_ uint32_t hash(const uint8_t p_int) { return hash_fmix32(p_int); }
 	static _FORCE_INLINE_ uint32_t hash(const int8_t p_int) { return hash_fmix32(p_int); }
-	
+
 	static _FORCE_INLINE_ uint32_t hash(const Vector2i &p_vec) {
 		uint32_t h = hash_murmur3_one_32(p_vec.x);
 		h = hash_murmur3_one_32(p_vec.y, h);

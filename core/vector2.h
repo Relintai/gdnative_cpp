@@ -37,8 +37,6 @@
 
 #include <math_funcs.h>
 
-
-
 class String;
 
 struct Vector2 {
@@ -267,40 +265,32 @@ struct Vector2 {
 	}
 
 	inline Vector2 floor() const {
-		return Vector2(Mathp::floor(x), Mathp::floor(y));
+		return Vector2(Math::floor(x), Math::floor(y));
 	}
 
 	inline Vector2 snapped(const Vector2 &p_by) const {
 		return Vector2(
-				Mathp::stepify(x, p_by.x),
-				Mathp::stepify(y, p_by.y));
+				Math::stepify(x, p_by.x),
+				Math::stepify(y, p_by.y));
 	}
 
 	inline real_t aspect() const { return width / height; }
 
 	operator String() const;
+
+	static Vector2 cartesian2polar(Vector2 v) {
+		return Vector2(Math::sqrt(v.x * v.x + v.y * v.y), Math::atan2(v.y, v.x));
+	}
+
+	static Vector2 polar2cartesian(Vector2 v) {
+		// x == radius
+		// y == angle
+		return Vector2(v.x * Math::cos(v.y), v.x * Math::sin(v.y));
+	}
 };
 
 inline Vector2 operator*(real_t p_scalar, const Vector2 &p_vec) {
 	return p_vec * p_scalar;
 }
-
-namespace Mathp {
-
-// Convenience, since they exist in GDScript
-
-inline Vector2 cartesian2polar(Vector2 v) {
-	return Vector2(Mathp::sqrt(v.x * v.x + v.y * v.y), Mathp::atan2(v.y, v.x));
-}
-
-inline Vector2 polar2cartesian(Vector2 v) {
-	// x == radius
-	// y == angle
-	return Vector2(v.x * Mathp::cos(v.y), v.x * Mathp::sin(v.y));
-}
-
-} // namespace Math
-
-
 
 #endif // VECTOR2_H

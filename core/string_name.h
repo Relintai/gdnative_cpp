@@ -33,8 +33,6 @@
 
 #include <gdn/string_name.h>
 
-
-
 class String;
 
 class StringName {
@@ -56,6 +54,7 @@ public:
 	operator String();
 
 	uint32_t get_hash();
+	uint32_t hash() const;
 	const void *get_data_unique_pointer();
 
 	bool operator==(const StringName &s) const;
@@ -66,7 +65,5 @@ public:
 	bool operator>(const StringName &s) const;
 	bool operator>=(const StringName &s) const;
 };
-
-
 
 #endif // STRING_H

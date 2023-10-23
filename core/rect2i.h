@@ -1,3 +1,6 @@
+#ifndef RECT2I_H
+#define RECT2I_H
+
 /*************************************************************************/
 /*  rect2.h                                                            */
 /*************************************************************************/
@@ -28,16 +31,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef RECT2I_H
-#define RECT2I_H
-
 #include "vector2i.h"
 
 #include <cmath>
-
 #include <cstdlib>
-
-
 
 class String;
 
@@ -60,7 +57,5 @@ struct Rect2i {
 		size = p_size;
 	}
 };
-
-
 
 #endif // RECT2_H

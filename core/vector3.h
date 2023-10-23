@@ -255,7 +255,7 @@ struct Vector3 {
 	}
 
 	inline real_t angle_to(const Vector3 &b) const {
-		return Mathp::atan2(cross(b).length(), dot(b));
+		return Math::atan2(cross(b).length(), dot(b));
 	}
 
 	inline Vector3 direction_to(const Vector3 &p_b) const {

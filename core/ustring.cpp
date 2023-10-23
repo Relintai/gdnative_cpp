@@ -31,16 +31,14 @@
 #include "ustring.h"
 
 #include "array.h"
-#include "pandemonium_global.h"
 #include "node_path.h"
+#include "pandemonium_global.h"
 #include "pool_arrays.h"
 #include "variant.h"
 
 #include <gdn/string.h>
 
 #include <string.h>
-
-
 
 CharString::~CharString() {
 	Pandemonium::api->pandemonium_char_string_destroy(&_char_string);
@@ -530,5 +528,3 @@ String String::trim_suffix(const String &suffix) const {
 	pandemonium_string s = Pandemonium::api->pandemonium_string_trim_suffix(&_pandemonium_string, &suffix._pandemonium_string);
 	return String(s);
 }
-
-

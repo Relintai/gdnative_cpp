@@ -1,3 +1,6 @@
+#ifndef RID_H
+#define RID_H
+
 /*************************************************************************/
 /*  rid.h                                                              */
 /*************************************************************************/
@@ -28,12 +31,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef RID_H
-#define RID_H
-
 #include <gdn/rid.h>
-
-
 
 class Object;
 
@@ -61,7 +59,5 @@ public:
 	bool operator<=(const RID &p_other) const;
 	bool operator>=(const RID &p_other) const;
 };
-
-
 
 #endif // RID_H

@@ -73,6 +73,7 @@ class String {
 	friend class NodePath;
 	friend class Variant;
 	friend class StringName;
+	
 	explicit inline String(pandemonium_string contents) :
 			_pandemonium_string(contents) {}
 

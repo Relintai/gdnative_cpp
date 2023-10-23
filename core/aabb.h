@@ -1,3 +1,6 @@
+#ifndef AABB_H
+#define AABB_H
+
 /*************************************************************************/
 /*  aabb.h                                                             */
 /*************************************************************************/
@@ -28,14 +31,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef AABB_H
-#define AABB_H
-
 #include "vector3.h"
-
-#include <cstdlib>
-
-
 
 class Plane;
 
@@ -66,8 +62,8 @@ public:
 	bool encloses(const AABB &p_aabb) const; /// p_aabb is completely inside this
 
 	AABB merge(const AABB &p_with) const;
-	void merge_with(const AABB &p_aabb); ///merge with another AABB
-	AABB intersection(const AABB &p_aabb) const; ///get box where two intersect, empty if no intersection occurs
+	void merge_with(const AABB &p_aabb); /// merge with another AABB
+	AABB intersection(const AABB &p_aabb) const; /// get box where two intersect, empty if no intersection occurs
 	bool intersects_segment(const Vector3 &p_from, const Vector3 &p_to, Vector3 *r_clip = nullptr, Vector3 *r_normal = nullptr) const;
 	bool intersects_ray(const Vector3 &p_from, const Vector3 &p_dir, Vector3 *r_clip = nullptr, Vector3 *r_normal = nullptr) const;
 	bool smits_intersect_ray(const Vector3 &from, const Vector3 &p_dir, real_t t0, real_t t1) const;
@@ -104,7 +100,5 @@ public:
 		size = p_size;
 	}
 };
-
-
 
 #endif // RECT3_H

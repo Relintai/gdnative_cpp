@@ -153,12 +153,24 @@ typedef float real_t;
 #define ERR_MSG_INDEX(index, size) (String("Index ") + #index + "=" + String::num_int64(index) + " out of size (" + #size + "=" + String::num_int64(size) + ")")
 #endif
 
+#ifndef ERR_MSG_INDEX_MSG
+#define ERR_MSG_INDEX_MSG(index, size, msg) (String("Index ") + #index + "=" + String::num_int64(index) + " out of size (" + #size + "=" + String::num_int64(size) + ")" + #msg)
+#endif
+
 #ifndef ERR_MSG_NULL
 #define ERR_MSG_NULL(param) (String("Parameter '") + #param + "' is null.")
 #endif
 
+#ifndef ERR_MSG_NULL_MSG
+#define ERR_MSG_NULL_MSG(param, msg) (String("Parameter '") + #param + "' is null." + #msg)
+#endif
+
 #ifndef ERR_MSG_COND
 #define ERR_MSG_COND(cond) (String("Condition '") + #cond + "' is true.")
+#endif
+
+#ifndef ERR_MSG_COND_MSG
+#define ERR_MSG_COND_MSG(cond, msg) (String("Condition '") + #cond + "' is true." + #msg)
 #endif
 
 #ifndef ERR_FAIL_INDEX
@@ -168,6 +180,16 @@ typedef float real_t;
 			ERR_PRINT(ERR_MSG_INDEX(index, size));        \
 			return;                                       \
 		}                                                 \
+	} while (0)
+#endif
+
+#ifndef ERR_FAIL_INDEX_MSG
+#define ERR_FAIL_INDEX_MSG(index, size, m_msg)                \
+	do {                                                      \
+		if (unlikely((index) < 0 || (index) >= (size))) {     \
+			ERR_PRINT(ERR_MSG_INDEX_MSG(index, size, m_msg)); \
+			return;                                           \
+		}                                                     \
 	} while (0)
 #endif
 
@@ -181,6 +203,16 @@ typedef float real_t;
 	} while (0)
 #endif
 
+#ifndef ERR_FAIL_INDEX_V_MSG
+#define ERR_FAIL_INDEX_V_MSG(index, size, ret, m_msg)         \
+	do {                                                      \
+		if (unlikely((index) < 0 || (index) >= (size))) {     \
+			ERR_PRINT(ERR_MSG_INDEX_MSG(index, size, m_msg)); \
+			return ret;                                       \
+		}                                                     \
+	} while (0)
+#endif
+
 #ifndef ERR_FAIL_UNSIGNED_INDEX_V
 #define ERR_FAIL_UNSIGNED_INDEX_V(index, size, ret) \
 	do {                                            \
@@ -188,6 +220,16 @@ typedef float real_t;
 			ERR_PRINT(ERR_MSG_INDEX(index, size));  \
 			return ret;                             \
 		}                                           \
+	} while (0)
+#endif
+
+#ifndef ERR_FAIL_UNSIGNED_INDEX_V_MSG
+#define ERR_FAIL_UNSIGNED_INDEX_V_MSG(index, size, ret, m_msg) \
+	do {                                                       \
+		if (unlikely((index) >= (size))) {                     \
+			ERR_PRINT(ERR_MSG_INDEX_MSG(index, size, m_msg));  \
+			return ret;                                        \
+		}                                                      \
 	} while (0)
 #endif
 
@@ -211,6 +253,16 @@ typedef float real_t;
 	} while (0)
 #endif
 
+#ifndef ERR_FAIL_NULL_MSG
+#define ERR_FAIL_NULL_MSG(param, m_msg)                \
+	do {                                               \
+		if (unlikely(!param)) {                        \
+			ERR_PRINT(ERR_MSG_NULL_MSG(param, m_msg)); \
+			return;                                    \
+		}                                              \
+	} while (0)
+#endif
+
 #ifndef ERR_FAIL_NULL_V
 #define ERR_FAIL_NULL_V(param, ret)         \
 	do {                                    \
@@ -218,6 +270,16 @@ typedef float real_t;
 			ERR_PRINT(ERR_MSG_NULL(param)); \
 			return ret;                     \
 		}                                   \
+	} while (0)
+#endif
+
+#ifndef ERR_FAIL_NULL_V_MSG
+#define ERR_FAIL_NULL_V_MSG(param, ret, m_msg)         \
+	do {                                               \
+		if (unlikely(!param)) {                        \
+			ERR_PRINT(ERR_MSG_NULL_MSG(param, m_msg)); \
+			return ret;                                \
+		}                                              \
 	} while (0)
 #endif
 
@@ -231,6 +293,16 @@ typedef float real_t;
 	} while (0)
 #endif
 
+#ifndef ERR_FAIL_COND_MSG
+#define ERR_FAIL_COND_MSG(cond, m_msg)                \
+	do {                                              \
+		if (unlikely(cond)) {                         \
+			ERR_PRINT(ERR_MSG_COND_MSG(cond, m_msg)); \
+			return;                                   \
+		}                                             \
+	} while (0)
+#endif
+
 #ifndef CRASH_COND
 #define CRASH_COND(cond)                     \
 	do {                                     \
@@ -241,6 +313,16 @@ typedef float real_t;
 	} while (0)
 #endif
 
+#ifndef CRASH_COND_MSG
+#define CRASH_COND_MSG(cond, m_msg)                     \
+	do {                                                \
+		if (unlikely(cond)) {                           \
+			FATAL_PRINT(ERR_MSG_COND_MSG(cond, m_msg)); \
+			GENERATE_TRAP;                              \
+		}                                               \
+	} while (0)
+#endif
+
 #ifndef ERR_FAIL_COND_V
 #define ERR_FAIL_COND_V(cond, ret)         \
 	do {                                   \
@@ -248,6 +330,16 @@ typedef float real_t;
 			ERR_PRINT(ERR_MSG_COND(cond)); \
 			return ret;                    \
 		}                                  \
+	} while (0)
+#endif
+
+#ifndef ERR_FAIL_COND_V_MSG
+#define ERR_FAIL_COND_V_MSG(cond, ret, m_msg)         \
+	do {                                              \
+		if (unlikely(cond)) {                         \
+			ERR_PRINT(ERR_MSG_COND_MSG(cond, m_msg)); \
+			return ret;                               \
+		}                                             \
 	} while (0)
 #endif
 

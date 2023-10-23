@@ -33,8 +33,6 @@
 
 #include <stddef.h>
 
-
-
 namespace _TagDB {
 
 void register_type(size_t type_tag, size_t base_type_tag);
@@ -43,7 +41,5 @@ void register_global_type(const char *name, size_t type_tag, size_t base_type_ta
 bool is_type_compatible(size_t type_tag, size_t base_type_tag);
 
 } // namespace _TagDB
-
-
 
 #endif // TAGDB_H

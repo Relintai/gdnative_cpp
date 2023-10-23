@@ -34,8 +34,6 @@
 
 #include <gdn/node_path.h>
 
-
-
 NodePath::NodePath() {
 	String from = "";
 	Pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
@@ -90,6 +88,10 @@ String NodePath::get_concatenated_subnames() const {
 	return String(str);
 }
 
+uint32_t NodePath::hash() const {
+	return Pandemonium::api->pandemonium_node_path_hash(&_node_path);
+}
+
 NodePath::operator String() const {
 	pandemonium_string str = Pandemonium::api->pandemonium_node_path_as_string(&_node_path);
 	return String(str);
@@ -110,5 +112,3 @@ void NodePath::operator=(const NodePath &other) {
 NodePath::~NodePath() {
 	Pandemonium::api->pandemonium_node_path_destroy(&_node_path);
 }
-
-

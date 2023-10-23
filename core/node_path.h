@@ -1,3 +1,7 @@
+
+#ifndef NODEPATH_H
+#define NODEPATH_H
+
 /*************************************************************************/
 /*  NodePath.h                                                         */
 /*************************************************************************/
@@ -28,12 +32,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef NODEPATH_H
-#define NODEPATH_H
-
 #include <gdn/node_path.h>
-
-
 
 class String;
 
@@ -70,15 +69,14 @@ public:
 
 	String get_concatenated_subnames() const;
 
+	uint32_t hash() const;
+
 	operator String() const;
 
 	void operator=(const NodePath &other);
-
 	bool operator==(const NodePath &other);
 
 	~NodePath();
 };
-
-
 
 #endif // NODEPATH_H

@@ -31,16 +31,14 @@
 #include "string_name.h"
 
 #include "array.h"
-#include "pandemonium_global.h"
 #include "node_path.h"
+#include "pandemonium_global.h"
 #include "pool_arrays.h"
 #include "variant.h"
 
 #include <gdn/string.h>
 
 #include <string.h>
-
-
 
 StringName::StringName() {
 	Pandemonium::api->pandemonium_string_name_new(&_pandemonium_string_name);
@@ -58,6 +56,19 @@ StringName::~StringName() {
 	Pandemonium::api->pandemonium_string_name_destroy(&_pandemonium_string_name);
 }
 
+StringName::operator String() {
+	return String(Pandemonium::api->pandemonium_string_name_get_name(&_pandemonium_string_name));
+}
+
+uint32_t StringName::get_hash() {
+	return Pandemonium::api->pandemonium_string_name_get_hash(&_pandemonium_string_name);
+}
+uint32_t StringName::hash() const {
+	return Pandemonium::api->pandemonium_string_name_get_hash(&_pandemonium_string_name);
+}
+const void *StringName::get_data_unique_pointer() {
+	return &_pandemonium_string_name;
+}
 
 bool StringName::operator==(const StringName &s) const {
 	return Pandemonium::api->pandemonium_string_name_operator_equal(&_pandemonium_string_name, &s._pandemonium_string_name);
@@ -83,5 +94,3 @@ bool StringName::operator>(const StringName &s) const {
 bool StringName::operator>=(const StringName &s) const {
 	return !(*this < s);
 }
-
-

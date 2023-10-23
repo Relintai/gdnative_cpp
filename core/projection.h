@@ -64,7 +64,7 @@ struct Projection {
 	void set_frustum(real_t p_size, real_t p_aspect, Vector2 p_offset, real_t p_near, real_t p_far, bool p_flip_fov = false);
 
 	static real_t get_fovy(real_t p_fovx, real_t p_aspect) {
-		return Mathp::rad2deg(atan(p_aspect * tan(Mathp::deg2rad(p_fovx) * 0.5)) * 2.0);
+		return Math::rad2deg(atan(p_aspect * tan(Math::deg2rad(p_fovx) * 0.5)) * 2.0);
 	}
 
 	static inline double absd(double g) {
