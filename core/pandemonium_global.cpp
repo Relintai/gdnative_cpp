@@ -54,15 +54,15 @@ static GDCALLINGCONV void wrapper_destroy(void *data, void *wrapper) {
 void *_RegisterState::nativescript_handle;
 int _RegisterState::language_index;
 
-const pandemonium_gdnative_core_api_struct *api = nullptr;
+const pandemonium_gdnative_core_api_struct *Pandemonium::api = NULL;
 
-const pandemonium_gdnative_ext_nativescript_api_struct *nativescript_api = nullptr;
-const pandemonium_gdnative_ext_pluginscript_api_struct *pluginscript_api = nullptr;
-const pandemonium_gdnative_ext_android_api_struct *android_api = nullptr;
-const pandemonium_gdnative_ext_videodecoder_api_struct *videodecoder_api = nullptr;
-const pandemonium_gdnative_ext_net_api_struct *net_api = nullptr;
+const pandemonium_gdnative_ext_nativescript_api_struct *Pandemonium::nativescript_api = NULL;
+const pandemonium_gdnative_ext_pluginscript_api_struct *Pandemonium::pluginscript_api = NULL;
+const pandemonium_gdnative_ext_android_api_struct *Pandemonium::android_api = NULL;
+const pandemonium_gdnative_ext_videodecoder_api_struct *Pandemonium::videodecoder_api = NULL;
+const pandemonium_gdnative_ext_net_api_struct *Pandemonium::net_api = NULL;
 
-const void *gdnlib = NULL;
+const void *Pandemonium::gdnlib = NULL;
 
 void Pandemonium::print(const String &message) {
 	Pandemonium::api->pandemonium_print((pandemonium_string *)&message);
