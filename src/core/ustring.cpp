@@ -54,6 +54,18 @@ const char *pandemonium::CharString::get_data() const {
 	return pandemonium::api->pandemonium_char_string_get_data(&_char_string);
 }
 
+pandemonium::Char16String::~Char16String() {
+	pandemonium::api->pandemonium_char_16_string_destroy(&_char_string);
+}
+
+int pandemonium::Char16String::length() const {
+	return pandemonium::api->pandemonium_char_16_string_length(&_char_string);
+}
+
+const char16_t *pandemonium::Char16String::get_data() const {
+	return pandemonium::api->pandemonium_char_16_string_get_data(&_char_string);
+}
+
 String String::num(double p_num, int p_decimals) {
 	return String(pandemonium::api->pandemonium_string_num_with_decimals(p_num, p_decimals));
 }

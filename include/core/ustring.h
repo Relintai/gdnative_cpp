@@ -56,6 +56,18 @@ public:
 	const char *get_data() const;
 };
 
+class Char16String {
+	friend class String;
+
+	pandemonium_char_16_string _char_string;
+
+public:
+	~Char16String();
+
+	int length() const;
+	const char16_t *get_data() const;
+};
+
 class String {
 	pandemonium_string _pandemonium_string;
 
