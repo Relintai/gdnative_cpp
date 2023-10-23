@@ -32,11 +32,13 @@
 
 #include "core/defs.h"
 #include "core/os/safe_refcount.h"
+#include "core/wrapped.h"
 
 #include <stddef.h>
+#include <type_traits>
 
 #ifndef PAD_ALIGN
-#define PAD_ALIGN 16 //must always be greater than this at much
+#define PAD_ALIGN 16 // must always be greater than this at much
 #endif
 
 class Memory {
@@ -88,11 +90,21 @@ _ALWAYS_INLINE_ T *_post_initialize(T *p_obj) {
 	return p_obj;
 }
 
-#define memnew(m_class) _post_initialize(new ("") m_class)
+template <typename T>
+_ALWAYS_INLINE_ T *memnew_template() {
+	if (std::is_base_of<_Wrapped, T>::value) {
+		return T::_new();
+	}
+
+	return _post_initialize(new T);
+}
+
+#define memnew_core(m_class) _post_initialize(new ("") m_class)
+#define memnew(m_class) memnew_template<m_class>()
 
 _ALWAYS_INLINE_ void *operator new(size_t p_size, void *p_pointer, size_t check, const char *p_description) {
-	//void *failptr=0;
-	//ERR_FAIL_COND_V( check < p_size , failptr); /** bug, or strange compiler, most likely */
+	// void *failptr=0;
+	// ERR_FAIL_COND_V( check < p_size , failptr); /** bug, or strange compiler, most likely */
 
 	return p_pointer;
 }
@@ -109,6 +121,12 @@ void memdelete(T *p_class) {
 	if (!predelete_handler(p_class)) {
 		return; // doesn't want to be deleted
 	}
+
+	if (std::is_base_of<_Wrapped, T>::value) {
+		reinterpret_cast<_Wrapped *>(p_class)->free();
+		return;
+	}
+
 	if (!HAS_TRIVIAL_DESTRUCTOR(T)) {
 		p_class->~T();
 	}
@@ -121,6 +139,12 @@ void memdelete_allocator(T *p_class) {
 	if (!predelete_handler(p_class)) {
 		return; // doesn't want to be deleted
 	}
+
+	if (std::is_base_of<_Wrapped, T>::value) {
+		reinterpret_cast<_Wrapped *>(p_class)->free();
+		return;
+	}
+
 	if (!HAS_TRIVIAL_DESTRUCTOR(T)) {
 		p_class->~T();
 	}
@@ -146,7 +170,7 @@ T *memnew_arr_template(size_t p_elements, const char *p_descr = "") {
 
 	size_t len = sizeof(T) * p_elements;
 	uint64_t *mem = (uint64_t *)Memory::alloc_static(len, true);
-	T *failptr = nullptr; //get rid of a warning
+	T *failptr = nullptr; // get rid of a warning
 	ERR_FAIL_COND_V(!mem, failptr);
 	*(mem - 1) = p_elements;
 

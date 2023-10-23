@@ -641,7 +641,7 @@ private:
 				_resize_and_rehash(capacity_index + 1);
 			}
 
-			Element *elem = memnew(Element(p_key, p_value));
+			Element *elem = memnew_core(Element(p_key, p_value));
 
 			if (tail_element == nullptr) {
 				head_element = elem;
