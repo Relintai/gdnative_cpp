@@ -32,7 +32,7 @@
 
 #include <string.h>
 
-#include "core/error/error_macros.h"
+#include "core/defs.h"
 #include "core/os/memory.h"
 #include "core/os/safe_refcount.h"
 

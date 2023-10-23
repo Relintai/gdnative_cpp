@@ -31,7 +31,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-enum class Error {
+enum Error {
 	OK,
 	FAILED, ///< Generic fail error
 	ERR_UNAVAILABLE, ///< What is requested is unsupported/unavailable

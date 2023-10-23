@@ -38,7 +38,7 @@
 
 #include "core/containers/cowdata.h"
 #include "core/containers/sort_array.h"
-#include "core/error/error_macros.h"
+#include "core/defs.h"
 #include "core/os/memory.h"
 
 template <class T>

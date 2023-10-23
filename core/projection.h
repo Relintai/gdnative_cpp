@@ -37,7 +37,7 @@
 #include "rect2.h"
 #include "transform.h"
 
-#include <vector>
+#include "core/containers/vector.h"
 
 struct Projection {
 	enum Planes {
@@ -83,7 +83,7 @@ struct Projection {
 	real_t get_fov() const;
 	bool is_orthogonal() const;
 
-	std::vector<Plane> get_projection_planes(const Transform &p_transform) const;
+	Vector<Plane> get_projection_planes(const Transform &p_transform) const;
 
 	bool get_endpoints(const Transform &p_transform, Vector3 *p_8points) const;
 	Vector2 get_viewport_half_extents() const;

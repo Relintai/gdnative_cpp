@@ -30,8 +30,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "core/error/error_macros.h"
-#include "core/typedefs.h"
+#include "core/defs.h"
 
 #define ERR_BAD_COMPARE(cond)                                         \
 	if (unlikely(cond)) {                                             \

@@ -495,6 +495,7 @@ env.Append(CPPPATH=[[env.Dir(d) for d in [".", env["headers_dir"], "gen", "core"
 # Sources to compile
 sources = []
 add_sources(sources, "core", "cpp")
+add_sources(sources, "core/os", "cpp")
 sources.extend(f for f in bindings if str(f).endswith(".cpp"))
 
 arch_suffix = env["bits"]
