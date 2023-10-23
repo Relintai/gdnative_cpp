@@ -32,7 +32,7 @@
 #define REF_H
 
 #include "pandemonium_global.h"
-#include "Reference.h"
+#include "reference.h"
 #include "variant.h"
 
 namespace pandemonium {

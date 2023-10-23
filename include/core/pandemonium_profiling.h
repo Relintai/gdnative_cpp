@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef PANDEMONIUM_PROFILING_HPP
-#define PANDEMONIUM_PROFILING_HPP
+#ifndef PANDEMONIUM_PROFILING_H
+#define PANDEMONIUM_PROFILING_H
 
 #include "defs.h"
 

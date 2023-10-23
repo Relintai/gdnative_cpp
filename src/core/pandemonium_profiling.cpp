@@ -1,7 +1,7 @@
 
 #include "pandemonium_profiling.h"
 
-#include "OS.h"
+#include "os.h"
 
 #include <cstdio>
 

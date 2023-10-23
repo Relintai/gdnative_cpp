@@ -35,7 +35,7 @@
 #include "core_types.h"
 #include "defs.h"
 #include "pandemonium_global.h"
-#include "Object.h"
+#include "object.h"
 
 namespace pandemonium {
 

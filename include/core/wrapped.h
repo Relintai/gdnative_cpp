@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef WRAPPED_HPP
-#define WRAPPED_HPP
+#ifndef WRAPPED_H
+#define WRAPPED_H
 
 #include <gdn/gdnative.h>
 
@@ -44,4 +44,4 @@ public:
 
 } // namespace pandemonium
 
-#endif // WRAPPED_HPP
+#endif // WRAPPED_H

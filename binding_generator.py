@@ -11,6 +11,33 @@ def correct_method_name(method_list):
         if method["name"] == "get_node":
             method["name"] = "get_node_internal"
 
+def class_name_to_file_name(class_name):
+    new_name = ""
+
+    upper_count = 0
+    upper_str = ""
+    for i in range(len(class_name)):
+        c = class_name[i]
+
+        if c.isupper():
+            upper_str += c
+        else:
+            if len(upper_str) > 0:
+                if len(new_name) > 0:
+                    new_name += "_"
+
+                new_name += upper_str.lower()
+                upper_str = ""
+
+            new_name += c
+
+    if len(upper_str) > 0:
+        if len(new_name) > 0:
+            new_name += "_"
+                    
+        new_name += upper_str.lower()
+
+    return new_name
 
 classes = []
 
@@ -23,8 +50,8 @@ def get_file_list(api_filepath, output_dir, headers=False, sources=False):
     include_gen_folder = Path(output_dir) / "include" / "gen"
     source_gen_folder = Path(output_dir) / "src" / "gen"
     for _class in classes:
-        header_filename = include_gen_folder / (strip_name(_class["name"]) + ".h")
-        source_filename = source_gen_folder / (strip_name(_class["name"]) + ".cpp")
+        header_filename = include_gen_folder / (class_name_to_file_name(strip_name(_class["name"])) + ".h")
+        source_filename = source_gen_folder / (class_name_to_file_name(strip_name(_class["name"])) + ".cpp")
         if headers:
             files.append(str(header_filename.as_posix()))
         if sources:
@@ -79,11 +106,11 @@ def generate_bindings(api_filepath, use_template_get_node, output_dir="."):
 
         impl = generate_class_implementation(icalls, used_classes, c, use_template_get_node)
 
-        header_filename = include_gen_folder / (strip_name(c["name"]) + ".h")
+        header_filename = include_gen_folder / (class_name_to_file_name(strip_name(c["name"])) + ".h")
         with header_filename.open("w+") as header_file:
             header_file.write(header)
 
-        source_filename = source_gen_folder / (strip_name(c["name"]) + ".cpp")
+        source_filename = source_gen_folder / (class_name_to_file_name(strip_name(c["name"]) )+ ".cpp")
         with source_filename.open("w+") as source_file:
             source_file.write(impl)
 
@@ -128,8 +155,8 @@ def make_gdnative_type(t, ref_allowed):
 def generate_class_header(used_classes, c, use_template_get_node):
 
     source = []
-    source.append("#ifndef PANDEMONIUM_CPP_" + strip_name(c["name"]).upper() + "_HPP")
-    source.append("#define PANDEMONIUM_CPP_" + strip_name(c["name"]).upper() + "_HPP")
+    source.append("#ifndef PANDEMONIUM_CPP_" + strip_name(c["name"]).upper() + "_H")
+    source.append("#define PANDEMONIUM_CPP_" + strip_name(c["name"]).upper() + "_H")
     source.append("")
     source.append("")
 
@@ -144,7 +171,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
     # Ref<T> is not included in object.h in Pandemonium either,
     # so don't include it here because it's not needed
     if class_name != "Object" and class_name != "Reference":
-        source.append("#include <core/reference.h>")
+        source.append("#include <core/ref.h>")
         ref_allowed = True
     else:
         source.append("#include <core/tag_db.h>")
@@ -157,17 +184,17 @@ def generate_class_header(used_classes, c, use_template_get_node):
             used_class_name = remove_enum_prefix(extract_nested_type(used_class))
             if used_class_name not in included:
                 included.append(used_class_name)
-                source.append('#include "' + used_class_name + '.h"')
+                source.append('#include "' + class_name_to_file_name(used_class_name) + '.h"')
         elif is_enum(used_class) and is_nested_type(used_class) and not is_nested_type(used_class, class_name):
             used_class_name = remove_enum_prefix(used_class)
             if used_class_name not in included:
                 included.append(used_class_name)
-                source.append('#include "' + used_class_name + '.h"')
+                source.append('#include "' + class_name_to_file_name(used_class_name) + '.h"')
 
     source.append("")
 
     if c["base_class"] != "":
-        source.append('#include "' + strip_name(c["base_class"]) + '.h"')
+        source.append('#include "' + class_name_to_file_name(strip_name(c["base_class"])) + '.h"')
 
     source.append("namespace pandemonium {")
     source.append("")
@@ -418,13 +445,13 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
     ref_allowed = class_name != "Object" and class_name != "Reference"
 
     source = []
-    source.append('#include "' + class_name + '.h"')
+    source.append('#include "' + class_name_to_file_name(class_name) + '.h"')
     source.append("")
     source.append("")
 
     source.append("#include <core/pandemonium_global.h>")
     source.append("#include <core/core_types.h>")
-    source.append("#include <core/reference.h>")
+    source.append("#include <core/ref.h>")
 
     source.append("#include <core/pandemonium.h>")
     source.append("")
@@ -437,7 +464,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         if is_enum(used_class):
             continue
         else:
-            source.append('#include "' + strip_name(used_class) + '.h"')
+            source.append('#include "' + class_name_to_file_name(strip_name(used_class)) + '.h"')
 
     source.append("")
     source.append("")
@@ -677,8 +704,8 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 def generate_icall_header(icalls):
 
     source = []
-    source.append("#ifndef PANDEMONIUM_CPP__ICALLS_HPP")
-    source.append("#define PANDEMONIUM_CPP__ICALLS_HPP")
+    source.append("#ifndef PANDEMONIUM_CPP__ICALLS_H")
+    source.append("#define PANDEMONIUM_CPP__ICALLS_H")
 
     source.append("")
 
@@ -688,7 +715,7 @@ def generate_icall_header(icalls):
 
     source.append("#include <core/pandemonium_global.h>")
     source.append("#include <core/core_types.h>")
-    source.append('#include "Object.h"')
+    source.append('#include "object.h"')
     source.append("")
     source.append("")
 
@@ -785,7 +812,7 @@ def generate_type_registry(classes):
     source.append("\n")
 
     for c in classes:
-        source.append("#include <" + strip_name(c["name"]) + ".h>")
+        source.append("#include <" + class_name_to_file_name(strip_name(c["name"])) + ".h>")
 
     source.append("")
     source.append("")
@@ -828,7 +855,7 @@ def generate_init_method_bindings(classes):
     source = []
 
     for c in classes:
-        source.append("#include <" + strip_name(c["name"]) + ".h>")
+        source.append("#include <" + class_name_to_file_name(strip_name(c["name"])) + ".h>")
 
     source.append("")
     source.append("")

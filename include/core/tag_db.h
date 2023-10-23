@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef TAGDB_HPP
-#define TAGDB_HPP
+#ifndef TAGDB_H
+#define TAGDB_H
 
 #include <stddef.h>
 
@@ -46,4 +46,4 @@ bool is_type_compatible(size_t type_tag, size_t base_type_tag);
 
 } // namespace pandemonium
 
-#endif // TAGDB_HPP
+#endif // TAGDB_H

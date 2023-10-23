@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef PANDEMONIUM_HPP
-#define PANDEMONIUM_HPP
+#ifndef PANDEMONIUM_H
+#define PANDEMONIUM_H
 
 #include <cstdlib>
 #include <cstring>
@@ -43,7 +43,7 @@
 #include "tag_db.h"
 #include "variant.h"
 
-#include "Object.h"
+#include "object.h"
 
 #include "pandemonium_global.h"
 
@@ -616,4 +616,4 @@ T *Object::cast_to(const Object *obj) {
 
 } // namespace pandemonium
 
-#endif // PANDEMONIUM_HPP
+#endif // PANDEMONIUM_H

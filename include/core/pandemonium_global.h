@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef PANDEMONIUM_GLOBAL_HPP
-#define PANDEMONIUM_GLOBAL_HPP
+#ifndef PANDEMONIUM_GLOBAL_H
+#define PANDEMONIUM_GLOBAL_H
 
 #include <gdnative_api_struct.gen.h>
 
