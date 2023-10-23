@@ -128,7 +128,7 @@ opts.Add(EnumVariable("target", "Compilation target", "debug", allowed_values=("
 opts.Add(
     PathVariable(
         "headers_dir",
-        "Path to the directory containing Godot headers",
+        "Path to the directory containing Pandemonium headers",
         "pandemonium_headers",
         PathVariable.PathIsDir,
     )
@@ -171,7 +171,7 @@ opts.Add(
     )
 )
 
-opts.Add(BoolVariable("build_library", "Build the godot-cpp library.", True))
+opts.Add(BoolVariable("build_library", "Build the pandemonium-cpp library.", True))
 
 opts.Update(env)
 Help(opts.GenerateHelpText(env))
@@ -514,7 +514,7 @@ env["arch_suffix"] = arch_suffix
 
 library = None
 env["OBJSUFFIX"] = ".{}.{}.{}{}".format(env["platform"], env["target"], arch_suffix, env["OBJSUFFIX"])
-library_name = "libgodot-cpp.{}.{}.{}{}".format(env["platform"], env["target"], arch_suffix, env["LIBSUFFIX"])
+library_name = "libpandemonium-cpp.{}.{}.{}{}".format(env["platform"], env["target"], arch_suffix, env["LIBSUFFIX"])
 
 if env["build_library"]:
     library = env.StaticLibrary(target=env.File("bin/%s" % library_name), source=sources)

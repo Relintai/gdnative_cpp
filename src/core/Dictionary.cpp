@@ -2,11 +2,11 @@
 /*  Dictionary.cpp                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -30,81 +30,81 @@
 
 #include "Dictionary.hpp"
 #include "Array.hpp"
-#include "GodotGlobal.hpp"
+#include "PandemoniumGlobal.hpp"
 #include "Variant.hpp"
 
-namespace godot {
+namespace pandemonium {
 
 Dictionary::Dictionary() {
-	godot::api->pandemonium_dictionary_new(&_pandemonium_dictionary);
+	pandemonium::api->pandemonium_dictionary_new(&_pandemonium_dictionary);
 }
 
 Dictionary::Dictionary(const Dictionary &other) {
-	godot::api->pandemonium_dictionary_new_copy(&_pandemonium_dictionary, &other._pandemonium_dictionary);
+	pandemonium::api->pandemonium_dictionary_new_copy(&_pandemonium_dictionary, &other._pandemonium_dictionary);
 }
 
 Dictionary &Dictionary::operator=(const Dictionary &other) {
-	godot::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
-	godot::api->pandemonium_dictionary_new_copy(&_pandemonium_dictionary, &other._pandemonium_dictionary);
+	pandemonium::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
+	pandemonium::api->pandemonium_dictionary_new_copy(&_pandemonium_dictionary, &other._pandemonium_dictionary);
 	return *this;
 }
 
 void Dictionary::clear() {
-	godot::api->pandemonium_dictionary_clear(&_pandemonium_dictionary);
+	pandemonium::api->pandemonium_dictionary_clear(&_pandemonium_dictionary);
 }
 
 bool Dictionary::empty() const {
-	return godot::api->pandemonium_dictionary_empty(&_pandemonium_dictionary);
+	return pandemonium::api->pandemonium_dictionary_empty(&_pandemonium_dictionary);
 }
 
 void Dictionary::erase(const Variant &key) {
-	godot::api->pandemonium_dictionary_erase(&_pandemonium_dictionary, (pandemonium_variant *)&key);
+	pandemonium::api->pandemonium_dictionary_erase(&_pandemonium_dictionary, (pandemonium_variant *)&key);
 }
 
 bool Dictionary::has(const Variant &key) const {
-	return godot::api->pandemonium_dictionary_has(&_pandemonium_dictionary, (pandemonium_variant *)&key);
+	return pandemonium::api->pandemonium_dictionary_has(&_pandemonium_dictionary, (pandemonium_variant *)&key);
 }
 
 bool Dictionary::has_all(const Array &keys) const {
-	return godot::api->pandemonium_dictionary_has_all(&_pandemonium_dictionary, (pandemonium_array *)&keys);
+	return pandemonium::api->pandemonium_dictionary_has_all(&_pandemonium_dictionary, (pandemonium_array *)&keys);
 }
 
 uint32_t Dictionary::hash() const {
-	return godot::api->pandemonium_dictionary_hash(&_pandemonium_dictionary);
+	return pandemonium::api->pandemonium_dictionary_hash(&_pandemonium_dictionary);
 }
 
 Array Dictionary::keys() const {
-	pandemonium_array a = godot::api->pandemonium_dictionary_keys(&_pandemonium_dictionary);
+	pandemonium_array a = pandemonium::api->pandemonium_dictionary_keys(&_pandemonium_dictionary);
 	return Array(a);
 }
 
 Variant &Dictionary::operator[](const Variant &key) {
-	pandemonium_variant *v = godot::api->pandemonium_dictionary_operator_index(&_pandemonium_dictionary, (pandemonium_variant *)&key);
+	pandemonium_variant *v = pandemonium::api->pandemonium_dictionary_operator_index(&_pandemonium_dictionary, (pandemonium_variant *)&key);
 	return *reinterpret_cast<Variant *>(v);
 }
 
 const Variant &Dictionary::operator[](const Variant &key) const {
 	// oops I did it again
-	pandemonium_variant *v = godot::api->pandemonium_dictionary_operator_index((pandemonium_dictionary *)&_pandemonium_dictionary, (pandemonium_variant *)&key);
+	pandemonium_variant *v = pandemonium::api->pandemonium_dictionary_operator_index((pandemonium_dictionary *)&_pandemonium_dictionary, (pandemonium_variant *)&key);
 	return *reinterpret_cast<Variant *>(v);
 }
 
 int Dictionary::size() const {
-	return godot::api->pandemonium_dictionary_size(&_pandemonium_dictionary);
+	return pandemonium::api->pandemonium_dictionary_size(&_pandemonium_dictionary);
 }
 
 String Dictionary::to_json() const {
-	pandemonium_string s = godot::api->pandemonium_dictionary_to_json(&_pandemonium_dictionary);
+	pandemonium_string s = pandemonium::api->pandemonium_dictionary_to_json(&_pandemonium_dictionary);
 	return String(s);
 }
 
 Array Dictionary::values() const {
-	pandemonium_array a = godot::api->pandemonium_dictionary_values(&_pandemonium_dictionary);
+	pandemonium_array a = pandemonium::api->pandemonium_dictionary_values(&_pandemonium_dictionary);
 	return Array(a);
 }
 
 Dictionary::~Dictionary() {
-	godot::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
+	pandemonium::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
 }
 
-} // namespace godot
+} // namespace pandemonium

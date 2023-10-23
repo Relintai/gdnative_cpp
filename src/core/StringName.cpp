@@ -2,11 +2,11 @@
 /*  String.cpp                                                           */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -31,7 +31,7 @@
 #include "StringName.hpp"
 
 #include "Array.hpp"
-#include "GodotGlobal.hpp"
+#include "PandemoniumGlobal.hpp"
 #include "NodePath.hpp"
 #include "PoolArrays.hpp"
 #include "Variant.hpp"
@@ -40,27 +40,27 @@
 
 #include <string.h>
 
-namespace godot {
+namespace pandemonium {
 
-godot::StringName::StringName() {
-	godot::api->pandemonium_string_name_new(&_pandemonium_string_name);
+pandemonium::StringName::StringName() {
+	pandemonium::api->pandemonium_string_name_new(&_pandemonium_string_name);
 }
 
 StringName::StringName(const char *contents) {
-	godot::api->pandemonium_string_name_new_data_char(&_pandemonium_string_name, contents);
+	pandemonium::api->pandemonium_string_name_new_data_char(&_pandemonium_string_name, contents);
 }
 
 StringName::StringName(const String &other) {
-	godot::api->pandemonium_string_name_new_data_string(&_pandemonium_string_name, &other._pandemonium_string);
+	pandemonium::api->pandemonium_string_name_new_data_string(&_pandemonium_string_name, &other._pandemonium_string);
 }
 
 StringName::~StringName() {
-	godot::api->pandemonium_string_name_destroy(&_pandemonium_string_name);
+	pandemonium::api->pandemonium_string_name_destroy(&_pandemonium_string_name);
 }
 
 
 bool StringName::operator==(const StringName &s) const {
-	return godot::api->pandemonium_string_name_operator_equal(&_pandemonium_string_name, &s._pandemonium_string_name);
+	return pandemonium::api->pandemonium_string_name_operator_equal(&_pandemonium_string_name, &s._pandemonium_string_name);
 }
 
 bool StringName::operator!=(const StringName &s) const {
@@ -68,11 +68,11 @@ bool StringName::operator!=(const StringName &s) const {
 }
 
 bool StringName::operator<(const StringName &s) const {
-	return godot::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name);
+	return pandemonium::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name);
 }
 
 bool StringName::operator<=(const StringName &s) const {
-	return godot::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name) ||
+	return pandemonium::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name) ||
 		   (*this == s);
 }
 
@@ -84,4 +84,4 @@ bool StringName::operator>=(const StringName &s) const {
 	return !(*this < s);
 }
 
-} // namespace godot
+} // namespace pandemonium

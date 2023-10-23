@@ -2,11 +2,11 @@
 /*  TagDB.hpp                                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -33,7 +33,7 @@
 
 #include <stddef.h>
 
-namespace godot {
+namespace pandemonium {
 
 namespace _TagDB {
 
@@ -44,6 +44,6 @@ bool is_type_compatible(size_t type_tag, size_t base_type_tag);
 
 } // namespace _TagDB
 
-} // namespace godot
+} // namespace pandemonium
 
 #endif // TAGDB_HPP

@@ -1,6 +1,6 @@
-# godot-cpp
+# pandemonium-cpp
 
-This repository contains the  *C++ bindings* for the [**Godot Engine**](https://github.com/godotengine/godot)'s GDNative API.
+This repository contains the  *C++ bindings* for the [**Pandemonium Engine**](https://github.com/pandemoniumengine/pandemonium)'s GDNative API.
 
 - [**Versioning**](#versioning)
 - [**Contributing**](#contributing)
@@ -9,8 +9,8 @@ This repository contains the  *C++ bindings* for the [**Godot Engine**](https://
 
 ## Versioning
 
-This repositories follows the same branch versioning as the main [Godot Engine
-repository](https://github.com/godotengine/godot):
+This repositories follows the same branch versioning as the main [Pandemonium Engine
+repository](https://github.com/pandemoniumengine/pandemonium):
 
 - `master` tracks the current development branch.
 - `3.x` tracks the development of the next 3.x minor release.
@@ -18,15 +18,15 @@ repository](https://github.com/godotengine/godot):
   in the corresponding branch.
 
 Stable releases are also tagged on this repository:
-[**Tags**](https://github.com/godotengine/godot-cpp/tags).
+[**Tags**](https://github.com/pandemoniumengine/pandemonium-cpp/tags).
 
-**For any project built against a stable release of Godot, we recommend using
+**For any project built against a stable release of Pandemonium, we recommend using
 this repository as a Git submodule, checking out the specific tag matching your
-Godot version.**
+Pandemonium version.**
 
 > As the `master` and `3.x` branches are constantly getting updates, if you are
-> using `godot-cpp` against a more current version of Godot, see the instructions
-> in [**pandemonium_headers**](https://github.com/godotengine/pandemonium_headers) for
+> using `pandemonium-cpp` against a more current version of Pandemonium, see the instructions
+> in [**pandemonium_headers**](https://github.com/pandemoniumengine/pandemonium_headers) for
 > updating the relevant files.
 
 ## Contributing
@@ -34,15 +34,15 @@ Godot version.**
 We greatly appreciate help in maintaining and extending this project. If you
 wish to help out, ensure you have an account on GitHub and create a "fork" of
 this repository. Rémi "Akien" Verschelde wrote an excellent bit of documentation
-for the main Godot project on this:
-[Pull request workflow](https://docs.godotengine.org/en/stable/community/contributing/pr_workflow.html)
+for the main Pandemonium project on this:
+[Pull request workflow](https://docs.pandemoniumengine.org/en/stable/community/contributing/pr_workflow.html)
 
 Please install clang-format and copy the files in `misc/hooks` into `.git/hooks`
 so formatting is done before your changes are submitted.
 
 ## Getting Started
 
-| **Build latest version of Godot** | [**GitHub**](https://github.com/godotengine/godot) | [**Docs**](https://godot.readthedocs.io/en/latest/development/compiling/index.html) |
+| **Build latest version of Pandemonium** | [**GitHub**](https://github.com/pandemoniumengine/pandemonium) | [**Docs**](https://pandemonium.readthedocs.io/en/latest/development/compiling/index.html) |
 | --- | --- | --- |
 
 ### Setting up a new project
@@ -50,27 +50,27 @@ so formatting is done before your changes are submitted.
 We recommend using Git for managing your project. The instructions below assume
 you're using Git. Alternatively, you can download the source code directly from
 GitHub. In this case, you need to download both
-[godot-cpp](https://github.com/godotengine/godot-cpp) and
-[pandemonium_headers](https://github.com/godotengine/pandemonium_headers).
+[pandemonium-cpp](https://github.com/pandemoniumengine/pandemonium-cpp) and
+[pandemonium_headers](https://github.com/pandemoniumengine/pandemonium_headers).
 
 ```bash
 mkdir SimpleLibrary
 cd SimpleLibrary
 mkdir bin
 mkdir src
-git clone --recursive https://github.com/godotengine/godot-cpp
+git clone --recursive https://github.com/pandemoniumengine/pandemonium-cpp
 ```
 
 If you wish to use a specific branch, add the -b option to the clone command:
 
 ```bash
-git clone --recursive https://github.com/godotengine/godot-cpp -b 3.0
+git clone --recursive https://github.com/pandemoniumengine/pandemonium-cpp -b 3.0
 ```
 
 If your project is an existing repository, use a Git submodule instead:
 
 ```bash
-git submodule add https://github.com/godotengine/godot-cpp
+git submodule add https://github.com/pandemoniumengine/pandemonium-cpp
 git submodule update --init --recursive
 ```
 
@@ -78,7 +78,7 @@ Right now, our directory structure should look like this:
 
 ```text
 SimpleLibrary/
-├─godot-cpp/
+├─pandemonium-cpp/
 | └─pandemonium_headers/
 ├─bin/
 └─src/
@@ -87,18 +87,18 @@ SimpleLibrary/
 ### Updating the `api.json` file
 
 Our `api.json` file contains metadata for all the classes that are part of the
-Godot core. This metadata is required to generate the C++ binding classes for
+Pandemonium core. This metadata is required to generate the C++ binding classes for
 use in GDNative modules.
 
 This file is supplied with our
-[pandemonium_headers](https://github.com/godotengine/pandemonium_headers) repository
-for your convenience. However, if you're running a custom build of Godot and
+[pandemonium_headers](https://github.com/pandemoniumengine/pandemonium_headers) repository
+for your convenience. However, if you're running a custom build of Pandemonium and
 need access to classes that have recent changes, you must generate a new
-`api.json` file. You do this by starting your Godot executable with the
+`api.json` file. You do this by starting your Pandemonium executable with the
 following parameters:
 
 ```bash
-godot --gdnative-generate-json-api api.json
+pandemonium --gdnative-generate-json-api api.json
 ```
 
 Now copy the `api.json` file into your folder structure to make it easier to
@@ -112,7 +112,7 @@ is required to tell SCons where to find your file.
 The final step is to compile our C++ bindings library:
 
 ```bash
-cd godot-cpp
+cd pandemonium-cpp
 scons platform=<your platform> generate_bindings=yes
 cd ..
 ```
@@ -121,7 +121,7 @@ Replace `<your platform>` with either `windows`, `linux`, `osx` or `android`. If
 you leave out `platform`, the target platform will automatically be detected
 from the host platform.
 
-The resulting library will be created in `godot-cpp/bin/`, take note of its name
+The resulting library will be created in `pandemonium-cpp/bin/`, take note of its name
 as it'll differ depending on the target platform.
 
 #### Compiling for Android
@@ -156,21 +156,21 @@ You can optionally add the following options to the SCons command line:
 Create `init.cpp` under `SimpleLibrary/src/` and add the following code:
 
 ```cpp
-#include <Godot.hpp>
+#include <Pandemonium.hpp>
 #include <Reference.hpp>
 
-using namespace godot;
+using namespace pandemonium;
 
 class SimpleClass : public Reference {
-    GODOT_CLASS(SimpleClass, Reference);
+    PANDEMONIUM_CLASS(SimpleClass, Reference);
 public:
     SimpleClass() { }
 
-    /** `_init` must exist as it is called by Godot. */
+    /** `_init` must exist as it is called by Pandemonium. */
     void _init() { }
 
     void test_void_method() {
-        Godot::print("This is test");
+        Pandemonium::print("This is test");
     }
 
     Variant method(Variant arg) {
@@ -194,7 +194,7 @@ public:
 
         /** Registering a signal: **/
         // register_signal<SimpleClass>("signal_name");
-        // register_signal<SimpleClass>("signal_name", "string_argument", GODOT_VARIANT_TYPE_STRING)
+        // register_signal<SimpleClass>("signal_name", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING)
     }
 
     String _name;
@@ -211,19 +211,19 @@ public:
 
 /** GDNative Initialize **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-    godot::Godot::gdnative_init(o);
+    pandemonium::Pandemonium::gdnative_init(o);
 }
 
 /** GDNative Terminate **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-    godot::Godot::gdnative_terminate(o);
+    pandemonium::Pandemonium::gdnative_terminate(o);
 }
 
 /** NativeScript Initialize **/
 extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-    godot::Godot::nativescript_init(handle);
+    pandemonium::Pandemonium::nativescript_init(handle);
 
-    godot::register_class<SimpleClass>();
+    pandemonium::register_class<SimpleClass>();
 }
 ```
 
@@ -235,11 +235,11 @@ Once you've compiled the GDNative C++ bindings (see above), you can compile the 
 
 ```bash
 cd SimpleLibrary
-clang++ -fPIC -o src/init.o -c src/init.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/pandemonium_headers
-clang++ -o bin/libtest.so -shared src/init.o -Lgodot-cpp/bin -l<name of the godot-cpp>
+clang++ -fPIC -o src/init.o -c src/init.cpp -g -O3 -std=c++14 -Ipandemonium-cpp/include -Ipandemonium-cpp/include/core -Ipandemonium-cpp/include/gen -Ipandemonium-cpp/pandemonium_headers
+clang++ -o bin/libtest.so -shared src/init.o -Lpandemonium-cpp/bin -l<name of the pandemonium-cpp>
 ```
 
-You'll need to replace `<name of the godot-cpp>` with the file that was created in [**Compiling the cpp bindings library**](#compiling-the-cpp-bindings-library).
+You'll need to replace `<name of the pandemonium-cpp>` with the file that was created in [**Compiling the cpp bindings library**](#compiling-the-cpp-bindings-library).
 
 This creates the file `libtest.so` in your `SimpleLibrary/bin` directory.
 
@@ -247,11 +247,11 @@ This creates the file `libtest.so` in your `SimpleLibrary/bin` directory.
 
 ```bash
 cd SimpleLibrary
-cl /Fosrc/init.obj /c src/init.cpp /nologo -EHsc -DNDEBUG /MDd /Igodot-cpp\include /Igodot-cpp\include\core /Igodot-cpp\include\gen /Igodot-cpp\pandemonium_headers
-link /nologo /dll /out:bin\libtest.dll /implib:bin\libsimple.lib src\init.obj godot-cpp\bin\<name of the godot-cpp>
+cl /Fosrc/init.obj /c src/init.cpp /nologo -EHsc -DNDEBUG /MDd /Ipandemonium-cpp\include /Ipandemonium-cpp\include\core /Ipandemonium-cpp\include\gen /Ipandemonium-cpp\pandemonium_headers
+link /nologo /dll /out:bin\libtest.dll /implib:bin\libsimple.lib src\init.obj pandemonium-cpp\bin\<name of the pandemonium-cpp>
 ```
 
-You'll need to replace `<name of the godot-cpp>` with the file that was created
+You'll need to replace `<name of the pandemonium-cpp>` with the file that was created
 in [**Compiling the cpp bindingslibrary**](#compiling-the-cpp-bindings-library).
 Replace `/MDd` with `/MD` to create a release build, which will run faster and
 be smaller.
@@ -270,11 +270,11 @@ submit a pull request :slightly_smiling_face:
 
 ```bash
 cd SimpleLibrary
-aarch64-linux-android29-clang++ -fPIC -o src/init.o -c src/init.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/pandemonium_headers
-aarch64-linux-android29-clang++ -o bin/libtest.so -shared src/init.o -Lgodot-cpp/bin -l<name of the godot-cpp>
+aarch64-linux-android29-clang++ -fPIC -o src/init.o -c src/init.cpp -g -O3 -std=c++14 -Ipandemonium-cpp/include -Ipandemonium-cpp/include/core -Ipandemonium-cpp/include/gen -Ipandemonium-cpp/pandemonium_headers
+aarch64-linux-android29-clang++ -o bin/libtest.so -shared src/init.o -Lpandemonium-cpp/bin -l<name of the pandemonium-cpp>
 ```
 
-You'll need to replace `<name of the godot-cpp>` with the file that was created in [**Compiling the cpp bindings library**](#compiling-the-cpp-bindings-library). The command above targets `arm64v8`. To target `armv7`, use `armv7a-linux-androideabi29-clang++` instead of `aarch64-linux-android29-clang++`.
+You'll need to replace `<name of the pandemonium-cpp>` with the file that was created in [**Compiling the cpp bindings library**](#compiling-the-cpp-bindings-library). The command above targets `arm64v8`. To target `armv7`, use `armv7a-linux-androideabi29-clang++` instead of `aarch64-linux-android29-clang++`.
 
 This creates the file `libtest.so` in your `SimpleLibrary/bin` directory.
 
@@ -284,30 +284,30 @@ GDNative isn't supported on iOS yet. This is because iOS only allows linking
 static libraries, not dynamic libraries. In theory, it would be possible to link
 a GDNative library statically, but some of GDNative's convenience would be lost
 in the process as one would have to recompile the engine on every change. See
-[issue #30](https://github.com/godotengine/pandemonium_headers/issues/30) in the
-Godot headers repository for more information.
+[issue #30](https://github.com/pandemoniumengine/pandemonium_headers/issues/30) in the
+Pandemonium headers repository for more information.
 
 #### HTML5
 
-GDNative is supported on [specific exports](https://docs.godotengine.org/en/latest/tutorials/export/exporting_for_web.html#export-options) for the HTML5 platform since Godot `3.3`. Linking webassembly modules is currently underspecified in the standard, but [emscripten](https://emscripten.org/), which Godot uses to build the HTML5 version, implements its own linking system.
+GDNative is supported on [specific exports](https://docs.pandemoniumengine.org/en/latest/tutorials/export/exporting_for_web.html#export-options) for the HTML5 platform since Pandemonium `3.3`. Linking webassembly modules is currently underspecified in the standard, but [emscripten](https://emscripten.org/), which Pandemonium uses to build the HTML5 version, implements its own linking system.
 
 To build GDNative libraries, you will need a recent version of [Emscripten](https://emscripten.org/).
 
 ```bash
 cd SimpleLibrary
-emcc  -o bin/libtest.wasm -g -O3 -s SIDE_MODULE=1 src/init.cpp godot-cpp/bin/<name of the godot-cpp> -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/pandemonium_headers
+emcc  -o bin/libtest.wasm -g -O3 -s SIDE_MODULE=1 src/init.cpp pandemonium-cpp/bin/<name of the pandemonium-cpp> -Ipandemonium-cpp/include -Ipandemonium-cpp/include/core -Ipandemonium-cpp/include/gen -Ipandemonium-cpp/pandemonium_headers
 ```
 
-You'll need to replace `<name of the godot-cpp>` with the file that was created in [**Compiling the cpp bindings library**](#compiling-the-cpp-bindings-library).
+You'll need to replace `<name of the pandemonium-cpp>` with the file that was created in [**Compiling the cpp bindings library**](#compiling-the-cpp-bindings-library).
 
 This creates the file `libtest.so` in your `SimpleLibrary/bin` directory.
 
 ### Creating `.gdnlib` and `.gdns` files
 
 Follow the instructions in
-[pandemonium_headers/README.md](https://github.com/godotengine/pandemonium_headers/blob/master/README.md#how-do-i-use-native-scripts-from-the-editor)
+[pandemonium_headers/README.md](https://github.com/pandemoniumengine/pandemonium_headers/blob/master/README.md#how-do-i-use-native-scripts-from-the-editor)
 to create the `.gdns` file. This file contains paths to GDNative libraries for
-various platforms. This makes the library usable from Godot in a
+various platforms. This makes the library usable from Pandemonium in a
 platform-independent manner.
 
 ### Implementing with GDScript
@@ -319,9 +319,9 @@ var simpleclass = load("res://simpleclass.gdns").new()
 simpleclass.method("Test argument")
 ```
 
-### Using Godot classes in C++
+### Using Pandemonium classes in C++
 
-Godot expects you to manage its classes the same way the engine does. These rules apply to all Godot classes, including your NativeScripts, but not to any normal C++ classes used in your library.
+Pandemonium expects you to manage its classes the same way the engine does. These rules apply to all Pandemonium classes, including your NativeScripts, but not to any normal C++ classes used in your library.
 
 - Instantiate Objects using `_new()`, not C++'s `new` operator.
 
@@ -359,7 +359,7 @@ MeshInstance *m = Object::cast_to<MeshInstance>(get_node("ChildNode"));
 if (m) { ... }
 ```
 
-- **Never** use Godot types in static or global variables. The Godot API isn't loaded until after their constructors are called.
+- **Never** use Pandemonium types in static or global variables. The Pandemonium API isn't loaded until after their constructors are called.
 
 ```cpp
 String s; // crashes

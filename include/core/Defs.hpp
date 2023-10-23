@@ -2,11 +2,11 @@
 /*  Defs.hpp                                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -31,7 +31,7 @@
 #ifndef DEFS_H
 #define DEFS_H
 
-namespace godot {
+namespace pandemonium {
 
 enum class Error {
 	OK,
@@ -85,9 +85,9 @@ enum class Error {
 	ERR_PRINTER_ON_FIRE, /// the parallel port printer is engulfed in flames
 };
 
-} // namespace godot
+} // namespace pandemonium
 
-#include <GodotGlobal.hpp>
+#include <PandemoniumGlobal.hpp>
 
 // alloca() is non-standard. When using MSVC, it's in malloc.h.
 #if defined(__linux__) || defined(__APPLE__)
@@ -98,7 +98,7 @@ enum class Error {
 
 typedef float real_t;
 
-// This epsilon should match the one used by Godot for consistency.
+// This epsilon should match the one used by Pandemonium for consistency.
 // Using `f` when `real_t` is float.
 #define CMP_EPSILON 0.00001f
 #define CMP_EPSILON2 (CMP_EPSILON * CMP_EPSILON)
@@ -132,7 +132,7 @@ typedef float real_t;
 
 // ERR/WARN macros
 #ifndef WARN_PRINT
-#define WARN_PRINT(msg) godot::Godot::print_warning(msg, __func__, __FILE__, __LINE__)
+#define WARN_PRINT(msg) pandemonium::Pandemonium::print_warning(msg, __func__, __FILE__, __LINE__)
 #endif
 
 #ifndef WARN_PRINTS
@@ -140,7 +140,7 @@ typedef float real_t;
 #endif
 
 #ifndef ERR_PRINT
-#define ERR_PRINT(msg) godot::Godot::print_error(msg, __func__, __FILE__, __LINE__)
+#define ERR_PRINT(msg) pandemonium::Pandemonium::print_error(msg, __func__, __FILE__, __LINE__)
 #endif
 
 #ifndef ERR_PRINTS
@@ -148,19 +148,19 @@ typedef float real_t;
 #endif
 
 #ifndef FATAL_PRINT
-#define FATAL_PRINT(msg) ERR_PRINT(godot::String("FATAL: ") + (msg))
+#define FATAL_PRINT(msg) ERR_PRINT(pandemonium::String("FATAL: ") + (msg))
 #endif
 
 #ifndef ERR_MSG_INDEX
-#define ERR_MSG_INDEX(index, size) (godot::String("Index ") + #index + "=" + godot::String::num_int64(index) + " out of size (" + #size + "=" + godot::String::num_int64(size) + ")")
+#define ERR_MSG_INDEX(index, size) (pandemonium::String("Index ") + #index + "=" + pandemonium::String::num_int64(index) + " out of size (" + #size + "=" + pandemonium::String::num_int64(size) + ")")
 #endif
 
 #ifndef ERR_MSG_NULL
-#define ERR_MSG_NULL(param) (godot::String("Parameter '") + #param + "' is null.")
+#define ERR_MSG_NULL(param) (pandemonium::String("Parameter '") + #param + "' is null.")
 #endif
 
 #ifndef ERR_MSG_COND
-#define ERR_MSG_COND(cond) (godot::String("Condition '") + #cond + "' is true.")
+#define ERR_MSG_COND(cond) (pandemonium::String("Condition '") + #cond + "' is true.")
 #endif
 
 #ifndef ERR_FAIL_INDEX

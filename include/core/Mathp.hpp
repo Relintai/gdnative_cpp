@@ -2,11 +2,11 @@
 /*  Math.hpp                                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -28,17 +28,17 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef GODOT_MATH_H
-#define GODOT_MATH_H
+#ifndef PANDEMONIUM_MATH_H
+#define PANDEMONIUM_MATH_H
 
 #include "Defs.hpp"
 #include <cmath>
 
-namespace godot {
+namespace pandemonium {
 namespace Mathp {
 
-// Functions reproduced as in Godot's source code `math_funcs.h`.
-// Some are overloads to automatically support changing real_t into either double or float in the way Godot does.
+// Functions reproduced as in Pandemonium's source code `math_funcs.h`.
+// Some are overloads to automatically support changing real_t into either double or float in the way Pandemonium does.
 
 inline double fmod(double p_x, double p_y) {
 	return ::fmod(p_x, p_y);
@@ -297,6 +297,6 @@ inline unsigned int next_power_of_2(unsigned int x) {
 }
 
 } // namespace Math
-} // namespace godot
+} // namespace pandemonium
 
-#endif // GODOT_MATH_H
+#endif // PANDEMONIUM_MATH_H

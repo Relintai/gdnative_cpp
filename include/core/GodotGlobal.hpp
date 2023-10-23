@@ -1,12 +1,12 @@
 /*************************************************************************/
-/*  GodotGlobal.hpp                                                      */
+/*  PandemoniumGlobal.hpp                                                      */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef GODOT_GLOBAL_HPP
-#define GODOT_GLOBAL_HPP
+#ifndef PANDEMONIUM_GLOBAL_HPP
+#define PANDEMONIUM_GLOBAL_HPP
 
 #include <gdnative_api_struct.gen.h>
 
 #include "Array.hpp"
 #include "String.hpp"
 
-namespace godot {
+namespace pandemonium {
 
 class Array;
 class String;
@@ -51,7 +51,7 @@ extern "C" const pandemonium_gdnative_ext_net_api_struct *net_api;
 
 extern "C" const void *gdnlib;
 
-class Godot {
+class Pandemonium {
 public:
 	static void print(const String &message);
 	static void print_warning(const String &description, const String &function, const String &file, int line);
@@ -75,6 +75,6 @@ struct _RegisterState {
 	static int language_index;
 };
 
-} // namespace godot
+} // namespace pandemonium
 
 #endif

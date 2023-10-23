@@ -2,11 +2,11 @@
 /*  Variant.hpp                                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -56,7 +56,7 @@
 #include "Vector4.hpp"
 #include "Vector4i.hpp"
 
-namespace godot {
+namespace pandemonium {
 
 class Dictionary;
 
@@ -213,7 +213,7 @@ public:
 
 	Variant(const Plane &p_plane);
 
-	Variant(const godot::AABB &p_aabb);
+	Variant(const pandemonium::AABB &p_aabb);
 
 	Variant(const Quaternion &p_quaternion);
 
@@ -229,7 +229,7 @@ public:
 
 	Variant(const NodePath &p_path);
 
-	Variant(const godot::RID &p_rid);
+	Variant(const pandemonium::RID &p_rid);
 
 	Variant(const Object *p_object);
 
@@ -279,7 +279,7 @@ public:
 	operator Vector4() const;
 	operator Vector4i() const;
 	operator Plane() const;
-	operator godot::AABB() const;
+	operator pandemonium::AABB() const;
 	operator Quaternion() const;
 	operator Basis() const;
 	operator Transform() const;
@@ -289,7 +289,7 @@ public:
 	operator Color() const;
 
 	operator NodePath() const;
-	operator godot::RID() const;
+	operator pandemonium::RID() const;
 	operator pandemonium_object *() const;
 
 	template <typename T>
@@ -331,6 +331,6 @@ public:
 	~Variant();
 };
 
-} // namespace godot
+} // namespace pandemonium
 
 #endif // VARIANT_H

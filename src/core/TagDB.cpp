@@ -2,11 +2,11 @@
 /*  TagDP.cpp                                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -32,9 +32,9 @@
 
 #include <unordered_map>
 
-#include <GodotGlobal.hpp>
+#include <PandemoniumGlobal.hpp>
 
-namespace godot {
+namespace pandemonium {
 
 namespace _TagDB {
 
@@ -52,7 +52,7 @@ bool is_type_known(size_t type_tag) {
 }
 
 void register_global_type(const char *name, size_t type_tag, size_t base_type_tag) {
-	godot::nativescript_api->pandemonium_nativescript_set_global_type_tag(godot::_RegisterState::language_index, name, (const void *)type_tag);
+	pandemonium::nativescript_api->pandemonium_nativescript_set_global_type_tag(pandemonium::_RegisterState::language_index, name, (const void *)type_tag);
 
 	register_type(type_tag, base_type_tag);
 }
@@ -75,4 +75,4 @@ bool is_type_compatible(size_t ask_tag, size_t have_tag) {
 
 } // namespace _TagDB
 
-} // namespace godot
+} // namespace pandemonium

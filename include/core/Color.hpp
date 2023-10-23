@@ -2,11 +2,11 @@
 /*  Color.hpp                                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -38,7 +38,7 @@
 #include "Defs.hpp"
 #include "String.hpp"
 
-namespace godot {
+namespace pandemonium {
 
 struct Color {
 private:
@@ -166,6 +166,6 @@ public:
 	}
 };
 
-} // namespace godot
+} // namespace pandemonium
 
 #endif // COLOR_H

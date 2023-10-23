@@ -2,11 +2,11 @@
 /*  init.cpp                                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -28,25 +28,25 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <Godot.hpp>
+#include <Pandemonium.hpp>
 #include <Reference.hpp>
 
-using namespace godot;
+using namespace pandemonium;
 
 class SimpleClass : public Reference {
-	GODOT_CLASS(SimpleClass, Reference);
+	PANDEMONIUM_CLASS(SimpleClass, Reference);
 
 public:
 	SimpleClass() {}
 
-	/** `_init` must exist as it is called by Godot. */
+	/** `_init` must exist as it is called by Pandemonium. */
 	void _init() {
 		_name = String("SimpleClass");
 		_value = 0;
 	}
 
 	void test_void_method() {
-		Godot::print("This is test");
+		Pandemonium::print("This is test");
 	}
 
 	Variant method(Variant arg) {
@@ -69,8 +69,8 @@ public:
 		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
 
 		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'godot::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", GODOT_VARIANT_TYPE_STRING);
+		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
+		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
 	}
 
 	String _name;
@@ -87,17 +87,17 @@ public:
 
 /** GDNative Initialize **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	godot::Godot::gdnative_init(o);
+	pandemonium::Pandemonium::gdnative_init(o);
 }
 
 /** GDNative Terminate **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	godot::Godot::gdnative_terminate(o);
+	pandemonium::Pandemonium::gdnative_terminate(o);
 }
 
 /** NativeScript Initialize **/
 extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	godot::Godot::nativescript_init(handle);
+	pandemonium::Pandemonium::nativescript_init(handle);
 
-	godot::register_class<SimpleClass>();
+	pandemonium::register_class<SimpleClass>();
 }

@@ -2,11 +2,11 @@
 /*  Ref.hpp                                                              */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -31,13 +31,13 @@
 #ifndef REF_H
 #define REF_H
 
-#include "GodotGlobal.hpp"
+#include "PandemoniumGlobal.hpp"
 #include "Reference.hpp"
 #include "Variant.hpp"
 
-namespace godot {
+namespace pandemonium {
 
-// Replicates Godot's Ref<T> behavior
+// Replicates Pandemonium's Ref<T> behavior
 // Rewritten from f5234e70be7dec4930c2d5a0e829ff480d044b1d.
 template <class T>
 class Ref {
@@ -202,7 +202,7 @@ public:
 		unref();
 	}
 
-	// Used exclusively in the bindings to recreate the Ref Godot encapsulates in return values,
+	// Used exclusively in the bindings to recreate the Ref Pandemonium encapsulates in return values,
 	// without adding to the refcount.
 	inline static Ref<T> __internal_constructor(Object *obj) {
 		Ref<T> r;
@@ -211,6 +211,6 @@ public:
 	}
 };
 
-} // namespace godot
+} // namespace pandemonium
 
 #endif

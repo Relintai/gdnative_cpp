@@ -1,12 +1,12 @@
 /*************************************************************************/
-/*  GodotGlobal.cpp                                                      */
+/*  PandemoniumGlobal.cpp                                                      */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "GodotGlobal.hpp"
+#include "PandemoniumGlobal.hpp"
 
 #include "String.hpp"
 #include "Array.hpp"
@@ -36,7 +36,7 @@
 #include "Wrapped.hpp"
 
 static GDCALLINGCONV void *wrapper_create(void *data, const void *type_tag, pandemonium_object *instance) {
-	godot::_Wrapped *wrapper_memory = (godot::_Wrapped *)godot::api->pandemonium_alloc(sizeof(godot::_Wrapped));
+	pandemonium::_Wrapped *wrapper_memory = (pandemonium::_Wrapped *)pandemonium::api->pandemonium_alloc(sizeof(pandemonium::_Wrapped));
 
 	if (!wrapper_memory)
 		return NULL;
@@ -48,10 +48,10 @@ static GDCALLINGCONV void *wrapper_create(void *data, const void *type_tag, pand
 
 static GDCALLINGCONV void wrapper_destroy(void *data, void *wrapper) {
 	if (wrapper)
-		godot::api->pandemonium_free(wrapper);
+		pandemonium::api->pandemonium_free(wrapper);
 }
 
-namespace godot {
+namespace pandemonium {
 
 void *_RegisterState::nativescript_handle;
 int _RegisterState::language_index;
@@ -66,11 +66,11 @@ const pandemonium_gdnative_ext_net_api_struct *net_api = nullptr;
 
 const void *gdnlib = NULL;
 
-void Godot::print(const String &message) {
-	godot::api->pandemonium_print((pandemonium_string *)&message);
+void Pandemonium::print(const String &message) {
+	pandemonium::api->pandemonium_print((pandemonium_string *)&message);
 }
 
-void Godot::print_warning(const String &description, const String &function, const String &file, int line) {
+void Pandemonium::print_warning(const String &description, const String &function, const String &file, int line) {
 	int len;
 
 	char *c_desc = description.alloc_c_string();
@@ -78,18 +78,18 @@ void Godot::print_warning(const String &description, const String &function, con
 	char *c_file = file.alloc_c_string();
 
 	if (c_desc != nullptr && c_func != nullptr && c_file != nullptr) {
-		godot::api->pandemonium_print_warning(c_desc, c_func, c_file, line);
+		pandemonium::api->pandemonium_print_warning(c_desc, c_func, c_file, line);
 	};
 
 	if (c_desc != nullptr)
-		godot::api->pandemonium_free(c_desc);
+		pandemonium::api->pandemonium_free(c_desc);
 	if (c_func != nullptr)
-		godot::api->pandemonium_free(c_func);
+		pandemonium::api->pandemonium_free(c_func);
 	if (c_file != nullptr)
-		godot::api->pandemonium_free(c_file);
+		pandemonium::api->pandemonium_free(c_file);
 }
 
-void Godot::print_error(const String &description, const String &function, const String &file, int line) {
+void Pandemonium::print_error(const String &description, const String &function, const String &file, int line) {
 	int len;
 
 	char *c_desc = description.alloc_c_string();
@@ -97,49 +97,49 @@ void Godot::print_error(const String &description, const String &function, const
 	char *c_file = file.alloc_c_string();
 
 	if (c_desc != nullptr && c_func != nullptr && c_file != nullptr) {
-		godot::api->pandemonium_print_error(c_desc, c_func, c_file, line);
+		pandemonium::api->pandemonium_print_error(c_desc, c_func, c_file, line);
 	};
 
 	if (c_desc != nullptr)
-		godot::api->pandemonium_free(c_desc);
+		pandemonium::api->pandemonium_free(c_desc);
 	if (c_func != nullptr)
-		godot::api->pandemonium_free(c_func);
+		pandemonium::api->pandemonium_free(c_func);
 	if (c_file != nullptr)
-		godot::api->pandemonium_free(c_file);
+		pandemonium::api->pandemonium_free(c_file);
 }
 
 void ___register_types();
 void ___init_method_bindings();
 
-void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
-	godot::api = options->api_struct;
-	godot::gdnlib = options->gd_native_library;
+void Pandemonium::gdnative_init(pandemonium_gdnative_init_options *options) {
+	pandemonium::api = options->api_struct;
+	pandemonium::gdnlib = options->gd_native_library;
 
-	const pandemonium_gdnative_api_struct *core_extension = godot::api->next;
+	const pandemonium_gdnative_api_struct *core_extension = pandemonium::api->next;
 
 	/*
 	while (core_extension) {
 		if (core_extension->version.major == 1 && core_extension->version.minor == 1) {
-			godot::core_1_1_api = (const pandemonium_gdnative_core_1_1_api_struct *)core_extension;
+			pandemonium::core_1_1_api = (const pandemonium_gdnative_core_1_1_api_struct *)core_extension;
 		} else if (core_extension->version.major == 1 && core_extension->version.minor == 2) {
-			godot::core_1_2_api = (const pandemonium_gdnative_core_1_2_api_struct *)core_extension;
+			pandemonium::core_1_2_api = (const pandemonium_gdnative_core_1_2_api_struct *)core_extension;
 		}
 		core_extension = core_extension->next;
 	}
 	*/
 
 	// now find our extensions
-	for (int i = 0; i < godot::api->num_extensions; i++) {
-		switch (godot::api->extensions[i]->type) {
+	for (int i = 0; i < pandemonium::api->num_extensions; i++) {
+		switch (pandemonium::api->extensions[i]->type) {
 			case GDNATIVE_EXT_NATIVESCRIPT: {
-				godot::nativescript_api = (const pandemonium_gdnative_ext_nativescript_api_struct *)godot::api->extensions[i];
+				pandemonium::nativescript_api = (const pandemonium_gdnative_ext_nativescript_api_struct *)pandemonium::api->extensions[i];
 
 				/*
-				const pandemonium_gdnative_api_struct *extension = godot::nativescript_api->next;
+				const pandemonium_gdnative_api_struct *extension = pandemonium::nativescript_api->next;
 
 				while (extension) {
 					if (extension->version.major == 1 && extension->version.minor == 1) {
-						//godot::nativescript_1_1_api = (const pandemonium_gdnative_ext_nativescript_1_1_api_struct *)extension;
+						//pandemonium::nativescript_1_1_api = (const pandemonium_gdnative_ext_nativescript_1_1_api_struct *)extension;
 					}
 
 					extension = extension->next;
@@ -147,23 +147,23 @@ void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
 				*/
 			} break;
 			case GDNATIVE_EXT_PLUGINSCRIPT: {
-				godot::pluginscript_api = (const pandemonium_gdnative_ext_pluginscript_api_struct *)godot::api->extensions[i];
+				pandemonium::pluginscript_api = (const pandemonium_gdnative_ext_pluginscript_api_struct *)pandemonium::api->extensions[i];
 			} break;
 			case GDNATIVE_EXT_ANDROID: {
-				godot::android_api = (const pandemonium_gdnative_ext_android_api_struct *)godot::api->extensions[i];
+				pandemonium::android_api = (const pandemonium_gdnative_ext_android_api_struct *)pandemonium::api->extensions[i];
 			} break;
 			case GDNATIVE_EXT_VIDEODECODER: {
-				godot::videodecoder_api = (const pandemonium_gdnative_ext_videodecoder_api_struct *)godot::api->extensions[i];
+				pandemonium::videodecoder_api = (const pandemonium_gdnative_ext_videodecoder_api_struct *)pandemonium::api->extensions[i];
 			} break;
 			case GDNATIVE_EXT_NET: {
-				godot::net_api = (const pandemonium_gdnative_ext_net_api_struct *)godot::api->extensions[i];
+				pandemonium::net_api = (const pandemonium_gdnative_ext_net_api_struct *)pandemonium::api->extensions[i];
 
 				/*
-				const pandemonium_gdnative_api_struct *extension = godot::net_api->next;
+				const pandemonium_gdnative_api_struct *extension = pandemonium::net_api->next;
 
 				while (extension) {
 					if (extension->version.major == 3 && extension->version.minor == 2) {
-						godot::net_3_2_api = (const pandemonium_gdnative_ext_net_3_2_api_struct *)extension;
+						pandemonium::net_3_2_api = (const pandemonium_gdnative_ext_net_3_2_api_struct *)extension;
 					}
 
 					extension = extension->next;
@@ -181,27 +181,27 @@ void Godot::gdnative_init(pandemonium_gdnative_init_options *options) {
 	binding_funcs.alloc_instance_binding_data = wrapper_create;
 	binding_funcs.free_instance_binding_data = wrapper_destroy;
 
-	godot::_RegisterState::language_index = godot::nativescript_api->pandemonium_nativescript_register_instance_binding_data_functions(binding_funcs);
+	pandemonium::_RegisterState::language_index = pandemonium::nativescript_api->pandemonium_nativescript_register_instance_binding_data_functions(binding_funcs);
 
 	// register these now
 	___register_types();
 	___init_method_bindings();
 }
 
-void Godot::gdnative_terminate(pandemonium_gdnative_terminate_options *options) {
+void Pandemonium::gdnative_terminate(pandemonium_gdnative_terminate_options *options) {
 	// reserved for future use.
 }
 
-void Godot::gdnative_profiling_add_data(const char *p_signature, uint64_t p_time) {
-	godot::nativescript_api->pandemonium_nativescript_profiling_add_data(p_signature, p_time);
+void Pandemonium::gdnative_profiling_add_data(const char *p_signature, uint64_t p_time) {
+	pandemonium::nativescript_api->pandemonium_nativescript_profiling_add_data(p_signature, p_time);
 }
 
-void Godot::nativescript_init(void *handle) {
-	godot::_RegisterState::nativescript_handle = handle;
+void Pandemonium::nativescript_init(void *handle) {
+	pandemonium::_RegisterState::nativescript_handle = handle;
 }
 
-void Godot::nativescript_terminate(void *handle) {
-	godot::nativescript_api->pandemonium_nativescript_unregister_instance_binding_data_functions(godot::_RegisterState::language_index);
+void Pandemonium::nativescript_terminate(void *handle) {
+	pandemonium::nativescript_api->pandemonium_nativescript_unregister_instance_binding_data_functions(pandemonium::_RegisterState::language_index);
 }
 
-} // namespace godot
+} // namespace pandemonium

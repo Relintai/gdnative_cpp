@@ -2,11 +2,11 @@
 /*  NodePath.cpp                                                         */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -29,86 +29,86 @@
 /*************************************************************************/
 
 #include "NodePath.hpp"
-#include "GodotGlobal.hpp"
+#include "PandemoniumGlobal.hpp"
 #include "String.hpp"
 
 #include <gdn/node_path.h>
 
-namespace godot {
+namespace pandemonium {
 
 NodePath::NodePath() {
 	String from = "";
-	godot::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
+	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
 }
 
 NodePath::NodePath(const NodePath &other) {
 	String from = other;
-	godot::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
+	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
 }
 
 NodePath::NodePath(const String &from) {
-	godot::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
+	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
 }
 
 NodePath::NodePath(const char *contents) {
 	String from = contents;
-	godot::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
+	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&from);
 }
 
 String NodePath::get_name(const int idx) const {
-	pandemonium_string str = godot::api->pandemonium_node_path_get_name(&_node_path, idx);
+	pandemonium_string str = pandemonium::api->pandemonium_node_path_get_name(&_node_path, idx);
 	return String(str);
 }
 
 int NodePath::get_name_count() const {
-	return godot::api->pandemonium_node_path_get_name_count(&_node_path);
+	return pandemonium::api->pandemonium_node_path_get_name_count(&_node_path);
 }
 
 String NodePath::get_subname(const int idx) const {
-	pandemonium_string str = godot::api->pandemonium_node_path_get_subname(&_node_path, idx);
+	pandemonium_string str = pandemonium::api->pandemonium_node_path_get_subname(&_node_path, idx);
 	return String(str);
 }
 
 int NodePath::get_subname_count() const {
-	return godot::api->pandemonium_node_path_get_subname_count(&_node_path);
+	return pandemonium::api->pandemonium_node_path_get_subname_count(&_node_path);
 }
 
 bool NodePath::is_absolute() const {
-	return godot::api->pandemonium_node_path_is_absolute(&_node_path);
+	return pandemonium::api->pandemonium_node_path_is_absolute(&_node_path);
 }
 
 bool NodePath::is_empty() const {
-	return godot::api->pandemonium_node_path_is_empty(&_node_path);
+	return pandemonium::api->pandemonium_node_path_is_empty(&_node_path);
 }
 
 NodePath NodePath::get_as_property_path() const {
-	pandemonium_node_path path = godot::api->pandemonium_node_path_get_as_property_path(&_node_path);
+	pandemonium_node_path path = pandemonium::api->pandemonium_node_path_get_as_property_path(&_node_path);
 	return NodePath(path);
 }
 String NodePath::get_concatenated_subnames() const {
-	pandemonium_string str = godot::api->pandemonium_node_path_get_concatenated_subnames(&_node_path);
+	pandemonium_string str = pandemonium::api->pandemonium_node_path_get_concatenated_subnames(&_node_path);
 	return String(str);
 }
 
 NodePath::operator String() const {
-	pandemonium_string str = godot::api->pandemonium_node_path_as_string(&_node_path);
+	pandemonium_string str = pandemonium::api->pandemonium_node_path_as_string(&_node_path);
 	return String(str);
 }
 
 bool NodePath::operator==(const NodePath &other) {
-	return godot::api->pandemonium_node_path_operator_equal(&_node_path, &other._node_path);
+	return pandemonium::api->pandemonium_node_path_operator_equal(&_node_path, &other._node_path);
 }
 
 void NodePath::operator=(const NodePath &other) {
-	godot::api->pandemonium_node_path_destroy(&_node_path);
+	pandemonium::api->pandemonium_node_path_destroy(&_node_path);
 
 	String other_string = (String)other;
 
-	godot::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&other_string);
+	pandemonium::api->pandemonium_node_path_new(&_node_path, (pandemonium_string *)&other_string);
 }
 
 NodePath::~NodePath() {
-	godot::api->pandemonium_node_path_destroy(&_node_path);
+	pandemonium::api->pandemonium_node_path_destroy(&_node_path);
 }
 
-} // namespace godot
+} // namespace pandemonium

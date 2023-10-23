@@ -1,12 +1,12 @@
 /*************************************************************************/
-/*  GodotProfiling.hpp                                                   */
+/*  PandemoniumProfiling.hpp                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -28,12 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef GODOT_PROFILING_HPP
-#define GODOT_PROFILING_HPP
+#ifndef PANDEMONIUM_PROFILING_HPP
+#define PANDEMONIUM_PROFILING_HPP
 
 #include "Defs.hpp"
 
-namespace godot {
+namespace pandemonium {
 
 class FunctionProfiling {
 	char signature[1024];
@@ -44,12 +44,12 @@ public:
 	~FunctionProfiling();
 };
 
-} // namespace godot
+} // namespace pandemonium
 
 #ifdef DEBUG_ENABLED
-#define GODOT_PROFILING_FUNCTION FunctionProfiling __function_profiling(__FUNCTION__, __LINE__);
+#define PANDEMONIUM_PROFILING_FUNCTION FunctionProfiling __function_profiling(__FUNCTION__, __LINE__);
 #else
-#define GODOT_PROFILING_FUNCTION
+#define PANDEMONIUM_PROFILING_FUNCTION
 #endif
 
 #endif

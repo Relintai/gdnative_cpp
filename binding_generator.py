@@ -128,8 +128,8 @@ def make_gdnative_type(t, ref_allowed):
 def generate_class_header(used_classes, c, use_template_get_node):
 
     source = []
-    source.append("#ifndef GODOT_CPP_" + strip_name(c["name"]).upper() + "_HPP")
-    source.append("#define GODOT_CPP_" + strip_name(c["name"]).upper() + "_HPP")
+    source.append("#ifndef PANDEMONIUM_CPP_" + strip_name(c["name"]).upper() + "_HPP")
+    source.append("#define PANDEMONIUM_CPP_" + strip_name(c["name"]).upper() + "_HPP")
     source.append("")
     source.append("")
 
@@ -141,7 +141,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
 
     class_name = strip_name(c["name"])
 
-    # Ref<T> is not included in object.h in Godot either,
+    # Ref<T> is not included in object.h in Pandemonium either,
     # so don't include it here because it's not needed
     if class_name != "Object" and class_name != "Reference":
         source.append("#include <core/Ref.hpp>")
@@ -169,7 +169,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
     if c["base_class"] != "":
         source.append('#include "' + strip_name(c["base_class"]) + '.hpp"')
 
-    source.append("namespace godot {")
+    source.append("namespace pandemonium {")
     source.append("")
 
     for used_type in used_classes:
@@ -229,7 +229,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
         source.append("\t}")
         source.append("")
 
-        # godot::api->pandemonium_global_get_singleton((char *) \"" + strip_name(c["name"]) + "\");"
+        # pandemonium::api->pandemonium_global_get_singleton((char *) \"" + strip_name(c["name"]) + "\");"
 
     # class name:
     # Two versions needed needed because when the user implements a custom class,
@@ -244,7 +244,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
     )
 
     source.append(
-        "\tstatic inline Object *___get_from_variant(Variant a) { pandemonium_object *o = (pandemonium_object*) a; return (o) ? (Object *) godot::nativescript_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, o) : nullptr; }"
+        "\tstatic inline Object *___get_from_variant(Variant a) { pandemonium_object *o = (pandemonium_object*) a; return (o) ? (Object *) pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(pandemonium::_RegisterState::language_index, o) : nullptr; }"
     )
 
     enum_values = []
@@ -271,7 +271,7 @@ def generate_class_header(used_classes, c, use_template_get_node):
     source.append("\n\t// methods")
 
     if class_name == "Object":
-        source.append("#ifndef GODOT_CPP_NO_OBJECT_CAST")
+        source.append("#ifndef PANDEMONIUM_CPP_NO_OBJECT_CAST")
         source.append("\ttemplate<class T>")
         source.append("\tstatic T *cast_to(const Object *obj);")
         source.append("#endif")
@@ -422,11 +422,11 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
     source.append("")
     source.append("")
 
-    source.append("#include <core/GodotGlobal.hpp>")
+    source.append("#include <core/PandemoniumGlobal.hpp>")
     source.append("#include <core/CoreTypes.hpp>")
     source.append("#include <core/Ref.hpp>")
 
-    source.append("#include <core/Godot.hpp>")
+    source.append("#include <core/Pandemonium.hpp>")
     source.append("")
 
     source.append('#include "__icalls.hpp"')
@@ -442,7 +442,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
     source.append("")
     source.append("")
 
-    source.append("namespace godot {")
+    source.append("namespace pandemonium {")
 
     core_object_name = "this"
 
@@ -456,7 +456,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
         # FIXME Test if inlining has a huge impact on binary size
         source.append(class_name + "::" + class_name + "() {")
-        source.append('\t_owner = godot::api->pandemonium_global_get_singleton((char *) "' + strip_name(c["name"]) + '");')
+        source.append('\t_owner = pandemonium::api->pandemonium_global_get_singleton((char *) "' + strip_name(c["name"]) + '");')
         source.append("}")
 
         source.append("")
@@ -475,7 +475,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         source.append(
             "\t___mb.mb_"
             + method["name"]
-            + ' = godot::api->pandemonium_method_bind_get_method("'
+            + ' = pandemonium::api->pandemonium_method_bind_get_method("'
             + c["name"]
             + '", "'
             + ("get_node" if use_template_get_node and method["name"] == "get_node_internal" else method["name"])
@@ -483,9 +483,9 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         )
 
     source.append("\tpandemonium_string_name class_name;")
-    source.append('\tgodot::api->pandemonium_string_name_new_data_char(&class_name, "' + c["name"] + '");')
-    source.append("\t_detail_class_tag = godot::api->pandemonium_get_class_tag(&class_name);")
-    source.append("\tgodot::api->pandemonium_string_name_destroy(&class_name);")
+    source.append('\tpandemonium::api->pandemonium_string_name_new_data_char(&class_name, "' + c["name"] + '");')
+    source.append("\t_detail_class_tag = pandemonium::api->pandemonium_get_class_tag(&class_name);")
+    source.append("\tpandemonium::api->pandemonium_string_name_destroy(&class_name);")
 
     source.append("}")
     source.append("")
@@ -496,7 +496,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         source.append(
             "\treturn ("
             + class_name
-            + ' *) godot::nativescript_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, godot::api->pandemonium_get_class_constructor((char *)"'
+            + ' *) pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(pandemonium::_RegisterState::language_index, pandemonium::api->pandemonium_get_class_constructor((char *)"'
             + c["name"]
             + '")());'
         )
@@ -526,7 +526,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
         if method["name"] == "free":
             # dirty hack because Object::free is marked virtual but doesn't actually exist...
-            source.append("\tgodot::api->pandemonium_object_destroy(_owner);")
+            source.append("\tpandemonium::api->pandemonium_object_destroy(_owner);")
             source.append("}")
             source.append("")
             continue
@@ -560,7 +560,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
                 source.append("\tVariant __given_args[" + str(len(method["arguments"])) + "];")
 
             for i, argument in enumerate(method["arguments"]):
-                source.append("\tgodot::api->pandemonium_variant_new_nil((pandemonium_variant *) &__given_args[" + str(i) + "]);")
+                source.append("\tpandemonium::api->pandemonium_variant_new_nil((pandemonium_variant *) &__given_args[" + str(i) + "]);")
 
             source.append("")
 
@@ -599,7 +599,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 
             source.append("\tVariant __result;")
             source.append(
-                "\t*(pandemonium_variant *) &__result = godot::api->pandemonium_method_bind_call(___mb.mb_"
+                "\t*(pandemonium_variant *) &__result = pandemonium::api->pandemonium_method_bind_call(___mb.mb_"
                 + method["name"]
                 + ", ((const Object *) "
                 + core_object_name
@@ -618,7 +618,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
                 source.append("")
 
             for i, argument in enumerate(method["arguments"]):
-                source.append("\tgodot::api->pandemonium_variant_destroy((pandemonium_variant *) &__given_args[" + str(i) + "]);")
+                source.append("\tpandemonium::api->pandemonium_variant_destroy((pandemonium_variant *) &__given_args[" + str(i) + "]);")
 
             source.append("")
 
@@ -677,8 +677,8 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
 def generate_icall_header(icalls):
 
     source = []
-    source.append("#ifndef GODOT_CPP__ICALLS_HPP")
-    source.append("#define GODOT_CPP__ICALLS_HPP")
+    source.append("#ifndef PANDEMONIUM_CPP__ICALLS_HPP")
+    source.append("#define PANDEMONIUM_CPP__ICALLS_HPP")
 
     source.append("")
 
@@ -686,13 +686,13 @@ def generate_icall_header(icalls):
     source.append("#include <stdint.h>")
     source.append("")
 
-    source.append("#include <core/GodotGlobal.hpp>")
+    source.append("#include <core/PandemoniumGlobal.hpp>")
     source.append("#include <core/CoreTypes.hpp>")
     source.append('#include "Object.hpp"')
     source.append("")
     source.append("")
 
-    source.append("namespace godot {")
+    source.append("namespace pandemonium {")
     source.append("")
 
     for icall in icalls:
@@ -749,7 +749,7 @@ def generate_icall_header(icalls):
         source.append("")
 
         source.append(
-            "\tgodot::api->pandemonium_method_bind_ptrcall(mb, inst->_owner, args, "
+            "\tpandemonium::api->pandemonium_method_bind_ptrcall(mb, inst->_owner, args, "
             + ("nullptr" if ret_type == "void" else "&ret")
             + ");"
         )
@@ -758,7 +758,7 @@ def generate_icall_header(icalls):
             if is_class_type(ret_type):
                 source.append("\tif (ret) {")
                 source.append(
-                    "\t\treturn (Object *) godot::nativescript_api->pandemonium_nativescript_get_instance_binding_data(godot::_RegisterState::language_index, ret);"
+                    "\t\treturn (Object *) pandemonium::nativescript_api->pandemonium_nativescript_get_instance_binding_data(pandemonium::_RegisterState::language_index, ret);"
                 )
                 source.append("\t}")
                 source.append("")
@@ -790,7 +790,7 @@ def generate_type_registry(classes):
     source.append("")
     source.append("")
 
-    source.append("namespace godot {")
+    source.append("namespace pandemonium {")
 
     source.append("void ___register_types()")
     source.append("{")
@@ -807,7 +807,7 @@ def generate_type_registry(classes):
             base_class_type_hash = "0"
 
         source.append(
-            '\tgodot::_TagDB::register_global_type("'
+            '\tpandemonium::_TagDB::register_global_type("'
             + c["name"]
             + '", '
             + class_type_hash
@@ -833,7 +833,7 @@ def generate_init_method_bindings(classes):
     source.append("")
     source.append("")
 
-    source.append("namespace godot {")
+    source.append("namespace pandemonium {")
 
     source.append("void ___init_method_bindings()")
     source.append("{")

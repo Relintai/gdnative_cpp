@@ -2,11 +2,11 @@
 /*  Quaternion.cpp                                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -35,7 +35,7 @@
 
 #include <cmath>
 
-namespace godot {
+namespace pandemonium {
 
 const Quaternion Quaternion::IDENTITY = Quaternion();
 
@@ -349,4 +349,4 @@ bool Quaternion::operator!=(const Quaternion &p_quaternion) const {
 	return x != p_quaternion.x || y != p_quaternion.y || z != p_quaternion.z || w != p_quaternion.w;
 }
 
-} // namespace godot
+} // namespace pandemonium

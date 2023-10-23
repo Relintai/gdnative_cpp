@@ -1,7 +1,7 @@
-# Godot 4+ specific ignores
-.godot/
+# Pandemonium 4+ specific ignores
+.pandemonium/
 
-# Godot-specific ignores
+# Pandemonium-specific ignores
 .import/
 export.cfg
 export_presets.cfg

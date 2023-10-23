@@ -1,11 +1,11 @@
 
-#include "GodotProfiling.hpp"
+#include "PandemoniumProfiling.hpp"
 
 #include "OS.hpp"
 
 #include <cstdio>
 
-namespace godot {
+namespace pandemonium {
 
 FunctionProfiling::FunctionProfiling(const char *p_function, const int p_line) {
 	snprintf(signature, 1024, "::%d::%s", p_line, p_function);
@@ -15,8 +15,8 @@ FunctionProfiling::FunctionProfiling(const char *p_function, const int p_line) {
 FunctionProfiling::~FunctionProfiling() {
 	uint64_t t = OS::get_singleton()->get_ticks_usec() - ticks;
 	if (t > 0) {
-		Godot::gdnative_profiling_add_data(signature, t);
+		Pandemonium::gdnative_profiling_add_data(signature, t);
 	}
 }
 
-} // namespace godot
+} // namespace pandemonium
