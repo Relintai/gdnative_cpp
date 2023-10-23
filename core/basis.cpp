@@ -106,9 +106,9 @@ bool Basis::is_rotation() const {
 }
 
 void Basis::transpose() {
-	std::swap(elements[0][1], elements[1][0]);
-	std::swap(elements[0][2], elements[2][0]);
-	std::swap(elements[1][2], elements[2][1]);
+	SWAP(elements[0][1], elements[1][0]);
+	SWAP(elements[0][2], elements[2][0]);
+	SWAP(elements[1][2], elements[2][1]);
 }
 
 Basis Basis::inverse() const {

@@ -37,8 +37,6 @@
 
 #include <math_funcs.h>
 
-
-
 class Basis;
 class String;
 
@@ -257,7 +255,7 @@ struct Vector3 {
 	}
 
 	inline real_t angle_to(const Vector3 &b) const {
-		return std::atan2(cross(b).length(), dot(b));
+		return Mathp::atan2(cross(b).length(), dot(b));
 	}
 
 	inline Vector3 direction_to(const Vector3 &p_b) const {
@@ -275,7 +273,7 @@ struct Vector3 {
 	}
 
 	inline bool is_normalized() const {
-		return std::abs(length_squared() - 1.f) < 0.00001f;
+		return ABS(length_squared() - 1.f) < 0.00001f;
 	}
 
 	Basis outer(const Vector3 &b) const;
@@ -335,7 +333,5 @@ inline Vector3 operator*(real_t p_scalar, const Vector3 &p_vec) {
 inline Vector3 vec3_cross(const Vector3 &p_a, const Vector3 &p_b) {
 	return p_a.cross(p_b);
 }
-
-
 
 #endif // VECTOR3_H

@@ -195,11 +195,11 @@ inline bool is_equal_approx(real_t a, real_t b) {
 		return true;
 	}
 	// Then check for approximate equality.
-	real_t tolerance = CMP_EPSILON * std::abs(a);
+	real_t tolerance = CMP_EPSILON * ABS(a);
 	if (tolerance < CMP_EPSILON) {
 		tolerance = CMP_EPSILON;
 	}
-	return std::abs(a - b) < tolerance;
+	return ABS(a - b) < tolerance;
 }
 
 inline bool is_equal_approx(real_t a, real_t b, real_t tolerance) {
@@ -208,11 +208,11 @@ inline bool is_equal_approx(real_t a, real_t b, real_t tolerance) {
 		return true;
 	}
 	// Then check for approximate equality.
-	return std::abs(a - b) < tolerance;
+	return ABS(a - b) < tolerance;
 }
 
 inline bool is_zero_approx(real_t s) {
-	return std::abs(s) < CMP_EPSILON;
+	return ABS(s) < CMP_EPSILON;
 }
 
 inline double smoothstep(double p_from, double p_to, double p_weight) {
@@ -231,11 +231,11 @@ inline float smoothstep(float p_from, float p_to, float p_weight) {
 }
 
 inline double move_toward(double p_from, double p_to, double p_delta) {
-	return std::abs(p_to - p_from) <= p_delta ? p_to : p_from + sign(p_to - p_from) * p_delta;
+	return ABS(p_to - p_from) <= p_delta ? p_to : p_from + sign(p_to - p_from) * p_delta;
 }
 
 inline float move_toward(float p_from, float p_to, float p_delta) {
-	return std::abs(p_to - p_from) <= p_delta ? p_to : p_from + sign(p_to - p_from) * p_delta;
+	return ABS(p_to - p_from) <= p_delta ? p_to : p_from + sign(p_to - p_from) * p_delta;
 }
 
 inline double linear2db(double p_linear) {

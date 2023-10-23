@@ -35,10 +35,6 @@
 
 #include "vector3.h"
 
-// #include "basis.h"
-
-
-
 class Quaternion {
 public:
 	static const Quaternion IDENTITY;
@@ -119,7 +115,5 @@ public:
 		w = 1;
 	}
 };
-
-
 
 #endif // QUAT_H

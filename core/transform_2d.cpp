@@ -115,7 +115,7 @@ Rect2 Transform2D::xform_inv(const Rect2 &p_rect) const {
 void Transform2D::invert() {
 	// FIXME: this function assumes the basis is a rotation matrix, with no scaling.
 	// Transform2D::affine_inverse can handle matrices with scaling, so GDScript should eventually use that.
-	std::swap(elements[0][1], elements[1][0]);
+	SWAP(elements[0][1], elements[1][0]);
 	elements[2] = basis_xform(-elements[2]);
 }
 
@@ -130,7 +130,7 @@ void Transform2D::affine_invert() {
 	ERR_FAIL_COND(det == 0);
 	real_t idet = 1.0 / det;
 
-	std::swap(elements[0][0], elements[1][1]);
+	SWAP(elements[0][0], elements[1][1]);
 	elements[0] *= Vector2(idet, -idet);
 	elements[1] *= Vector2(-idet, idet);
 

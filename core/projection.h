@@ -39,10 +39,6 @@
 
 #include <vector>
 
-namespace {
-
-} // namespace
-
 struct Projection {
 	enum Planes {
 		PLANE_NEAR,

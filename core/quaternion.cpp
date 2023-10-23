@@ -122,7 +122,7 @@ Quaternion Quaternion::normalized() const {
 }
 
 bool Quaternion::is_normalized() const {
-	return std::abs(length_squared() - 1.0) < 0.00001;
+	return ABS(length_squared() - 1.0) < 0.00001;
 }
 
 Quaternion Quaternion::inverse() const {

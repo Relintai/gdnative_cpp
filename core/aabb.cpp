@@ -346,7 +346,7 @@ bool AABB::intersects_ray(const Vector3 &p_from, const Vector3 &p_dir, Vector3 *
 			c2[i] = (end[i] - p_from[i]) / p_dir[i];
 
 			if (c1[i] > c2[i]) {
-				std::swap(c1, c2);
+				SWAP(c1, c2);
 			}
 			if (c1[i] > near) {
 				near = c1[i];
