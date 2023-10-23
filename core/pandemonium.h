@@ -34,22 +34,22 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <gdnative_api_struct.gen.h>
-#include <nativescript/pandemonium_nativescript.h>
+#include <type_traits>
 #include <typeinfo>
 
-#include "core_types.h"
-#include "reference.h"
-#include "tag_db.h"
-#include "variant.h"
+#include <gdnative_api_struct.gen.h>
+#include <nativescript/pandemonium_nativescript.h>
 
-#include "object.h"
+#include "core/core_types.h"
+#include "core/tag_db.h"
+#include "core/variant.h"
+#include "gen/reference.h"
 
-#include "pandemonium_global.h"
+#include "core/pandemonium_global.h"
 
-#include <type_traits>
+class Object;
 
-namespace detail {
+namespace PandemoniumDetail {
 
 // Pandemonium classes are wrapped by heap-allocated instances mimicking them through the C API.
 // They all inherit `_Wrapped`.
@@ -118,7 +118,7 @@ inline T *create_custom_class_instance() {
 	return (T *)Pandemonium::nativescript_api->pandemonium_nativescript_get_userdata(base_obj);
 }
 
-} // namespace detail
+} // namespace PandemoniumDetail
 
 // Used in the definition of a custom class.
 //
@@ -132,37 +132,34 @@ inline T *create_custom_class_instance() {
 // ___get_base_id:             Gets the ID of the direct base class, as returned by ___get_id
 // ___get_base_class_name:     Name of the direct base class
 // ___get_from_variant:        Converts a Variant into an Object*. Will be non-null if the class matches.
-#define PANDEMONIUM_CLASS(Name, Base)                                                       \
-                                                                                            \
-public:                                                                                     \
-	inline static const char *___get_class_name() {                                         \
-		return #Name;                                                                       \
-	}                                                                                       \
-	enum { ___CLASS_IS_SCRIPT = 1 };                                                        \
-	inline static const char *___get_pandemonium_class_name() {                             \
-		return Base::___get_pandemonium_class_name();                                       \
-	}                                                                                       \
-	inline static Name *_new() {                                                            \
-		return Pandemonium::detail::create_custom_class_instance<Name>();                   \
-	}                                                                                       \
-	inline static size_t ___get_id() {                                                      \
-		return typeid(Name).hash_code();                                                    \
-	}                                                                                       \
-	inline static size_t ___get_base_id() {                                                 \
-		return Base::___get_id();                                                           \
-	}                                                                                       \
-	inline static const char *___get_base_class_name() {                                    \
-		return Base::___get_class_name();                                                   \
-	}                                                                                       \
-	inline static Pandemonium::Object *___get_from_variant(Pandemonium::Variant a) {        \
-		return (Pandemonium::Object *)Pandemonium::detail::get_custom_class_instance<Name>( \
-				Pandemonium::Object::___get_from_variant(a));                               \
-	}                                                                                       \
-                                                                                            \
+#define PANDEMONIUM_CLASS(Name, Base)                                        \
+                                                                             \
+public:                                                                      \
+	inline static const char *___get_class_name() {                          \
+		return #Name;                                                        \
+	}                                                                        \
+	enum { ___CLASS_IS_SCRIPT = 1 };                                         \
+	inline static const char *___get_pandemonium_class_name() {              \
+		return Base::___get_pandemonium_class_name();                        \
+	}                                                                        \
+	inline static Name *_new() {                                             \
+		return PandemoniumDetail::create_custom_class_instance<Name>();      \
+	}                                                                        \
+	inline static size_t ___get_id() {                                       \
+		return typeid(Name).hash_code();                                     \
+	}                                                                        \
+	inline static size_t ___get_base_id() {                                  \
+		return Base::___get_id();                                            \
+	}                                                                        \
+	inline static const char *___get_base_class_name() {                     \
+		return Base::___get_class_name();                                    \
+	}                                                                        \
+	inline static Object *___get_from_variant(Variant a) {                   \
+		return (Object *)PandemoniumDetail::get_custom_class_instance<Name>( \
+				Object::___get_from_variant(a));                             \
+	}                                                                        \
+                                                                             \
 private:
-
-// Legacy compatibility
-#define PANDEMONIUM_SUBCLASS(Name, Base) PANDEMONIUM_CLASS(Name, Base)
 
 template <class T>
 struct _ArgCast {
@@ -439,7 +436,7 @@ void register_property(const char *name, P(T::*var), P default_value,
 	usage = (pandemonium_property_usage_flags)((int)usage | PANDEMONIUM_PROPERTY_USAGE_SCRIPT_VARIABLE);
 
 	if (def_val.get_type() == Variant::OBJECT) {
-		Object *o = detail::get_wrapper<Object>(def_val.operator pandemonium_object *());
+		Object *o = PandemoniumDetail::get_wrapper<Object>(def_val.operator pandemonium_object *());
 		if (o && o->is_class("Resource")) {
 			hint = (pandemonium_property_hint)((int)hint | PANDEMONIUM_PROPERTY_HINT_RESOURCE_TYPE);
 			hint_string = o->get_class();
@@ -609,7 +606,7 @@ T *Object::cast_to(const Object *obj) {
 		}
 
 		if (_TagDB::is_type_compatible(T::___get_id(), have_tag)) {
-			return detail::get_custom_class_instance<T>(obj);
+			return PandemoniumDetail::get_custom_class_instance<T>(obj);
 		}
 	} else {
 		if (Pandemonium::api->pandemonium_object_cast_to(obj->_owner, (void *)T::___get_id())) {
