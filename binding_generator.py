@@ -47,8 +47,8 @@ def get_file_list(api_filepath, output_dir, headers=False, sources=False):
     files = []
     with open(api_filepath) as api_file:
         classes = json.load(api_file)
-    include_gen_folder = Path(output_dir) / "include" / "gen"
-    source_gen_folder = Path(output_dir) / "src" / "gen"
+    include_gen_folder = Path(output_dir) / "gen"
+    source_gen_folder = Path(output_dir) / "gen"
     for _class in classes:
         header_filename = include_gen_folder / (class_name_to_file_name(strip_name(_class["name"])) + ".h")
         source_filename = source_gen_folder / (class_name_to_file_name(strip_name(_class["name"])) + ".cpp")
@@ -90,8 +90,8 @@ def generate_bindings(api_filepath, use_template_get_node, output_dir="."):
         classes = json.load(api_file)
 
     icalls = set()
-    include_gen_folder = Path(output_dir) / "include" / "gen"
-    source_gen_folder = Path(output_dir) / "src" / "gen"
+    include_gen_folder = Path(output_dir) / "gen"
+    source_gen_folder = Path(output_dir) / "gen"
 
     include_gen_folder.mkdir(parents=True, exist_ok=True)
     source_gen_folder.mkdir(parents=True, exist_ok=True)

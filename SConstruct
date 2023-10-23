@@ -490,11 +490,11 @@ if env["generate_bindings"]:
     NoCache(bindings)
 
 # Includes
-env.Append(CPPPATH=[[env.Dir(d) for d in [".", env["headers_dir"], "include", "include/gen", "include/core"]]])
+env.Append(CPPPATH=[[env.Dir(d) for d in [".", env["headers_dir"], "gen", "core"]]])
 
 # Sources to compile
 sources = []
-add_sources(sources, "src/core", "cpp")
+add_sources(sources, "core", "cpp")
 sources.extend(f for f in bindings if str(f).endswith(".cpp"))
 
 arch_suffix = env["bits"]
