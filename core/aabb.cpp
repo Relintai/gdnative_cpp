@@ -34,8 +34,6 @@
 
 #include <algorithm>
 
-
-
 bool AABB::intersects(const AABB &p_aabb) const {
 	if (position.x >= (p_aabb.position.x + p_aabb.size.x))
 		return false;
@@ -600,5 +598,3 @@ void AABB::get_edge(int p_edge, Vector3 &r_from, Vector3 &r_to) const {
 AABB::operator String() const {
 	return String() + position + " - " + size;
 }
-
-

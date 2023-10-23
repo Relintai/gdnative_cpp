@@ -35,11 +35,6 @@
 #include <gdn/color.h>
 #include <cmath>
 
-
-
-#define MIN(a, b) (a < b ? a : b)
-#define MAX(a, b) (a > b ? a : b)
-
 static String _to_hex(float p_val);
 
 static float _parse_col(const String &p_str, int p_ofs) {
@@ -651,5 +646,3 @@ Color Color::operator-() const {
 			1.0 - b,
 			1.0 - a);
 }
-
-

@@ -1,3 +1,6 @@
+#ifndef DEFS_H
+#define DEFS_H
+
 /*************************************************************************/
 /*  defs.h                                                             */
 /*************************************************************************/
@@ -27,11 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef DEFS_H
-#define DEFS_H
-
-
 
 enum class Error {
 	OK,
@@ -85,8 +83,6 @@ enum class Error {
 	ERR_PRINTER_ON_FIRE, /// the parallel port printer is engulfed in flames
 };
 
-
-
 #include <pandemonium_global.h>
 
 // alloca() is non-standard. When using MSVC, it's in malloc.h.
@@ -118,6 +114,8 @@ typedef float real_t;
 #define likely(x) x
 #define unlikely(x) x
 #endif
+
+#include "typedefs.h"
 
 // Don't use this directly; instead, use any of the CRASH_* macros
 #ifdef _MSC_VER

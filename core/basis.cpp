@@ -35,8 +35,6 @@
 
 #include <algorithm>
 
-
-
 const Basis Basis::IDENTITY = Basis();
 const Basis Basis::FLIP_X = Basis(-1, 0, 0, 0, 1, 0, 0, 0, 1);
 const Basis Basis::FLIP_Y = Basis(1, 0, 0, 0, -1, 0, 0, 0, 1);
@@ -258,7 +256,7 @@ void Basis::set_euler_xyz(const Vector3 &p_euler) {
 	s = ::sin(p_euler.z);
 	Basis zmat(c, -s, 0.0, s, c, 0.0, 0.0, 0.0, 1.0);
 
-	//optimizer will optimize away all this anyway
+	// optimizer will optimize away all this anyway
 	*this = xmat * (ymat * zmat);
 }
 
@@ -325,7 +323,7 @@ void Basis::set_euler_yxz(const Vector3 &p_euler) {
 	s = ::sin(p_euler.z);
 	Basis zmat(c, -s, 0.0, s, c, 0.0, 0.0, 0.0, 1.0);
 
-	//optimizer will optimize away all this anyway
+	// optimizer will optimize away all this anyway
 	*this = ymat * xmat * zmat;
 }
 
@@ -599,7 +597,7 @@ static const Basis _ortho_bases[24] = {
 };
 
 int Basis::get_orthogonal_index() const {
-	//could be sped up if i come up with a way
+	// could be sped up if i come up with a way
 	Basis orth = *this;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -624,7 +622,7 @@ int Basis::get_orthogonal_index() const {
 }
 
 void Basis::set_orthogonal_index(int p_index) {
-	//there only exist 24 orthogonal bases in r3
+	// there only exist 24 orthogonal bases in r3
 	ERR_FAIL_COND(p_index >= 24);
 
 	*this = _ortho_bases[p_index];
@@ -634,11 +632,7 @@ Basis::Basis(const Vector3 &p_euler) {
 	set_euler(p_euler);
 }
 
-
-
 #include "quaternion.h"
-
-
 
 Basis::Basis(const Quaternion &p_quaternion) {
 	real_t d = p_quaternion.length_squared();
@@ -674,8 +668,8 @@ Basis::Basis(const Vector3 &p_axis, real_t p_phi) {
 }
 
 Basis::operator Quaternion() const {
-	//commenting this check because precision issues cause it to fail when it shouldn't
-	//ERR_FAIL_COND_V(is_rotation() == false, Quaternion());
+	// commenting this check because precision issues cause it to fail when it shouldn't
+	// ERR_FAIL_COND_V(is_rotation() == false, Quaternion());
 
 	real_t trace = elements[0][0] + elements[1][1] + elements[2][2];
 	real_t temp[4];
@@ -690,8 +684,8 @@ Basis::operator Quaternion() const {
 		temp[2] = ((elements[1][0] - elements[0][1]) * s);
 	} else {
 		int i = elements[0][0] < elements[1][1] ?
-						  (elements[1][1] < elements[2][2] ? 2 : 1) :
-						  (elements[0][0] < elements[2][2] ? 2 : 0);
+						(elements[1][1] < elements[2][2] ? 2 : 1) :
+						(elements[0][0] < elements[2][2] ? 2 : 0);
 		int j = (i + 1) % 3;
 		int k = (i + 2) % 3;
 
@@ -706,5 +700,3 @@ Basis::operator Quaternion() const {
 
 	return Quaternion(temp[0], temp[1], temp[2], temp[3]);
 }
-
-
