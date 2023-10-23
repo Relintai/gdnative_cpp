@@ -137,17 +137,17 @@ def generate_class_header(used_classes, c, use_template_get_node):
     source.append("#include <cstdint>")
     source.append("")
 
-    source.append("#include <core/CoreTypes.h>")
+    source.append("#include <core/core_types.h>")
 
     class_name = strip_name(c["name"])
 
     # Ref<T> is not included in object.h in Pandemonium either,
     # so don't include it here because it's not needed
     if class_name != "Object" and class_name != "Reference":
-        source.append("#include <core/Ref.h>")
+        source.append("#include <core/reference.h>")
         ref_allowed = True
     else:
-        source.append("#include <core/TagDB.h>")
+        source.append("#include <core/tag_db.h>")
         ref_allowed = False
 
     included = []
@@ -422,11 +422,11 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
     source.append("")
     source.append("")
 
-    source.append("#include <core/PandemoniumGlobal.h>")
-    source.append("#include <core/CoreTypes.h>")
-    source.append("#include <core/Ref.h>")
+    source.append("#include <core/pandemonium_global.h>")
+    source.append("#include <core/core_types.h>")
+    source.append("#include <core/reference.h>")
 
-    source.append("#include <core/Pandemonium.h>")
+    source.append("#include <core/pandemonium.h>")
     source.append("")
 
     source.append('#include "__icalls.h"')
@@ -686,8 +686,8 @@ def generate_icall_header(icalls):
     source.append("#include <stdint.h>")
     source.append("")
 
-    source.append("#include <core/PandemoniumGlobal.h>")
-    source.append("#include <core/CoreTypes.h>")
+    source.append("#include <core/pandemonium_global.h>")
+    source.append("#include <core/core_types.h>")
     source.append('#include "Object.h"')
     source.append("")
     source.append("")
@@ -780,7 +780,7 @@ def generate_icall_header(icalls):
 def generate_type_registry(classes):
     source = []
 
-    source.append('#include "TagDB.h"')
+    source.append('#include "tag_db.h"')
     source.append("#include <typeinfo>")
     source.append("\n")
 

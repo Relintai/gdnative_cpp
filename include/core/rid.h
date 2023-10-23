@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  rid.h                                                              */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,40 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#ifndef RID_H
+#define RID_H
 
-using namespace pandemonium;
+#include <gdn/rid.h>
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+namespace pandemonium {
+
+class Object;
+
+class RID {
+	pandemonium_rid _pandemonium_rid;
 
 public:
-	SimpleClass() {}
+	RID();
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
+	RID(Object *p);
+
+	pandemonium_rid _get_pandemonium_rid() const;
+
+	int32_t get_id() const;
+
+	inline bool is_valid() const {
+		// is_valid() is not available in the C API...
+		return *this != RID();
 	}
 
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
-
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
-	}
+	bool operator==(const RID &p_other) const;
+	bool operator!=(const RID &p_other) const;
+	bool operator<(const RID &p_other) const;
+	bool operator>(const RID &p_other) const;
+	bool operator<=(const RID &p_other) const;
+	bool operator>=(const RID &p_other) const;
 };
 
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
-}
+} // namespace pandemonium
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
-}
-
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
-
-	pandemonium::register_class<SimpleClass>();
-}
+#endif // RID_H

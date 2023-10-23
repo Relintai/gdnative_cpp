@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  pandemonium_global.h                                                      */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,53 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#ifndef PANDEMONIUM_GLOBAL_HPP
+#define PANDEMONIUM_GLOBAL_HPP
 
-using namespace pandemonium;
+#include <gdnative_api_struct.gen.h>
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+#include "array.h"
+#include "ustring.h"
 
+namespace pandemonium {
+
+class Array;
+class String;
+
+extern "C" const pandemonium_gdnative_core_api_struct *api;
+
+extern "C" const pandemonium_gdnative_ext_nativescript_api_struct *nativescript_api;
+extern "C" const pandemonium_gdnative_ext_pluginscript_api_struct *pluginscript_api;
+extern "C" const pandemonium_gdnative_ext_android_api_struct *android_api;
+extern "C" const pandemonium_gdnative_ext_videodecoder_api_struct *videodecoder_api;
+extern "C" const pandemonium_gdnative_ext_net_api_struct *net_api;
+
+extern "C" const void *gdnlib;
+
+class Pandemonium {
 public:
-	SimpleClass() {}
+	static void print(const String &message);
+	static void print_warning(const String &description, const String &function, const String &file, int line);
+	static void print_error(const String &description, const String &function, const String &file, int line);
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
-	}
+	static void gdnative_init(pandemonium_gdnative_init_options *o);
+	static void gdnative_terminate(pandemonium_gdnative_terminate_options *o);
+	static void nativescript_init(void *handle);
+	static void nativescript_terminate(void *handle);
 
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
+	static void gdnative_profiling_add_data(const char *p_signature, uint64_t p_time);
 
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
+	template <class... Args>
+	static void print(const String &fmt, Args... values) {
+		print(fmt.format(Array::make(values...)));
 	}
 };
 
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
-}
+struct _RegisterState {
+	static void *nativescript_handle;
+	static int language_index;
+};
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
-}
+} // namespace pandemonium
 
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
-
-	pandemonium::register_class<SimpleClass>();
-}
+#endif

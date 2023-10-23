@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  vector2.h                                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,45 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#ifndef VECTOR3I_H
+#define VECTOR3I_H
 
-using namespace pandemonium;
+#include <gdn/vector3i.h>
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+#include "defs.h"
 
-public:
-	SimpleClass() {}
+#include <math_funcs.h>
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
+namespace pandemonium {
+
+class String;
+
+struct Vector3i {
+	union {
+		struct {
+			int32_t x;
+			int32_t y;
+			int32_t z;
+		};
+
+		int32_t coord[3]; // Not for direct access, use [] operator instead
+	};
+
+	inline Vector3i(int p_x, int p_y, int p_z) {
+		x = p_x;
+		y = p_y;
+		z = p_z;
 	}
 
-	void test_void_method() {
-		Pandemonium::print("This is test");
+	inline Vector3i() {
+		x = 0;
+		y = 0;
+		z = 0;
 	}
 
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
-	}
+	operator String() const;
 };
 
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
-}
+} // namespace pandemonium
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
-}
-
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
-
-	pandemonium::register_class<SimpleClass>();
-}
+#endif // VECTOR2_H

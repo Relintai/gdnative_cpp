@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  wrapped.h                                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,20 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#ifndef WRAPPED_HPP
+#define WRAPPED_HPP
 
-using namespace pandemonium;
+#include <gdn/gdnative.h>
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+namespace pandemonium {
 
+// This is an internal base class used by the bindings. You should not need to access its members.
+class _Wrapped {
 public:
-	SimpleClass() {}
-
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
-	}
-
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
-
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
-	}
+	pandemonium_object *_owner;
+	size_t _type_tag;
 };
 
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
-}
+} // namespace pandemonium
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
-}
-
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
-
-	pandemonium::register_class<SimpleClass>();
-}
+#endif // WRAPPED_HPP

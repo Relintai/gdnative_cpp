@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  Vector2.cpp                                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,73 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#include "vector2.h"
 
-using namespace pandemonium;
+#include <gdn/vector2.h>
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+#include "ustring.h"
 
-public:
-	SimpleClass() {}
+namespace pandemonium {
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
-	}
+const Vector2 Vector2::ZERO = Vector2();
+const Vector2 Vector2::ONE = Vector2(1, 1);
+const Vector2 Vector2::INF = Vector2(INFINITY, INFINITY);
 
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
+const Vector2 Vector2::LEFT = Vector2(-1, 0);
+const Vector2 Vector2::RIGHT = Vector2(1, 0);
+const Vector2 Vector2::UP = Vector2(0, -1);
+const Vector2 Vector2::DOWN = Vector2(0, 1);
 
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
-	}
-};
-
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
+bool Vector2::operator==(const Vector2 &p_vec2) const {
+	return x == p_vec2.x && y == p_vec2.y;
 }
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
+bool Vector2::operator!=(const Vector2 &p_vec2) const {
+	return x != p_vec2.x || y != p_vec2.y;
 }
 
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
-
-	pandemonium::register_class<SimpleClass>();
+Vector2 Vector2::project(const Vector2 &p_vec) const {
+	Vector2 v1 = p_vec;
+	Vector2 v2 = *this;
+	return v2 * (v1.dot(v2) / v2.dot(v2));
 }
+
+Vector2 Vector2::plane_project(real_t p_d, const Vector2 &p_vec) const {
+	return p_vec - *this * (dot(p_vec) - p_d);
+}
+
+Vector2 Vector2::clamped(real_t p_len) const {
+	real_t l = length();
+	Vector2 v = *this;
+	if (l > 0 && p_len < l) {
+		v /= l;
+		v *= p_len;
+	}
+	return v;
+}
+
+Vector2 Vector2::cubic_interpolate(const Vector2 &p_b, const Vector2 &p_pre_a, const Vector2 &p_post_b, real_t p_t) const {
+	Vector2 p0 = p_pre_a;
+	Vector2 p1 = *this;
+	Vector2 p2 = p_b;
+	Vector2 p3 = p_post_b;
+
+	real_t t = p_t;
+	real_t t2 = t * t;
+	real_t t3 = t2 * t;
+
+	Vector2 out;
+	out = ((p1 * 2.0) +
+				  (-p0 + p2) * t +
+				  (p0 * 2.0 - p1 * 5.0 + p2 * 4 - p3) * t2 +
+				  (-p0 + p1 * 3.0 - p2 * 3.0 + p3) * t3) *
+		  0.5;
+
+	return out;
+}
+
+Vector2::operator String() const {
+	return String::num(x) + ", " + String::num(y);
+}
+
+} // namespace pandemonium

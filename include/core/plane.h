@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  Plane.h                                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,71 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#ifndef PLANE_H
+#define PLANE_H
 
-using namespace pandemonium;
+#include "vector3.h"
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+#include <cmath>
 
-public:
-	SimpleClass() {}
+namespace pandemonium {
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
-	}
+enum ClockDirection {
 
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
-
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
-	}
+	CLOCKWISE,
+	COUNTERCLOCKWISE
 };
 
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
-}
+class Plane {
+public:
+	Vector3 normal;
+	real_t d;
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
-}
+	void set_normal(const Vector3 &p_normal);
 
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
+	inline Vector3 get_normal() const { return normal; } ///Point is coplanar, CMP_EPSILON for precision
 
-	pandemonium::register_class<SimpleClass>();
-}
+	void normalize();
+
+	Plane normalized() const;
+
+	/* Plane-Point operations */
+
+	inline Vector3 center() const { return normal * d; }
+	Vector3 get_any_point() const;
+	Vector3 get_any_perpendicular_normal() const;
+
+	bool is_point_over(const Vector3 &p_point) const; ///< Point is over plane
+	real_t distance_to(const Vector3 &p_point) const;
+	bool has_point(const Vector3 &p_point, real_t _epsilon = CMP_EPSILON) const;
+
+	/* intersections */
+
+	bool intersect_3(const Plane &p_plane1, const Plane &p_plane2, Vector3 *r_result = 0) const;
+	bool intersects_ray(Vector3 p_from, Vector3 p_dir, Vector3 *p_intersection) const;
+	bool intersects_segment(Vector3 p_begin, Vector3 p_end, Vector3 *p_intersection) const;
+
+	Vector3 project(const Vector3 &p_point) const;
+
+	/* misc */
+
+	inline Plane operator-() const { return Plane(-normal, -d); }
+	bool is_almost_like(const Plane &p_plane) const;
+
+	bool operator==(const Plane &p_plane) const;
+	bool operator!=(const Plane &p_plane) const;
+	operator String() const;
+
+	inline Plane() { d = 0; }
+	inline Plane(real_t p_a, real_t p_b, real_t p_c, real_t p_d) :
+			normal(p_a, p_b, p_c),
+			d(p_d) {}
+
+	Plane(const Vector3 &p_normal, real_t p_d);
+	Plane(const Vector3 &p_point, const Vector3 &p_normal);
+	Plane(const Vector3 &p_point1, const Vector3 &p_point2, const Vector3 &p_point3, ClockDirection p_dir = CLOCKWISE);
+};
+
+} // namespace pandemonium
+
+#endif // PLANE_H

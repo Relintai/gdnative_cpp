@@ -156,7 +156,7 @@ You can optionally add the following options to the SCons command line:
 Create `init.cpp` under `SimpleLibrary/src/` and add the following code:
 
 ```cpp
-#include <Pandemonium.h>
+#include <pandemonium.h>
 #include <Reference.h>
 
 using namespace pandemonium;

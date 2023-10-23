@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  dictionary.h                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,63 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#ifndef DICTIONARY_H
+#define DICTIONARY_H
 
-using namespace pandemonium;
+#include "array.h"
+#include "variant.h"
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+#include <gdn/dictionary.h>
+
+namespace pandemonium {
+
+class Variant;
+
+class Dictionary {
+	pandemonium_dictionary _pandemonium_dictionary;
+
+	friend Variant::operator Dictionary() const;
+	inline explicit Dictionary(const pandemonium_dictionary &other) {
+		_pandemonium_dictionary = other;
+	}
 
 public:
-	SimpleClass() {}
+	Dictionary();
+	Dictionary(const Dictionary &other);
+	Dictionary &operator=(const Dictionary &other);
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
+	template <class... Args>
+	static Dictionary make(Args... args) {
+		return helpers::add_all(Dictionary(), args...);
 	}
 
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
+	void clear();
 
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
+	bool empty() const;
 
-		return ret;
-	}
+	void erase(const Variant &key);
 
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
+	bool has(const Variant &key) const;
 
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
+	bool has_all(const Array &keys) const;
 
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
+	uint32_t hash() const;
 
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
+	Array keys() const;
 
-	String _name;
-	int _value;
+	Variant &operator[](const Variant &key);
 
-	void set_value(int p_value) {
-		_value = p_value;
-	}
+	const Variant &operator[](const Variant &key) const;
 
-	int get_value() const {
-		return _value;
-	}
+	int size() const;
+
+	String to_json() const;
+
+	Array values() const;
+
+	~Dictionary();
 };
 
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
-}
+} // namespace pandemonium
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
-}
-
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
-
-	pandemonium::register_class<SimpleClass>();
-}
+#endif // DICTIONARY_H

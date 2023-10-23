@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  TagDP.cpp                                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,51 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#include "tag_db.h"
 
-using namespace pandemonium;
+#include <unordered_map>
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+#include <pandemonium_global.h>
 
-public:
-	SimpleClass() {}
+namespace pandemonium {
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
+namespace _TagDB {
+
+std::unordered_map<size_t, size_t> parent_to;
+
+void register_type(size_t type_tag, size_t base_type_tag) {
+	if (type_tag == base_type_tag) {
+		return;
 	}
-
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
-
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
-	}
-};
-
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
+	parent_to[type_tag] = base_type_tag;
 }
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
+bool is_type_known(size_t type_tag) {
+	return parent_to.find(type_tag) != parent_to.end();
 }
 
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
+void register_global_type(const char *name, size_t type_tag, size_t base_type_tag) {
+	pandemonium::nativescript_api->pandemonium_nativescript_set_global_type_tag(pandemonium::_RegisterState::language_index, name, (const void *)type_tag);
 
-	pandemonium::register_class<SimpleClass>();
+	register_type(type_tag, base_type_tag);
 }
+
+bool is_type_compatible(size_t ask_tag, size_t have_tag) {
+	if (have_tag == 0)
+		return false;
+
+	size_t tag = have_tag;
+
+	while (tag != 0) {
+		if (tag == ask_tag)
+			return true;
+
+		tag = parent_to[tag];
+	}
+
+	return false;
+}
+
+} // namespace _TagDB
+
+} // namespace pandemonium

@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  RID.cpp                                                              */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,52 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#include "rid.h"
 
-using namespace pandemonium;
+#include <gdn/rid.h>
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+#include "pandemonium_global.h"
 
-public:
-	SimpleClass() {}
+namespace pandemonium {
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
-	}
-
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
-
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
-	}
-};
-
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
+RID::RID() {
+	pandemonium::api->pandemonium_rid_new(&_pandemonium_rid);
 }
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
+RID::RID(Object *p) {
+	pandemonium::api->pandemonium_rid_new_with_resource(&_pandemonium_rid, (const pandemonium_object *)p);
 }
 
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
-
-	pandemonium::register_class<SimpleClass>();
+pandemonium_rid RID::_get_pandemonium_rid() const {
+	return _pandemonium_rid;
 }
+
+int32_t RID::get_id() const {
+	return pandemonium::api->pandemonium_rid_get_id(&_pandemonium_rid);
+}
+
+bool RID::operator==(const RID &p_other) const {
+	return pandemonium::api->pandemonium_rid_operator_equal(&_pandemonium_rid, &p_other._pandemonium_rid);
+}
+
+bool RID::operator!=(const RID &p_other) const {
+	return !(*this == p_other);
+}
+
+bool RID::operator<(const RID &p_other) const {
+	return pandemonium::api->pandemonium_rid_operator_less(&_pandemonium_rid, &p_other._pandemonium_rid);
+}
+
+bool RID::operator>(const RID &p_other) const {
+	return !(*this < p_other) && *this != p_other;
+}
+
+bool RID::operator<=(const RID &p_other) const {
+	return (*this < p_other) || *this == p_other;
+}
+
+bool RID::operator>=(const RID &p_other) const {
+	return !(*this < p_other);
+}
+
+} // namespace pandemonium

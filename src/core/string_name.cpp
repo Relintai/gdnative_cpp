@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  init.cpp                                                             */
+/*  String.cpp                                                           */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           PANDEMONIUM ENGINE                                */
@@ -28,76 +28,60 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <pandemonium.h>
-#include <Reference.h>
+#include "string_name.h"
 
-using namespace pandemonium;
+#include "array.h"
+#include "pandemonium_global.h"
+#include "node_path.h"
+#include "pool_arrays.h"
+#include "variant.h"
 
-class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+#include <gdn/string.h>
 
-public:
-	SimpleClass() {}
+#include <string.h>
 
-	/** `_init` must exist as it is called by Pandemonium. */
-	void _init() {
-		_name = String("SimpleClass");
-		_value = 0;
-	}
+namespace pandemonium {
 
-	void test_void_method() {
-		Pandemonium::print("This is test");
-	}
-
-	Variant method(Variant arg) {
-		Variant ret;
-		ret = arg;
-
-		return ret;
-	}
-
-	static void _register_methods() {
-		register_method("method", &SimpleClass::method);
-
-		/**
-		 * The line below is equivalent to the following GDScript export:
-		 *	 export var _name = "SimpleClass"
-		 **/
-		register_property<SimpleClass, String>("name", &SimpleClass::_name, String("SimpleClass"));
-
-		/** Alternatively, with getter and setter methods: */
-		register_property<SimpleClass, int>("value", &SimpleClass::set_value, &SimpleClass::get_value, 0);
-
-		/** Registering a signal: **/
-		register_signal<SimpleClass>("signal_name0"); // windows: error C2668: 'pandemonium::register_signal': ambiguous call to overloaded function
-		register_signal<SimpleClass>("signal_name1", "string_argument", PANDEMONIUM_VARIANT_TYPE_STRING);
-	}
-
-	String _name;
-	int _value;
-
-	void set_value(int p_value) {
-		_value = p_value;
-	}
-
-	int get_value() const {
-		return _value;
-	}
-};
-
-/** GDNative Initialize **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
-	pandemonium::Pandemonium::gdnative_init(o);
+pandemonium::StringName::StringName() {
+	pandemonium::api->pandemonium_string_name_new(&_pandemonium_string_name);
 }
 
-/** GDNative Terminate **/
-extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
-	pandemonium::Pandemonium::gdnative_terminate(o);
+StringName::StringName(const char *contents) {
+	pandemonium::api->pandemonium_string_name_new_data_char(&_pandemonium_string_name, contents);
 }
 
-/** NativeScript Initialize **/
-extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
-	pandemonium::Pandemonium::nativescript_init(handle);
-
-	pandemonium::register_class<SimpleClass>();
+StringName::StringName(const String &other) {
+	pandemonium::api->pandemonium_string_name_new_data_string(&_pandemonium_string_name, &other._pandemonium_string);
 }
+
+StringName::~StringName() {
+	pandemonium::api->pandemonium_string_name_destroy(&_pandemonium_string_name);
+}
+
+
+bool StringName::operator==(const StringName &s) const {
+	return pandemonium::api->pandemonium_string_name_operator_equal(&_pandemonium_string_name, &s._pandemonium_string_name);
+}
+
+bool StringName::operator!=(const StringName &s) const {
+	return !(*this == s);
+}
+
+bool StringName::operator<(const StringName &s) const {
+	return pandemonium::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name);
+}
+
+bool StringName::operator<=(const StringName &s) const {
+	return pandemonium::api->pandemonium_string_name_operator_less(&_pandemonium_string_name, &s._pandemonium_string_name) ||
+		   (*this == s);
+}
+
+bool StringName::operator>(const StringName &s) const {
+	return !(*this <= s);
+}
+
+bool StringName::operator>=(const StringName &s) const {
+	return !(*this < s);
+}
+
+} // namespace pandemonium
