@@ -35,8 +35,6 @@
 
 #include <cmath>
 
-
-
 const Quaternion Quaternion::IDENTITY = Quaternion();
 
 // set_euler_xyz expects a vector containing the Euler angles in the format
@@ -192,7 +190,7 @@ Quaternion Quaternion::slerpni(const Quaternion &q, const real_t &t) const {
 }
 
 Quaternion Quaternion::cubic_slerp(const Quaternion &q, const Quaternion &prep, const Quaternion &postq, const real_t &t) const {
-	//the only way to do slerp :|
+	// the only way to do slerp :|
 	real_t t2 = (1.0 - t) * t * 2;
 	Quaternion sp = this->slerp(q, t);
 	Quaternion sq = prep.slerpni(postq, t);
@@ -348,5 +346,3 @@ bool Quaternion::operator==(const Quaternion &p_quaternion) const {
 bool Quaternion::operator!=(const Quaternion &p_quaternion) const {
 	return x != p_quaternion.x || y != p_quaternion.y || z != p_quaternion.z || w != p_quaternion.w;
 }
-
-

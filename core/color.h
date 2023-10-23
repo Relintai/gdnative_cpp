@@ -1,3 +1,6 @@
+#ifndef COLOR_H
+#define COLOR_H
+
 /*************************************************************************/
 /*  color.h                                                            */
 /*************************************************************************/
@@ -28,17 +31,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef COLOR_H
-#define COLOR_H
-
 #include <gdn/color.h>
 
 #include <cmath>
 
 #include "defs.h"
 #include "ustring.h"
-
-
 
 struct Color {
 private:
@@ -141,7 +139,7 @@ public:
 
 	String to_html(bool p_alpha = true) const;
 
-	bool operator<(const Color &p_color) const; //used in set keys
+	bool operator<(const Color &p_color) const; // used in set keys
 
 	operator String() const;
 
@@ -165,7 +163,5 @@ public:
 		a = p_a;
 	}
 };
-
-
 
 #endif // COLOR_H

@@ -1,3 +1,6 @@
+#ifndef STRING_H
+#define STRING_H
+
 /*************************************************************************/
 /*  String.h                                                           */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef STRING_H
-#define STRING_H
 
 #include <gdn/string.h>
 
@@ -73,7 +73,7 @@ class String {
 	friend class NodePath;
 	friend class Variant;
 	friend class StringName;
-	
+
 	explicit inline String(pandemonium_string contents) :
 			_pandemonium_string(contents) {}
 

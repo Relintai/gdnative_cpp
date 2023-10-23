@@ -1,3 +1,6 @@
+#ifndef VECTOR3_H
+#define VECTOR3_H
+
 /*************************************************************************/
 /*  vector3.h                                                          */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef VECTOR3_H
-#define VECTOR3_H
 
 #include <gdn/vector3.h>
 

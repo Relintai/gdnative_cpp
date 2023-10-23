@@ -30,8 +30,8 @@
 
 #include "pandemonium_global.h"
 
-#include "ustring.h"
 #include "array.h"
+#include "ustring.h"
 
 #include "wrapped.h"
 
@@ -50,8 +50,6 @@ static GDCALLINGCONV void wrapper_destroy(void *data, void *wrapper) {
 	if (wrapper)
 		Pandemonium::api->pandemonium_free(wrapper);
 }
-
-
 
 void *_RegisterState::nativescript_handle;
 int _RegisterState::language_index;
@@ -203,5 +201,3 @@ void Pandemonium::nativescript_init(void *handle) {
 void Pandemonium::nativescript_terminate(void *handle) {
 	Pandemonium::nativescript_api->pandemonium_nativescript_unregister_instance_binding_data_functions(_RegisterState::language_index);
 }
-
-

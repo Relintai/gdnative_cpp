@@ -1,3 +1,6 @@
+#ifndef QUATERNION_H
+#define QUATERNION_H
+
 /*************************************************************************/
 /*  Quaternion.h                                                             */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef QUATERNION_H
-#define QUATERNION_H
 
 #include <cmath>
 

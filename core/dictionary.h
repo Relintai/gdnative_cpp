@@ -1,3 +1,6 @@
+#ifndef DICTIONARY_H
+#define DICTIONARY_H
+
 /*************************************************************************/
 /*  dictionary.h                                                       */
 /*************************************************************************/
@@ -28,15 +31,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef DICTIONARY_H
-#define DICTIONARY_H
-
 #include "array.h"
 #include "variant.h"
 
 #include <gdn/dictionary.h>
-
-
 
 class Variant;
 
@@ -84,7 +82,5 @@ public:
 
 	~Dictionary();
 };
-
-
 
 #endif // DICTIONARY_H

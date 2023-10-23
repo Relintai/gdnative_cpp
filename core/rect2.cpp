@@ -29,13 +29,11 @@
 /*************************************************************************/
 
 #include "rect2.h"
-#include "ustring.h"
 #include "transform_2d.h"
+#include "ustring.h"
 #include "vector2.h"
 
 #include <cmath>
-
-
 
 #ifndef MAX
 #define MAX(a, b) (a > b ? a : b)
@@ -106,7 +104,7 @@ Rect2 Rect2::merge(const Rect2 &p_rect) const { ///< return a merged rect
 	new_rect.size.x = MAX(p_rect.position.x + p_rect.size.x, position.x + size.x);
 	new_rect.size.y = MAX(p_rect.position.y + p_rect.size.y, position.y + size.y);
 
-	new_rect.size = new_rect.size - new_rect.position; //make relative again
+	new_rect.size = new_rect.size - new_rect.position; // make relative again
 
 	return new_rect;
 }
@@ -171,7 +169,7 @@ bool Rect2::intersects_segment(const Point2 &p_from, const Point2 &p_to, Point2 
 }
 
 bool Rect2::intersects_transformed(const Transform2D &p_xform, const Rect2 &p_rect) const {
-	//SAT intersection between local and transformed rect2
+	// SAT intersection between local and transformed rect2
 
 	Vector2 xf_points[4] = {
 		p_xform.xform(p_rect.position),
@@ -182,7 +180,7 @@ bool Rect2::intersects_transformed(const Transform2D &p_xform, const Rect2 &p_re
 
 	real_t low_limit;
 
-	//base rect2 first (faster)
+	// base rect2 first (faster)
 
 	if (xf_points[0].y > position.y)
 		goto next1;
@@ -319,5 +317,3 @@ next4:
 
 	return true;
 }
-
-

@@ -34,8 +34,6 @@
 
 #include "pandemonium_global.h"
 
-
-
 RID::RID() {
 	Pandemonium::api->pandemonium_rid_new(&_pandemonium_rid);
 }
@@ -75,5 +73,3 @@ bool RID::operator<=(const RID &p_other) const {
 bool RID::operator>=(const RID &p_other) const {
 	return !(*this < p_other);
 }
-
-

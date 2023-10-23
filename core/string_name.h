@@ -1,3 +1,6 @@
+#ifndef STRING_NAME_H
+#define STRING_NAME_H
+
 /*************************************************************************/
 /*  string.h                                                           */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef STRING_NAME_H
-#define STRING_NAME_H
 
 #include <gdn/string_name.h>
 

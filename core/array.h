@@ -1,3 +1,8 @@
+#ifndef ARRAY_H
+#define ARRAY_H
+
+#include <gdn/array.h>
+
 /*************************************************************************/
 /*  array.h                                                            */
 /*************************************************************************/
@@ -27,13 +32,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef ARRAY_H
-#define ARRAY_H
-
-#include <gdn/array.h>
-
-
 
 class String;
 
@@ -185,7 +183,5 @@ public:
 
 	~Array();
 };
-
-
 
 #endif // ARRAY_H

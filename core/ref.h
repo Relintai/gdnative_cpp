@@ -1,3 +1,6 @@
+#ifndef REF_H
+#define REF_H
+
 /*************************************************************************/
 /*  Ref.h                                                              */
 /*************************************************************************/
@@ -28,14 +31,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef REF_H
-#define REF_H
-
 #include "pandemonium_global.h"
 #include "reference.h"
 #include "variant.h"
-
-
 
 // Replicates Pandemonium's Ref<T> behavior
 // Rewritten from f5234e70be7dec4930c2d5a0e829ff480d044b1d.
@@ -178,19 +176,19 @@ public:
 	inline bool is_null() const { return reference == nullptr; }
 
 	void unref() {
-		//TODO this should be moved to mutexes, since this engine does not really
-		// do a lot of referencing on references and stuff
-		// mutexes will avoid more crashes?
+		// TODO this should be moved to mutexes, since this engine does not really
+		//  do a lot of referencing on references and stuff
+		//  mutexes will avoid more crashes?
 
 		if (reference && reference->unreference()) {
-			//memdelete(reference);
+			// memdelete(reference);
 			reference->free();
 		}
 		reference = nullptr;
 	}
 
 	void instance() {
-		//ref(memnew(T));
+		// ref(memnew(T));
 		ref(T::_new());
 	}
 
@@ -210,7 +208,5 @@ public:
 		return r;
 	}
 };
-
-
 
 #endif

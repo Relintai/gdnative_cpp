@@ -1,3 +1,6 @@
+#ifndef POOLARRAYS_H
+#define POOLARRAYS_H
+
 /*************************************************************************/
 /*  PoolArrays.h                                                       */
 /*************************************************************************/
@@ -28,9 +31,6 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef POOLARRAYS_H
-#define POOLARRAYS_H
-
 #include "defs.h"
 
 #include "color.h"
@@ -41,8 +41,6 @@
 #include "vector3.h"
 
 #include <gdn/pool_arrays.h>
-
-
 
 class Array;
 
@@ -863,7 +861,5 @@ public:
 
 	~PoolColorArray();
 };
-
-
 
 #endif // POOLARRAYS_H

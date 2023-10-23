@@ -1,3 +1,6 @@
+#ifndef VECTOR4I_H
+#define VECTOR4I_H
+
 /*************************************************************************/
 /*  vector2.h                                                          */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef VECTOR4I_H
-#define VECTOR4I_H
 
 #include <gdn/vector4i.h>
 

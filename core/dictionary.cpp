@@ -33,8 +33,6 @@
 #include "pandemonium_global.h"
 #include "variant.h"
 
-
-
 Dictionary::Dictionary() {
 	Pandemonium::api->pandemonium_dictionary_new(&_pandemonium_dictionary);
 }
@@ -106,5 +104,3 @@ Array Dictionary::values() const {
 Dictionary::~Dictionary() {
 	Pandemonium::api->pandemonium_dictionary_destroy(&_pandemonium_dictionary);
 }
-
-

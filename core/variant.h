@@ -1,3 +1,6 @@
+#ifndef VARIANT_H
+#define VARIANT_H
+
 /*************************************************************************/
 /*  Variant.h                                                          */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef VARIANT_H
-#define VARIANT_H
 
 #include <gdn/variant.h>
 

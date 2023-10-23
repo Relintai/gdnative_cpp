@@ -5,8 +5,6 @@
 
 #include <cstdio>
 
-
-
 FunctionProfiling::FunctionProfiling(const char *p_function, const int p_line) {
 	snprintf(signature, 1024, "::%d::%s", p_line, p_function);
 	ticks = OS::get_singleton()->get_ticks_usec();
@@ -18,4 +16,3 @@ FunctionProfiling::~FunctionProfiling() {
 		Pandemonium::gdnative_profiling_add_data(signature, t);
 	}
 }
-

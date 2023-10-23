@@ -1,3 +1,6 @@
+#ifndef VECTOR2_H
+#define VECTOR2_H
+
 /*************************************************************************/
 /*  Vector2.h                                                          */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef VECTOR2_H
-#define VECTOR2_H
 
 #include <gdn/vector2.h>
 

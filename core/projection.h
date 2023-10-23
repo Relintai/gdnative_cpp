@@ -1,3 +1,6 @@
+#ifndef PROJECTION_H
+#define PROJECTION_H
+
 /*************************************************************************/
 /*  Projection.h                                                     */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef CAMERA_MATRIX_H
-#define CAMERA_MATRIX_H
 
 #include "defs.h"
 #include "math_funcs.h"

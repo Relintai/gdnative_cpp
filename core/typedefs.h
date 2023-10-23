@@ -41,7 +41,7 @@
 #define _MKSTR(m_x) _STR(m_x)
 #endif
 
-//should always inline no matter what
+// should always inline no matter what
 #ifndef _ALWAYS_INLINE_
 
 #if defined(__GNUC__) && (__GNUC__ >= 4)
@@ -107,7 +107,7 @@
 #endif
 #endif
 
-//custom, gcc-safe offsetof, because gcc complains a lot.
+// custom, gcc-safe offsetof, because gcc complains a lot.
 template <class T>
 T *_nullptr() {
 	T *t = NULL;
@@ -179,7 +179,7 @@ inline void __swap_tmpl(T &x, T &y) {
 	y = aux;
 }
 
-#endif //swap
+#endif // swap
 
 /* clang-format off */
 #define HEX2CHR(m_hex) \
@@ -381,7 +381,7 @@ struct _GlobalLock {
 // Limit the depth of recursive algorithms when dealing with Array/Dictionary
 #define MAX_RECURSION 100
 
-//HAS_TRIVIAL_CONSTRUCTOR
+// HAS_TRIVIAL_CONSTRUCTOR
 
 #if defined(__llvm__) && _llvm_has_builtin(__is_trivially_constructible)
 #define HAS_TRIVIAL_CONSTRUCTOR(T) __is_trivially_constructible(T)
@@ -391,7 +391,7 @@ struct _GlobalLock {
 #define HAS_TRIVIAL_CONSTRUCTOR(T) __has_trivial_constructor(T)
 #endif
 
-//HAS_TRIVIAL_DESTRUCTOR
+// HAS_TRIVIAL_DESTRUCTOR
 
 #if defined(__llvm__) && _llvm_has_builtin(__is_trivially_destructible)
 #define HAS_TRIVIAL_DESTRUCTOR(T) __is_trivially_destructible(T)
@@ -401,7 +401,7 @@ struct _GlobalLock {
 #define HAS_TRIVIAL_DESTRUCTOR(T) __has_trivial_destructor(T)
 #endif
 
-//HAS_TRIVIAL_COPY
+// HAS_TRIVIAL_COPY
 
 #if defined(__llvm__) && _llvm_has_builtin(__is_trivially_copyable)
 #define HAS_TRIVIAL_COPY(T) __is_trivially_copyable(T)

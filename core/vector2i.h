@@ -1,3 +1,6 @@
+#ifndef VECTOR2I_H
+#define VECTOR2I_H
+
 /*************************************************************************/
 /*  vector2.h                                                          */
 /*************************************************************************/
@@ -28,16 +31,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef VECTOR2I_H
-#define VECTOR2I_H
-
 #include <gdn/vector2i.h>
 
 #include "defs.h"
 
 #include <math_funcs.h>
-
-
 
 class String;
 
@@ -63,7 +61,5 @@ struct Vector2i {
 
 	operator String() const;
 };
-
-
 
 #endif // VECTOR2_H

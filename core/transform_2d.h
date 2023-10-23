@@ -1,3 +1,6 @@
+#ifndef TRANSFORM2D_H
+#define TRANSFORM2D_H
+
 /*************************************************************************/
 /*  Transform2D.h                                                      */
 /*************************************************************************/
@@ -28,12 +31,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef TRANSFORM2D_H
-#define TRANSFORM2D_H
-
 #include "vector2.h"
-
-
 
 typedef Vector2 Size2;
 
@@ -130,7 +128,5 @@ struct Transform2D {
 		elements[1][1] = 1.0;
 	}
 };
-
-
 
 #endif // TRANSFORM2D_H

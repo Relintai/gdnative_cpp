@@ -1,3 +1,6 @@
+#ifndef RECT2_H
+#define RECT2_H
+
 /*************************************************************************/
 /*  Rect2.h                                                            */
 /*************************************************************************/
@@ -28,16 +31,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef RECT2_H
-#define RECT2_H
-
 #include "vector2.h"
 
 #include <cmath>
 
 #include <cstdlib>
-
-
 
 class String;
 
@@ -123,7 +121,7 @@ struct Rect2 {
 		return r;
 	}
 
-	inline void expand_to(const Vector2 &p_vector) { //in place function for speed
+	inline void expand_to(const Vector2 &p_vector) { // in place function for speed
 
 		Vector2 begin = position;
 		Vector2 end = position + size;
@@ -154,7 +152,5 @@ struct Rect2 {
 		size = p_size;
 	}
 };
-
-
 
 #endif // RECT2_H

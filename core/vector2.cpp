@@ -34,8 +34,6 @@
 
 #include "ustring.h"
 
-
-
 const Vector2 Vector2::ZERO = Vector2();
 const Vector2 Vector2::ONE = Vector2(1, 1);
 const Vector2 Vector2::INF = Vector2(INFINITY, INFINITY);
@@ -96,5 +94,3 @@ Vector2 Vector2::cubic_interpolate(const Vector2 &p_b, const Vector2 &p_pre_a, c
 Vector2::operator String() const {
 	return String::num(x) + ", " + String::num(y);
 }
-
-

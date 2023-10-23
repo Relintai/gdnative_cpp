@@ -1,3 +1,6 @@
+#ifndef PANDEMONIUM_GLOBAL_H
+#define PANDEMONIUM_GLOBAL_H
+
 /*************************************************************************/
 /*  pandemonium_global.h                                                      */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef PANDEMONIUM_GLOBAL_H
-#define PANDEMONIUM_GLOBAL_H
 
 #include <gdnative_api_struct.gen.h>
 

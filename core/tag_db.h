@@ -1,3 +1,6 @@
+#ifndef TAGDB_H
+#define TAGDB_H
+
 /*************************************************************************/
 /*  TagDB.h                                                            */
 /*************************************************************************/
@@ -27,9 +30,6 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-
-#ifndef TAGDB_H
-#define TAGDB_H
 
 #include <stddef.h>
 

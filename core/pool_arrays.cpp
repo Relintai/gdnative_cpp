@@ -39,8 +39,6 @@
 
 #include <gdn/pool_arrays.h>
 
-
-
 PoolByteArray::PoolByteArray() {
 	Pandemonium::api->pandemonium_pool_byte_array_new(&_pandemonium_array);
 }
@@ -644,5 +642,3 @@ int PoolColorArray::size() const {
 PoolColorArray::~PoolColorArray() {
 	Pandemonium::api->pandemonium_pool_color_array_destroy(&_pandemonium_array);
 }
-
-

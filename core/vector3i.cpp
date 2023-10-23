@@ -34,10 +34,6 @@
 
 #include "ustring.h"
 
-
-
 Vector3i::operator String() const {
-	return String::num(x) + ", " + String::num(y)  + ", " + String::num(z) ;
+	return String::num(x) + ", " + String::num(y) + ", " + String::num(z);
 }
-
-

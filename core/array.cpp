@@ -30,12 +30,10 @@
 
 #include "array.h"
 #include "pandemonium_global.h"
-#include "variant.h"
 #include "ustring.h"
+#include "variant.h"
 
 #include <cstdlib>
-
-
 
 class Object;
 
@@ -223,5 +221,3 @@ void Array::shuffle() {
 Array::~Array() {
 	Pandemonium::api->pandemonium_array_destroy(&_pandemonium_array);
 }
-
-

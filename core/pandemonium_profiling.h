@@ -1,3 +1,6 @@
+#ifndef PANDEMONIUM_PROFILING_H
+#define PANDEMONIUM_PROFILING_H
+
 /*************************************************************************/
 /*  pandemonium_profiling.h                                                   */
 /*************************************************************************/
@@ -28,12 +31,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef PANDEMONIUM_PROFILING_H
-#define PANDEMONIUM_PROFILING_H
-
 #include "defs.h"
-
-
 
 class FunctionProfiling {
 	char signature[1024];
@@ -43,8 +41,6 @@ public:
 	FunctionProfiling(const char *p_function, const int p_line);
 	~FunctionProfiling();
 };
-
-
 
 #ifdef DEBUG_ENABLED
 #define PANDEMONIUM_PROFILING_FUNCTION FunctionProfiling __function_profiling(__FUNCTION__, __LINE__);

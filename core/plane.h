@@ -1,3 +1,6 @@
+#ifndef PLANE_H
+#define PLANE_H
+
 /*************************************************************************/
 /*  Plane.h                                                            */
 /*************************************************************************/
@@ -28,14 +31,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef PLANE_H
-#define PLANE_H
-
 #include "vector3.h"
 
 #include <cmath>
-
-
 
 enum ClockDirection {
 
@@ -50,7 +48,7 @@ public:
 
 	void set_normal(const Vector3 &p_normal);
 
-	inline Vector3 get_normal() const { return normal; } ///Point is coplanar, CMP_EPSILON for precision
+	inline Vector3 get_normal() const { return normal; } /// Point is coplanar, CMP_EPSILON for precision
 
 	void normalize();
 
@@ -92,7 +90,5 @@ public:
 	Plane(const Vector3 &p_point, const Vector3 &p_normal);
 	Plane(const Vector3 &p_point1, const Vector3 &p_point2, const Vector3 &p_point3, ClockDirection p_dir = CLOCKWISE);
 };
-
-
 
 #endif // PLANE_H

@@ -37,8 +37,6 @@
 
 #include "quaternion.h"
 
-
-
 const Transform Transform::IDENTITY = Transform();
 const Transform Transform::FLIP_X = Transform(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0);
 const Transform Transform::FLIP_Y = Transform(1, 0, 0, 0, -1, 0, 0, 0, 1, 0, 0, 0);
@@ -111,7 +109,7 @@ AABB Transform::xform(const AABB &p_aabb) const {
 	Vector3 y = basis.get_axis(1) * p_aabb.size.y;
 	Vector3 z = basis.get_axis(2) * p_aabb.size.z;
 	Vector3 pos = xform(p_aabb.position);
-	//could be even further optimized
+	// could be even further optimized
 	AABB new_aabb;
 	new_aabb.position = pos;
 	new_aabb.expand_to(pos + x);
@@ -301,5 +299,3 @@ Transform::Transform(const Basis &p_basis, const Vector3 &p_origin) {
 	basis = p_basis;
 	origin = p_origin;
 }
-
-

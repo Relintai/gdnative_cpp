@@ -32,10 +32,6 @@
 #include "ustring.h"
 #include "vector2i.h"
 
-
-
 Rect2i::operator String() const {
 	return String(position) + ", " + String(size);
 }
-
-

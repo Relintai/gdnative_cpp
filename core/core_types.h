@@ -1,3 +1,6 @@
+#ifndef CORETYPES_H
+#define CORETYPES_H
+
 /*************************************************************************/
 /*  core_types.h                                                        */
 /*************************************************************************/
@@ -28,9 +31,6 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CORETYPES_H
-#define CORETYPES_H
-
 #include "defs.h"
 
 #include "aabb.h"
@@ -41,15 +41,15 @@
 #include "node_path.h"
 #include "plane.h"
 #include "pool_arrays.h"
+#include "projection.h"
 #include "quaternion.h"
-#include "rid.h"
 #include "rect2.h"
 #include "rect2i.h"
-#include "ustring.h"
+#include "rid.h"
 #include "string_name.h"
 #include "transform.h"
 #include "transform_2d.h"
-#include "projection.h"
+#include "ustring.h"
 #include "variant.h"
 #include "vector2.h"
 #include "vector2i.h"

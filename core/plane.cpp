@@ -34,8 +34,6 @@
 
 #include <cmath>
 
-
-
 void Plane::set_normal(const Vector3 &p_normal) {
 	this->normal = p_normal;
 }
@@ -107,15 +105,15 @@ bool Plane::intersects_ray(Vector3 p_from, Vector3 p_dir, Vector3 *p_intersectio
 	Vector3 segment = p_dir;
 	real_t den = normal.dot(segment);
 
-	//printf("den is %i\n",den);
+	// printf("den is %i\n",den);
 	if (::fabs(den) <= CMP_EPSILON) {
 		return false;
 	}
 
 	real_t dist = (normal.dot(p_from) - d) / den;
-	//printf("dist is %i\n",dist);
+	// printf("dist is %i\n",dist);
 
-	if (dist > CMP_EPSILON) { //this is a ray, before the emiting pos (p_from) doesnt exist
+	if (dist > CMP_EPSILON) { // this is a ray, before the emiting pos (p_from) doesnt exist
 
 		return false;
 	}
@@ -130,13 +128,13 @@ bool Plane::intersects_segment(Vector3 p_begin, Vector3 p_end, Vector3 *p_inters
 	Vector3 segment = p_begin - p_end;
 	real_t den = normal.dot(segment);
 
-	//printf("den is %i\n",den);
+	// printf("den is %i\n",den);
 	if (::fabs(den) <= CMP_EPSILON) {
 		return false;
 	}
 
 	real_t dist = (normal.dot(p_begin) - d) / den;
-	//printf("dist is %i\n",dist);
+	// printf("dist is %i\n",dist);
 
 	if (dist < -CMP_EPSILON || dist > (1.0 + CMP_EPSILON)) {
 		return false;
@@ -200,5 +198,3 @@ bool Plane::operator==(const Plane &p_plane) const {
 bool Plane::operator!=(const Plane &p_plane) const {
 	return normal != p_plane.normal || d != p_plane.d;
 }
-
-

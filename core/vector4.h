@@ -1,3 +1,6 @@
+#ifndef VECTOR4_H
+#define VECTOR4_H
+
 /*************************************************************************/
 /*  vector2.h                                                          */
 /*************************************************************************/
@@ -28,16 +31,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef VECTOR4_H
-#define VECTOR4_H
-
 #include <gdn/vector4.h>
 
 #include "defs.h"
 
 #include <math_funcs.h>
-
-
 
 class String;
 
@@ -69,7 +67,5 @@ struct Vector4 {
 
 	operator String() const;
 };
-
-
 
 #endif // VECTOR2_H

@@ -36,8 +36,6 @@
 
 #include "basis.h"
 
-
-
 const Vector3 Vector3::ZERO = Vector3();
 const Vector3 Vector3::ONE = Vector3(1, 1, 1);
 const Vector3 Vector3::INF = Vector3(INFINITY, INFINITY, INFINITY);
@@ -117,5 +115,3 @@ void Vector3::snap(real_t p_val) {
 Vector3::operator String() const {
 	return String::num(x) + ", " + String::num(y) + ", " + String::num(z);
 }
-
-

@@ -1,3 +1,6 @@
+#ifndef TRANSFORM_H
+#define TRANSFORM_H
+
 /*************************************************************************/
 /*  Transform.h                                                        */
 /*************************************************************************/
@@ -28,15 +31,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef TRANSFORM_H
-#define TRANSFORM_H
-
 #include "basis.h"
 
 #include "aabb.h"
 #include "plane.h"
-
-
 
 class Transform {
 public:
@@ -115,7 +113,5 @@ public:
 	Transform(const Basis &p_basis, const Vector3 &p_origin = Vector3());
 	inline Transform() {}
 };
-
-
 
 #endif // TRANSFORM_H
