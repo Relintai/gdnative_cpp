@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Vector4.hpp"
+#include "Vector4.h"
 
 #include <gdn/vector4.h>
 
-#include "String.hpp"
+#include "String.h"
 
 namespace pandemonium {
 

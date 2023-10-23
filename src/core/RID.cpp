@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "RID.hpp"
+#include "RID.h"
 
 #include <gdn/rid.h>
 
-#include "PandemoniumGlobal.hpp"
+#include "PandemoniumGlobal.h"
 
 namespace pandemonium {
 

@@ -28,10 +28,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Array.hpp"
-#include "PandemoniumGlobal.hpp"
-#include "Variant.hpp"
-#include "String.hpp"
+#include "Array.h"
+#include "PandemoniumGlobal.h"
+#include "Variant.h"
+#include "String.h"
 
 #include <cstdlib>
 

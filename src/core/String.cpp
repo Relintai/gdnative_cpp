@@ -28,13 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "String.hpp"
+#include "String.h"
 
-#include "Array.hpp"
-#include "PandemoniumGlobal.hpp"
-#include "NodePath.hpp"
-#include "PoolArrays.hpp"
-#include "Variant.hpp"
+#include "Array.h"
+#include "PandemoniumGlobal.h"
+#include "NodePath.h"
+#include "PoolArrays.h"
+#include "Variant.h"
 
 #include <gdn/string.h>
 

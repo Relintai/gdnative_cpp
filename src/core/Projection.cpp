@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Projection.hpp"
+#include "Projection.h"
 
 void Projection::set_identity() {
 	for (int i = 0; i < 4; i++) {

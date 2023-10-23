@@ -28,10 +28,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Dictionary.hpp"
-#include "Array.hpp"
-#include "PandemoniumGlobal.hpp"
-#include "Variant.hpp"
+#include "Dictionary.h"
+#include "Array.h"
+#include "PandemoniumGlobal.h"
+#include "Variant.h"
 
 namespace pandemonium {
 

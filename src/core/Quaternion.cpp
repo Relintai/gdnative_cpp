@@ -28,10 +28,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Quaternion.hpp"
-#include "Basis.hpp"
-#include "Defs.hpp"
-#include "Vector3.hpp"
+#include "Quaternion.h"
+#include "Basis.h"
+#include "Defs.h"
+#include "Vector3.h"
 
 #include <cmath>
 

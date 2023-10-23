@@ -28,10 +28,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Basis.hpp"
-#include "Defs.hpp"
-#include "Quaternion.hpp"
-#include "Vector3.hpp"
+#include "Basis.h"
+#include "Defs.h"
+#include "Quaternion.h"
+#include "Vector3.h"
 
 #include <algorithm>
 
@@ -636,7 +636,7 @@ Basis::Basis(const Vector3 &p_euler) {
 
 } // namespace pandemonium
 
-#include "Quaternion.hpp"
+#include "Quaternion.h"
 
 namespace pandemonium {
 

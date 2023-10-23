@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "NodePath.hpp"
-#include "PandemoniumGlobal.hpp"
-#include "String.hpp"
+#include "NodePath.h"
+#include "PandemoniumGlobal.h"
+#include "String.h"
 
 #include <gdn/node_path.h>
 

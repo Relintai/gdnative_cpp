@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Rect2i.hpp"
-#include "String.hpp"
-#include "Vector2i.hpp"
+#include "Rect2i.h"
+#include "String.h"
+#include "Vector2i.h"
 
 namespace pandemonium {
 

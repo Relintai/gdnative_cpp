@@ -28,10 +28,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Rect2.hpp"
-#include "String.hpp"
-#include "Transform2D.hpp"
-#include "Vector2.hpp"
+#include "Rect2.h"
+#include "String.h"
+#include "Transform2D.h"
+#include "Vector2.h"
 
 #include <cmath>
 

@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Color.hpp"
-#include "Defs.hpp"
-#include "String.hpp"
+#include "Color.h"
+#include "Defs.h"
+#include "String.h"
 
 #include <gdn/color.h>
 #include <cmath>

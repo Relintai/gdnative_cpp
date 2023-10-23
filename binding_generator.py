@@ -23,13 +23,13 @@ def get_file_list(api_filepath, output_dir, headers=False, sources=False):
     include_gen_folder = Path(output_dir) / "include" / "gen"
     source_gen_folder = Path(output_dir) / "src" / "gen"
     for _class in classes:
-        header_filename = include_gen_folder / (strip_name(_class["name"]) + ".hpp")
+        header_filename = include_gen_folder / (strip_name(_class["name"]) + ".h")
         source_filename = source_gen_folder / (strip_name(_class["name"]) + ".cpp")
         if headers:
             files.append(str(header_filename.as_posix()))
         if sources:
             files.append(str(source_filename.as_posix()))
-    icall_header_filename = include_gen_folder / "__icalls.hpp"
+    icall_header_filename = include_gen_folder / "__icalls.h"
     register_types_filename = source_gen_folder / "__register_types.cpp"
     init_method_bindings_filename = source_gen_folder / "__init_method_bindings.cpp"
     if headers:
@@ -79,7 +79,7 @@ def generate_bindings(api_filepath, use_template_get_node, output_dir="."):
 
         impl = generate_class_implementation(icalls, used_classes, c, use_template_get_node)
 
-        header_filename = include_gen_folder / (strip_name(c["name"]) + ".hpp")
+        header_filename = include_gen_folder / (strip_name(c["name"]) + ".h")
         with header_filename.open("w+") as header_file:
             header_file.write(header)
 
@@ -87,7 +87,7 @@ def generate_bindings(api_filepath, use_template_get_node, output_dir="."):
         with source_filename.open("w+") as source_file:
             source_file.write(impl)
 
-    icall_header_filename = include_gen_folder / "__icalls.hpp"
+    icall_header_filename = include_gen_folder / "__icalls.h"
     with icall_header_filename.open("w+") as icall_header_file:
         icall_header_file.write(generate_icall_header(icalls))
 
@@ -137,17 +137,17 @@ def generate_class_header(used_classes, c, use_template_get_node):
     source.append("#include <cstdint>")
     source.append("")
 
-    source.append("#include <core/CoreTypes.hpp>")
+    source.append("#include <core/CoreTypes.h>")
 
     class_name = strip_name(c["name"])
 
     # Ref<T> is not included in object.h in Pandemonium either,
     # so don't include it here because it's not needed
     if class_name != "Object" and class_name != "Reference":
-        source.append("#include <core/Ref.hpp>")
+        source.append("#include <core/Ref.h>")
         ref_allowed = True
     else:
-        source.append("#include <core/TagDB.hpp>")
+        source.append("#include <core/TagDB.h>")
         ref_allowed = False
 
     included = []
@@ -157,17 +157,17 @@ def generate_class_header(used_classes, c, use_template_get_node):
             used_class_name = remove_enum_prefix(extract_nested_type(used_class))
             if used_class_name not in included:
                 included.append(used_class_name)
-                source.append('#include "' + used_class_name + '.hpp"')
+                source.append('#include "' + used_class_name + '.h"')
         elif is_enum(used_class) and is_nested_type(used_class) and not is_nested_type(used_class, class_name):
             used_class_name = remove_enum_prefix(used_class)
             if used_class_name not in included:
                 included.append(used_class_name)
-                source.append('#include "' + used_class_name + '.hpp"')
+                source.append('#include "' + used_class_name + '.h"')
 
     source.append("")
 
     if c["base_class"] != "":
-        source.append('#include "' + strip_name(c["base_class"]) + '.hpp"')
+        source.append('#include "' + strip_name(c["base_class"]) + '.h"')
 
     source.append("namespace pandemonium {")
     source.append("")
@@ -418,18 +418,18 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
     ref_allowed = class_name != "Object" and class_name != "Reference"
 
     source = []
-    source.append('#include "' + class_name + '.hpp"')
+    source.append('#include "' + class_name + '.h"')
     source.append("")
     source.append("")
 
-    source.append("#include <core/PandemoniumGlobal.hpp>")
-    source.append("#include <core/CoreTypes.hpp>")
-    source.append("#include <core/Ref.hpp>")
+    source.append("#include <core/PandemoniumGlobal.h>")
+    source.append("#include <core/CoreTypes.h>")
+    source.append("#include <core/Ref.h>")
 
-    source.append("#include <core/Pandemonium.hpp>")
+    source.append("#include <core/Pandemonium.h>")
     source.append("")
 
-    source.append('#include "__icalls.hpp"')
+    source.append('#include "__icalls.h"')
     source.append("")
     source.append("")
 
@@ -437,7 +437,7 @@ def generate_class_implementation(icalls, used_classes, c, use_template_get_node
         if is_enum(used_class):
             continue
         else:
-            source.append('#include "' + strip_name(used_class) + '.hpp"')
+            source.append('#include "' + strip_name(used_class) + '.h"')
 
     source.append("")
     source.append("")
@@ -686,9 +686,9 @@ def generate_icall_header(icalls):
     source.append("#include <stdint.h>")
     source.append("")
 
-    source.append("#include <core/PandemoniumGlobal.hpp>")
-    source.append("#include <core/CoreTypes.hpp>")
-    source.append('#include "Object.hpp"')
+    source.append("#include <core/PandemoniumGlobal.h>")
+    source.append("#include <core/CoreTypes.h>")
+    source.append('#include "Object.h"')
     source.append("")
     source.append("")
 
@@ -780,12 +780,12 @@ def generate_icall_header(icalls):
 def generate_type_registry(classes):
     source = []
 
-    source.append('#include "TagDB.hpp"')
+    source.append('#include "TagDB.h"')
     source.append("#include <typeinfo>")
     source.append("\n")
 
     for c in classes:
-        source.append("#include <" + strip_name(c["name"]) + ".hpp>")
+        source.append("#include <" + strip_name(c["name"]) + ".h>")
 
     source.append("")
     source.append("")
@@ -828,7 +828,7 @@ def generate_init_method_bindings(classes):
     source = []
 
     for c in classes:
-        source.append("#include <" + strip_name(c["name"]) + ".hpp>")
+        source.append("#include <" + strip_name(c["name"]) + ".h>")
 
     source.append("")
     source.append("")

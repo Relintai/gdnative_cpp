@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "AABB.hpp"
-#include "Plane.hpp"
-#include "Vector3.hpp"
+#include "AABB.h"
+#include "Plane.h"
+#include "Vector3.h"
 
 #include <algorithm>
 

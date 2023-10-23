@@ -1,0 +1,207 @@
+/*************************************************************************/
+/*  PandemoniumGlobal.cpp                                                      */
+/*************************************************************************/
+/*                       This file is part of:                           */
+/*                           PANDEMONIUM ENGINE                                */
+/*                      https://pandemoniumengine.org                          */
+/*************************************************************************/
+/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
+/* Copyright (c) 2014-2022 Pandemonium Engine contributors (cf. AUTHORS.md).   */
+/*                                                                       */
+/* Permission is hereby granted, free of charge, to any person obtaining */
+/* a copy of this software and associated documentation files (the       */
+/* "Software"), to deal in the Software without restriction, including   */
+/* without limitation the rights to use, copy, modify, merge, publish,   */
+/* distribute, sublicense, and/or sell copies of the Software, and to    */
+/* permit persons to whom the Software is furnished to do so, subject to */
+/* the following conditions:                                             */
+/*                                                                       */
+/* The above copyright notice and this permission notice shall be        */
+/* included in all copies or substantial portions of the Software.       */
+/*                                                                       */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,       */
+/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */
+/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/
+/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */
+/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */
+/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
+/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
+/*************************************************************************/
+
+#include "PandemoniumGlobal.h"
+
+#include "String.h"
+#include "Array.h"
+
+#include "Wrapped.h"
+
+static GDCALLINGCONV void *wrapper_create(void *data, const void *type_tag, pandemonium_object *instance) {
+	pandemonium::_Wrapped *wrapper_memory = (pandemonium::_Wrapped *)pandemonium::api->pandemonium_alloc(sizeof(pandemonium::_Wrapped));
+
+	if (!wrapper_memory)
+		return NULL;
+	wrapper_memory->_owner = instance;
+	wrapper_memory->_type_tag = (size_t)type_tag;
+
+	return (void *)wrapper_memory;
+}
+
+static GDCALLINGCONV void wrapper_destroy(void *data, void *wrapper) {
+	if (wrapper)
+		pandemonium::api->pandemonium_free(wrapper);
+}
+
+namespace pandemonium {
+
+void *_RegisterState::nativescript_handle;
+int _RegisterState::language_index;
+
+const pandemonium_gdnative_core_api_struct *api = nullptr;
+
+const pandemonium_gdnative_ext_nativescript_api_struct *nativescript_api = nullptr;
+const pandemonium_gdnative_ext_pluginscript_api_struct *pluginscript_api = nullptr;
+const pandemonium_gdnative_ext_android_api_struct *android_api = nullptr;
+const pandemonium_gdnative_ext_videodecoder_api_struct *videodecoder_api = nullptr;
+const pandemonium_gdnative_ext_net_api_struct *net_api = nullptr;
+
+const void *gdnlib = NULL;
+
+void Pandemonium::print(const String &message) {
+	pandemonium::api->pandemonium_print((pandemonium_string *)&message);
+}
+
+void Pandemonium::print_warning(const String &description, const String &function, const String &file, int line) {
+	int len;
+
+	char *c_desc = description.alloc_c_string();
+	char *c_func = function.alloc_c_string();
+	char *c_file = file.alloc_c_string();
+
+	if (c_desc != nullptr && c_func != nullptr && c_file != nullptr) {
+		pandemonium::api->pandemonium_print_warning(c_desc, c_func, c_file, line);
+	};
+
+	if (c_desc != nullptr)
+		pandemonium::api->pandemonium_free(c_desc);
+	if (c_func != nullptr)
+		pandemonium::api->pandemonium_free(c_func);
+	if (c_file != nullptr)
+		pandemonium::api->pandemonium_free(c_file);
+}
+
+void Pandemonium::print_error(const String &description, const String &function, const String &file, int line) {
+	int len;
+
+	char *c_desc = description.alloc_c_string();
+	char *c_func = function.alloc_c_string();
+	char *c_file = file.alloc_c_string();
+
+	if (c_desc != nullptr && c_func != nullptr && c_file != nullptr) {
+		pandemonium::api->pandemonium_print_error(c_desc, c_func, c_file, line);
+	};
+
+	if (c_desc != nullptr)
+		pandemonium::api->pandemonium_free(c_desc);
+	if (c_func != nullptr)
+		pandemonium::api->pandemonium_free(c_func);
+	if (c_file != nullptr)
+		pandemonium::api->pandemonium_free(c_file);
+}
+
+void ___register_types();
+void ___init_method_bindings();
+
+void Pandemonium::gdnative_init(pandemonium_gdnative_init_options *options) {
+	pandemonium::api = options->api_struct;
+	pandemonium::gdnlib = options->gd_native_library;
+
+	const pandemonium_gdnative_api_struct *core_extension = pandemonium::api->next;
+
+	/*
+	while (core_extension) {
+		if (core_extension->version.major == 1 && core_extension->version.minor == 1) {
+			pandemonium::core_1_1_api = (const pandemonium_gdnative_core_1_1_api_struct *)core_extension;
+		} else if (core_extension->version.major == 1 && core_extension->version.minor == 2) {
+			pandemonium::core_1_2_api = (const pandemonium_gdnative_core_1_2_api_struct *)core_extension;
+		}
+		core_extension = core_extension->next;
+	}
+	*/
+
+	// now find our extensions
+	for (int i = 0; i < pandemonium::api->num_extensions; i++) {
+		switch (pandemonium::api->extensions[i]->type) {
+			case GDNATIVE_EXT_NATIVESCRIPT: {
+				pandemonium::nativescript_api = (const pandemonium_gdnative_ext_nativescript_api_struct *)pandemonium::api->extensions[i];
+
+				/*
+				const pandemonium_gdnative_api_struct *extension = pandemonium::nativescript_api->next;
+
+				while (extension) {
+					if (extension->version.major == 1 && extension->version.minor == 1) {
+						//pandemonium::nativescript_1_1_api = (const pandemonium_gdnative_ext_nativescript_1_1_api_struct *)extension;
+					}
+
+					extension = extension->next;
+				}
+				*/
+			} break;
+			case GDNATIVE_EXT_PLUGINSCRIPT: {
+				pandemonium::pluginscript_api = (const pandemonium_gdnative_ext_pluginscript_api_struct *)pandemonium::api->extensions[i];
+			} break;
+			case GDNATIVE_EXT_ANDROID: {
+				pandemonium::android_api = (const pandemonium_gdnative_ext_android_api_struct *)pandemonium::api->extensions[i];
+			} break;
+			case GDNATIVE_EXT_VIDEODECODER: {
+				pandemonium::videodecoder_api = (const pandemonium_gdnative_ext_videodecoder_api_struct *)pandemonium::api->extensions[i];
+			} break;
+			case GDNATIVE_EXT_NET: {
+				pandemonium::net_api = (const pandemonium_gdnative_ext_net_api_struct *)pandemonium::api->extensions[i];
+
+				/*
+				const pandemonium_gdnative_api_struct *extension = pandemonium::net_api->next;
+
+				while (extension) {
+					if (extension->version.major == 3 && extension->version.minor == 2) {
+						pandemonium::net_3_2_api = (const pandemonium_gdnative_ext_net_3_2_api_struct *)extension;
+					}
+
+					extension = extension->next;
+				}
+				*/
+			} break;
+
+			default:
+				break;
+		}
+	}
+
+	// Initialize the `language_index` here since `__register_types()` makes use of it.
+	pandemonium_instance_binding_functions binding_funcs = {};
+	binding_funcs.alloc_instance_binding_data = wrapper_create;
+	binding_funcs.free_instance_binding_data = wrapper_destroy;
+
+	pandemonium::_RegisterState::language_index = pandemonium::nativescript_api->pandemonium_nativescript_register_instance_binding_data_functions(binding_funcs);
+
+	// register these now
+	___register_types();
+	___init_method_bindings();
+}
+
+void Pandemonium::gdnative_terminate(pandemonium_gdnative_terminate_options *options) {
+	// reserved for future use.
+}
+
+void Pandemonium::gdnative_profiling_add_data(const char *p_signature, uint64_t p_time) {
+	pandemonium::nativescript_api->pandemonium_nativescript_profiling_add_data(p_signature, p_time);
+}
+
+void Pandemonium::nativescript_init(void *handle) {
+	pandemonium::_RegisterState::nativescript_handle = handle;
+}
+
+void Pandemonium::nativescript_terminate(void *handle) {
+	pandemonium::nativescript_api->pandemonium_nativescript_unregister_instance_binding_data_functions(pandemonium::_RegisterState::language_index);
+}
+
+} // namespace pandemonium

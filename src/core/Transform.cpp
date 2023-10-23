@@ -28,14 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Transform.hpp"
+#include "Transform.h"
 
-#include "Basis.hpp"
+#include "Basis.h"
 
-#include "AABB.hpp"
-#include "Plane.hpp"
+#include "AABB.h"
+#include "Plane.h"
 
-#include "Quaternion.hpp"
+#include "Quaternion.h"
 
 namespace pandemonium {
 

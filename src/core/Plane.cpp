@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Plane.hpp"
+#include "Plane.h"
 
-#include "Mathp.hpp"
+#include "Mathp.h"
 
 #include <cmath>
 

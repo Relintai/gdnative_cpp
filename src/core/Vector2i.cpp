@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Vector2i.hpp"
+#include "Vector2i.h"
 
 #include <gdn/vector2i.h>
 
-#include "String.hpp"
+#include "String.h"
 
 namespace pandemonium {
 

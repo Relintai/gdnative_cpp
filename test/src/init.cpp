@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include <Pandemonium.hpp>
-#include <Reference.hpp>
+#include <Pandemonium.h>
+#include <Reference.h>
 
 using namespace pandemonium;
 

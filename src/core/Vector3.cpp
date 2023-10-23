@@ -28,13 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Vector3.hpp"
+#include "Vector3.h"
 
-#include "String.hpp"
+#include "String.h"
 
 #include <stdlib.h>
 
-#include "Basis.hpp"
+#include "Basis.h"
 
 namespace pandemonium {
 

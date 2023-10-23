@@ -28,14 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "PoolArrays.hpp"
-#include "Color.hpp"
-#include "Defs.hpp"
-#include "PandemoniumGlobal.hpp"
-#include "String.hpp"
-#include "Vector2.hpp"
-#include "Vector2i.hpp"
-#include "Vector3.hpp"
+#include "PoolArrays.h"
+#include "Color.h"
+#include "Defs.h"
+#include "PandemoniumGlobal.h"
+#include "String.h"
+#include "Vector2.h"
+#include "Vector2i.h"
+#include "Vector3.h"
 
 #include <gdn/pool_arrays.h>
 

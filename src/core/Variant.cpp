@@ -28,14 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "Variant.hpp"
+#include "Variant.h"
 
 #include <gdn/variant.h>
 
-#include "CoreTypes.hpp"
-#include "Defs.hpp"
-#include "PandemoniumGlobal.hpp"
-#include "Object.hpp"
+#include "CoreTypes.h"
+#include "Defs.h"
+#include "PandemoniumGlobal.h"
+#include "Object.h"
 
 namespace pandemonium {
 
