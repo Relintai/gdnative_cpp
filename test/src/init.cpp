@@ -34,7 +34,7 @@
 
 
 class SimpleClass : public Reference {
-	PANDEMONIUM_CLASS(SimpleClass, Reference);
+	GDCLASS(SimpleClass, Reference);
 
 public:
 	SimpleClass() {}

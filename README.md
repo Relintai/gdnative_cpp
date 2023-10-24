@@ -162,7 +162,7 @@ Create `init.cpp` under `SimpleLibrary/src/` and add the following code:
 
 
 class SimpleClass : public Reference {
-    PANDEMONIUM_CLASS(SimpleClass, Reference);
+    GDCLASS(SimpleClass, Reference);
 public:
     SimpleClass() { }
 

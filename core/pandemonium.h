@@ -132,7 +132,7 @@ inline T *create_custom_class_instance() {
 // ___get_base_id:             Gets the ID of the direct base class, as returned by ___get_id
 // ___get_base_class_name:     Name of the direct base class
 // ___get_from_variant:        Converts a Variant into an Object*. Will be non-null if the class matches.
-#define PANDEMONIUM_CLASS(Name, Base)                                        \
+#define GDCLASS(Name, Base)                                        \
                                                                              \
 public:                                                                      \
 	inline static const char *___get_class_name() {                          \
