@@ -953,6 +953,8 @@ def is_core_type(name):
         "StringName",
         "Dictionary",
         "Array",
+        "TypedArray",
+        "PackedTypedArray",
         "PoolByteArray",
         "PoolIntArray",
         "PoolRealArray",
