@@ -601,24 +601,24 @@ PoolVector3iArray::Write PoolVector3iArray::write() {
 	return write;
 }
 
-void PoolVector3iArray::append(const Vector3 &data) {
-	Pandemonium::api->pandemonium_pool_vector3i_array_append(&_pandemonium_array, (pandemonium_vector3 *)&data);
+void PoolVector3iArray::append(const Vector3i &data) {
+	Pandemonium::api->pandemonium_pool_vector3i_array_append(&_pandemonium_array, (pandemonium_vector3i *)&data);
 }
 
 void PoolVector3iArray::append_array(const PoolVector3iArray &array) {
 	Pandemonium::api->pandemonium_pool_vector3i_array_append_array(&_pandemonium_array, &array._pandemonium_array);
 }
 
-int PoolVector3iArray::insert(const int idx, const Vector3 &data) {
-	return Pandemonium::api->pandemonium_pool_vector3i_array_insert(&_pandemonium_array, idx, (pandemonium_vector3 *)&data);
+int PoolVector3iArray::insert(const int idx, const Vector3i &data) {
+	return Pandemonium::api->pandemonium_pool_vector3i_array_insert(&_pandemonium_array, idx, (pandemonium_vector3i *)&data);
 }
 
 void PoolVector3iArray::invert() {
 	Pandemonium::api->pandemonium_pool_vector3i_array_invert(&_pandemonium_array);
 }
 
-void PoolVector3iArray::push_back(const Vector3 &data) {
-	Pandemonium::api->pandemonium_pool_vector3i_array_push_back(&_pandemonium_array, (pandemonium_vector3 *)&data);
+void PoolVector3iArray::push_back(const Vector3i &data) {
+	Pandemonium::api->pandemonium_pool_vector3i_array_push_back(&_pandemonium_array, (pandemonium_vector3i *)&data);
 }
 
 void PoolVector3iArray::remove(const int idx) {
@@ -629,13 +629,13 @@ void PoolVector3iArray::resize(const int size) {
 	Pandemonium::api->pandemonium_pool_vector3i_array_resize(&_pandemonium_array, size);
 }
 
-void PoolVector3iArray::set(const int idx, const Vector3 &data) {
-	Pandemonium::api->pandemonium_pool_vector3i_array_set(&_pandemonium_array, idx, (pandemonium_vector3 *)&data);
+void PoolVector3iArray::set(const int idx, const Vector3i &data) {
+	Pandemonium::api->pandemonium_pool_vector3i_array_set(&_pandemonium_array, idx, (pandemonium_vector3i *)&data);
 }
 
-const Vector3 PoolVector3iArray::operator[](const int idx) {
-	Vector3 v;
-	*(pandemonium_vector3 *)&v = Pandemonium::api->pandemonium_pool_vector3i_array_get(&_pandemonium_array, idx);
+const Vector3i PoolVector3iArray::operator[](const int idx) {
+	Vector3i v;
+	*(pandemonium_vector3i *)&v = Pandemonium::api->pandemonium_pool_vector3i_array_get(&_pandemonium_array, idx);
 	return v;
 }
 
@@ -757,24 +757,24 @@ PoolVector4iArray::Write PoolVector4iArray::write() {
 	return write;
 }
 
-void PoolVector4iArray::append(const Vector4 &data) {
-	Pandemonium::api->pandemonium_pool_vector4i_array_append(&_pandemonium_array, (pandemonium_vector4 *)&data);
+void PoolVector4iArray::append(const Vector4i &data) {
+	Pandemonium::api->pandemonium_pool_vector4i_array_append(&_pandemonium_array, (pandemonium_vector4i *)&data);
 }
 
 void PoolVector4iArray::append_array(const PoolVector4iArray &array) {
 	Pandemonium::api->pandemonium_pool_vector4i_array_append_array(&_pandemonium_array, &array._pandemonium_array);
 }
 
-int PoolVector4iArray::insert(const int idx, const Vector4 &data) {
-	return Pandemonium::api->pandemonium_pool_vector4i_array_insert(&_pandemonium_array, idx, (pandemonium_vector4 *)&data);
+int PoolVector4iArray::insert(const int idx, const Vector4i &data) {
+	return Pandemonium::api->pandemonium_pool_vector4i_array_insert(&_pandemonium_array, idx, (pandemonium_vector4i *)&data);
 }
 
 void PoolVector4iArray::invert() {
 	Pandemonium::api->pandemonium_pool_vector4i_array_invert(&_pandemonium_array);
 }
 
-void PoolVector4iArray::push_back(const Vector4 &data) {
-	Pandemonium::api->pandemonium_pool_vector4i_array_push_back(&_pandemonium_array, (pandemonium_vector4 *)&data);
+void PoolVector4iArray::push_back(const Vector4i &data) {
+	Pandemonium::api->pandemonium_pool_vector4i_array_push_back(&_pandemonium_array, (pandemonium_vector4i *)&data);
 }
 
 void PoolVector4iArray::remove(const int idx) {
@@ -785,13 +785,13 @@ void PoolVector4iArray::resize(const int size) {
 	Pandemonium::api->pandemonium_pool_vector4i_array_resize(&_pandemonium_array, size);
 }
 
-void PoolVector4iArray::set(const int idx, const Vector4 &data) {
-	Pandemonium::api->pandemonium_pool_vector4i_array_set(&_pandemonium_array, idx, (pandemonium_vector4 *)&data);
+void PoolVector4iArray::set(const int idx, const Vector4i &data) {
+	Pandemonium::api->pandemonium_pool_vector4i_array_set(&_pandemonium_array, idx, (pandemonium_vector4i *)&data);
 }
 
-const Vector4 PoolVector4iArray::operator[](const int idx) {
-	Vector4 v;
-	*(pandemonium_vector4 *)&v = Pandemonium::api->pandemonium_pool_vector4i_array_get(&_pandemonium_array, idx);
+const Vector4i PoolVector4iArray::operator[](const int idx) {
+	Vector4i v;
+	*(pandemonium_vector4i *)&v = Pandemonium::api->pandemonium_pool_vector4i_array_get(&_pandemonium_array, idx);
 	return v;
 }
 

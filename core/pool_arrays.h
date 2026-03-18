@@ -39,6 +39,9 @@
 #include "vector2.h"
 #include "vector2i.h"
 #include "vector3.h"
+#include "vector3i.h"
+#include "vector4.h"
+#include "vector4i.h"
 
 #include <gdn/pool_arrays.h>
 
@@ -790,11 +793,11 @@ public:
 			Pandemonium::api->pandemonium_pool_vector3i_array_read_access_destroy(_read_access);
 		}
 
-		inline const Vector3 *ptr() const {
-			return (const Vector3 *)Pandemonium::api->pandemonium_pool_vector3i_array_read_access_ptr(_read_access);
+		inline const Vector3i *ptr() const {
+			return (const Vector3i *)Pandemonium::api->pandemonium_pool_vector3i_array_read_access_ptr(_read_access);
 		}
 
-		inline const Vector3 &operator[](int p_idx) const {
+		inline const Vector3i &operator[](int p_idx) const {
 			return ptr()[p_idx];
 		}
 
@@ -820,11 +823,11 @@ public:
 			Pandemonium::api->pandemonium_pool_vector3i_array_write_access_destroy(_write_access);
 		}
 
-		inline Vector3 *ptr() const {
-			return (Vector3 *)Pandemonium::api->pandemonium_pool_vector3i_array_write_access_ptr(_write_access);
+		inline Vector3i *ptr() const {
+			return (Vector3i *)Pandemonium::api->pandemonium_pool_vector3i_array_write_access_ptr(_write_access);
 		}
 
-		inline Vector3 &operator[](int p_idx) const {
+		inline Vector3i &operator[](int p_idx) const {
 			return ptr()[p_idx];
 		}
 
@@ -843,23 +846,23 @@ public:
 
 	Write write();
 
-	void append(const Vector3 &data);
+	void append(const Vector3i &data);
 
 	void append_array(const PoolVector3iArray &array);
 
-	int insert(const int idx, const Vector3 &data);
+	int insert(const int idx, const Vector3i &data);
 
 	void invert();
 
-	void push_back(const Vector3 &data);
+	void push_back(const Vector3i &data);
 
 	void remove(const int idx);
 
 	void resize(const int size);
 
-	void set(const int idx, const Vector3 &data);
+	void set(const int idx, const Vector3i &data);
 
-	const Vector3 operator[](const int idx);
+	const Vector3i operator[](const int idx);
 
 	int size() const;
 
@@ -998,11 +1001,11 @@ public:
 			Pandemonium::api->pandemonium_pool_vector4i_array_read_access_destroy(_read_access);
 		}
 
-		inline const Vector4 *ptr() const {
-			return (const Vector4 *)Pandemonium::api->pandemonium_pool_vector4i_array_read_access_ptr(_read_access);
+		inline const Vector4i *ptr() const {
+			return (const Vector4i *)Pandemonium::api->pandemonium_pool_vector4i_array_read_access_ptr(_read_access);
 		}
 
-		inline const Vector4 &operator[](int p_idx) const {
+		inline const Vector4i &operator[](int p_idx) const {
 			return ptr()[p_idx];
 		}
 
@@ -1028,11 +1031,11 @@ public:
 			Pandemonium::api->pandemonium_pool_vector4i_array_write_access_destroy(_write_access);
 		}
 
-		inline Vector4 *ptr() const {
-			return (Vector4 *)Pandemonium::api->pandemonium_pool_vector4i_array_write_access_ptr(_write_access);
+		inline Vector4i *ptr() const {
+			return (Vector4i *)Pandemonium::api->pandemonium_pool_vector4i_array_write_access_ptr(_write_access);
 		}
 
-		inline Vector4 &operator[](int p_idx) const {
+		inline Vector4i &operator[](int p_idx) const {
 			return ptr()[p_idx];
 		}
 
@@ -1051,23 +1054,23 @@ public:
 
 	Write write();
 
-	void append(const Vector4 &data);
+	void append(const Vector4i &data);
 
 	void append_array(const PoolVector4iArray &array);
 
-	int insert(const int idx, const Vector4 &data);
+	int insert(const int idx, const Vector4i &data);
 
 	void invert();
 
-	void push_back(const Vector4 &data);
+	void push_back(const Vector4i &data);
 
 	void remove(const int idx);
 
 	void resize(const int size);
 
-	void set(const int idx, const Vector4 &data);
+	void set(const int idx, const Vector4i &data);
 
-	const Vector4 operator[](const int idx);
+	const Vector4i operator[](const int idx);
 
 	int size() const;
 
