@@ -658,6 +658,8 @@ public:
 	~PoolVector2iArray();
 };
 
+// PoolVector3Array
+
 class PoolVector3Array {
 	pandemonium_pool_vector3_array _pandemonium_array;
 
@@ -759,6 +761,320 @@ public:
 
 	~PoolVector3Array();
 };
+
+// PoolVector3iArray
+
+class PoolVector3iArray {
+	pandemonium_pool_vector3i_array _pandemonium_array;
+
+	friend class Variant;
+	explicit inline PoolVector3iArray(pandemonium_pool_vector3i_array a) {
+		_pandemonium_array = a;
+	}
+
+public:
+	class Read {
+		friend class PoolVector3iArray;
+		pandemonium_pool_vector3i_array_read_access *_read_access;
+
+	public:
+		inline Read() {
+			_read_access = nullptr;
+		}
+
+		inline Read(const Read &p_other) {
+			_read_access = Pandemonium::api->pandemonium_pool_vector3i_array_read_access_copy(p_other._read_access);
+		}
+
+		inline ~Read() {
+			Pandemonium::api->pandemonium_pool_vector3i_array_read_access_destroy(_read_access);
+		}
+
+		inline const Vector3 *ptr() const {
+			return (const Vector3 *)Pandemonium::api->pandemonium_pool_vector3i_array_read_access_ptr(_read_access);
+		}
+
+		inline const Vector3 &operator[](int p_idx) const {
+			return ptr()[p_idx];
+		}
+
+		inline void operator=(const Read &p_other) {
+			Pandemonium::api->pandemonium_pool_vector3i_array_read_access_operator_assign(_read_access, p_other._read_access);
+		}
+	};
+
+	class Write {
+		friend class PoolVector3iArray;
+		pandemonium_pool_vector3i_array_write_access *_write_access;
+
+	public:
+		inline Write() {
+			_write_access = nullptr;
+		}
+
+		inline Write(const Write &p_other) {
+			_write_access = Pandemonium::api->pandemonium_pool_vector3i_array_write_access_copy(p_other._write_access);
+		}
+
+		inline ~Write() {
+			Pandemonium::api->pandemonium_pool_vector3i_array_write_access_destroy(_write_access);
+		}
+
+		inline Vector3 *ptr() const {
+			return (Vector3 *)Pandemonium::api->pandemonium_pool_vector3i_array_write_access_ptr(_write_access);
+		}
+
+		inline Vector3 &operator[](int p_idx) const {
+			return ptr()[p_idx];
+		}
+
+		inline void operator=(const Write &p_other) {
+			Pandemonium::api->pandemonium_pool_vector3i_array_write_access_operator_assign(_write_access, p_other._write_access);
+		}
+	};
+
+	PoolVector3iArray();
+	PoolVector3iArray(const PoolVector3iArray &p_other);
+	PoolVector3iArray &operator=(const PoolVector3iArray &p_other);
+
+	PoolVector3iArray(const Array &array);
+
+	Read read() const;
+
+	Write write();
+
+	void append(const Vector3 &data);
+
+	void append_array(const PoolVector3iArray &array);
+
+	int insert(const int idx, const Vector3 &data);
+
+	void invert();
+
+	void push_back(const Vector3 &data);
+
+	void remove(const int idx);
+
+	void resize(const int size);
+
+	void set(const int idx, const Vector3 &data);
+
+	const Vector3 operator[](const int idx);
+
+	int size() const;
+
+	~PoolVector3iArray();
+};
+
+// PoolVector4Array
+
+class PoolVector4Array {
+	pandemonium_pool_vector4_array _pandemonium_array;
+
+	friend class Variant;
+	explicit inline PoolVector4Array(pandemonium_pool_vector4_array a) {
+		_pandemonium_array = a;
+	}
+
+public:
+	class Read {
+		friend class PoolVector4Array;
+		pandemonium_pool_vector4_array_read_access *_read_access;
+
+	public:
+		inline Read() {
+			_read_access = nullptr;
+		}
+
+		inline Read(const Read &p_other) {
+			_read_access = Pandemonium::api->pandemonium_pool_vector4_array_read_access_copy(p_other._read_access);
+		}
+
+		inline ~Read() {
+			Pandemonium::api->pandemonium_pool_vector4_array_read_access_destroy(_read_access);
+		}
+
+		inline const Vector4 *ptr() const {
+			return (const Vector4 *)Pandemonium::api->pandemonium_pool_vector4_array_read_access_ptr(_read_access);
+		}
+
+		inline const Vector4 &operator[](int p_idx) const {
+			return ptr()[p_idx];
+		}
+
+		inline void operator=(const Read &p_other) {
+			Pandemonium::api->pandemonium_pool_vector4_array_read_access_operator_assign(_read_access, p_other._read_access);
+		}
+	};
+
+	class Write {
+		friend class PoolVector4Array;
+		pandemonium_pool_vector4_array_write_access *_write_access;
+
+	public:
+		inline Write() {
+			_write_access = nullptr;
+		}
+
+		inline Write(const Write &p_other) {
+			_write_access = Pandemonium::api->pandemonium_pool_vector4_array_write_access_copy(p_other._write_access);
+		}
+
+		inline ~Write() {
+			Pandemonium::api->pandemonium_pool_vector4_array_write_access_destroy(_write_access);
+		}
+
+		inline Vector4 *ptr() const {
+			return (Vector4 *)Pandemonium::api->pandemonium_pool_vector4_array_write_access_ptr(_write_access);
+		}
+
+		inline Vector4 &operator[](int p_idx) const {
+			return ptr()[p_idx];
+		}
+
+		inline void operator=(const Write &p_other) {
+			Pandemonium::api->pandemonium_pool_vector4_array_write_access_operator_assign(_write_access, p_other._write_access);
+		}
+	};
+
+	PoolVector4Array();
+	PoolVector4Array(const PoolVector4Array &p_other);
+	PoolVector4Array &operator=(const PoolVector4Array &p_other);
+
+	PoolVector4Array(const Array &array);
+
+	Read read() const;
+
+	Write write();
+
+	void append(const Vector4 &data);
+
+	void append_array(const PoolVector4Array &array);
+
+	int insert(const int idx, const Vector4 &data);
+
+	void invert();
+
+	void push_back(const Vector4 &data);
+
+	void remove(const int idx);
+
+	void resize(const int size);
+
+	void set(const int idx, const Vector4 &data);
+
+	const Vector4 operator[](const int idx);
+
+	int size() const;
+
+	~PoolVector4Array();
+};
+
+// PoolVector4iArray
+
+class PoolVector4iArray {
+	pandemonium_pool_vector4i_array _pandemonium_array;
+
+	friend class Variant;
+	explicit inline PoolVector4iArray(pandemonium_pool_vector4i_array a) {
+		_pandemonium_array = a;
+	}
+
+public:
+	class Read {
+		friend class PoolVector4iArray;
+		pandemonium_pool_vector4i_array_read_access *_read_access;
+
+	public:
+		inline Read() {
+			_read_access = nullptr;
+		}
+
+		inline Read(const Read &p_other) {
+			_read_access = Pandemonium::api->pandemonium_pool_vector4i_array_read_access_copy(p_other._read_access);
+		}
+
+		inline ~Read() {
+			Pandemonium::api->pandemonium_pool_vector4i_array_read_access_destroy(_read_access);
+		}
+
+		inline const Vector4 *ptr() const {
+			return (const Vector4 *)Pandemonium::api->pandemonium_pool_vector4i_array_read_access_ptr(_read_access);
+		}
+
+		inline const Vector4 &operator[](int p_idx) const {
+			return ptr()[p_idx];
+		}
+
+		inline void operator=(const Read &p_other) {
+			Pandemonium::api->pandemonium_pool_vector4i_array_read_access_operator_assign(_read_access, p_other._read_access);
+		}
+	};
+
+	class Write {
+		friend class PoolVector4iArray;
+		pandemonium_pool_vector4i_array_write_access *_write_access;
+
+	public:
+		inline Write() {
+			_write_access = nullptr;
+		}
+
+		inline Write(const Write &p_other) {
+			_write_access = Pandemonium::api->pandemonium_pool_vector4i_array_write_access_copy(p_other._write_access);
+		}
+
+		inline ~Write() {
+			Pandemonium::api->pandemonium_pool_vector4i_array_write_access_destroy(_write_access);
+		}
+
+		inline Vector4 *ptr() const {
+			return (Vector4 *)Pandemonium::api->pandemonium_pool_vector4i_array_write_access_ptr(_write_access);
+		}
+
+		inline Vector4 &operator[](int p_idx) const {
+			return ptr()[p_idx];
+		}
+
+		inline void operator=(const Write &p_other) {
+			Pandemonium::api->pandemonium_pool_vector4i_array_write_access_operator_assign(_write_access, p_other._write_access);
+		}
+	};
+
+	PoolVector4iArray();
+	PoolVector4iArray(const PoolVector4iArray &p_other);
+	PoolVector4iArray &operator=(const PoolVector4iArray &p_other);
+
+	PoolVector4iArray(const Array &array);
+
+	Read read() const;
+
+	Write write();
+
+	void append(const Vector4 &data);
+
+	void append_array(const PoolVector4iArray &array);
+
+	int insert(const int idx, const Vector4 &data);
+
+	void invert();
+
+	void push_back(const Vector4 &data);
+
+	void remove(const int idx);
+
+	void resize(const int size);
+
+	void set(const int idx, const Vector4 &data);
+
+	const Vector4 operator[](const int idx);
+
+	int size() const;
+
+	~PoolVector4iArray();
+};
+
+// PoolColorArray
 
 class PoolColorArray {
 	pandemonium_pool_color_array _pandemonium_array;
