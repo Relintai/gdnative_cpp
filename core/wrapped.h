@@ -38,8 +38,12 @@ class _Wrapped {
 public:
 	pandemonium_object *_owner;
 	size_t _type_tag;
-
+	
 	virtual void free() {}
+
+	virtual ~_Wrapped() {
+		free();
+	}
 };
 
 #endif // WRAPPED_H

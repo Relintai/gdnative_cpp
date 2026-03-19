@@ -122,11 +122,6 @@ void memdelete(T *p_class) {
 		return; // doesn't want to be deleted
 	}
 
-	if (std::is_base_of<_Wrapped, T>::value) {
-		reinterpret_cast<_Wrapped *>(p_class)->free();
-		return;
-	}
-
 	if (!HAS_TRIVIAL_DESTRUCTOR(T)) {
 		p_class->~T();
 	}
@@ -138,11 +133,6 @@ template <class T, class A>
 void memdelete_allocator(T *p_class) {
 	if (!predelete_handler(p_class)) {
 		return; // doesn't want to be deleted
-	}
-
-	if (std::is_base_of<_Wrapped, T>::value) {
-		reinterpret_cast<_Wrapped *>(p_class)->free();
-		return;
 	}
 
 	if (!HAS_TRIVIAL_DESTRUCTOR(T)) {
