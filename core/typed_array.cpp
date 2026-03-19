@@ -61,14 +61,8 @@ void TypedArray::clear() {
 	Pandemonium::api->pandemonium_typed_array_clear(&_pandemonium_typed_array);
 }
 
-bool TypedArray::deep_equal(const TypedArray &p_array) const {
-	return Pandemonium::api->pandemonium_typed_array_deep_equal(&_pandemonium_typed_array, &p_array._pandemonium_typed_array);
-}
 bool TypedArray::deep_equal(const TypedArray &p_array, const int p_recursion_count) const {
 	return Pandemonium::api->pandemonium_typed_array_deep_equal_recursion_count(&_pandemonium_typed_array, &p_array._pandemonium_typed_array, p_recursion_count);
-}
-bool TypedArray::deep_equal_approx(const TypedArray &p_array) const {
-	return Pandemonium::api->pandemonium_typed_array_deep_equal_approx(&_pandemonium_typed_array, &p_array._pandemonium_typed_array);
 }
 bool TypedArray::deep_equal_approx(const TypedArray &p_array, const int p_recursion_count) const {
 	return Pandemonium::api->pandemonium_typed_array_deep_equal_approx_recursion_count(&_pandemonium_typed_array, &p_array._pandemonium_typed_array, p_recursion_count);

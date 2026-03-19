@@ -68,14 +68,8 @@ void Array::clear() {
 	Pandemonium::api->pandemonium_array_clear(&_pandemonium_array);
 }
 
-bool Array::deep_equal(const Array &p_array) const {
-	return Pandemonium::api->pandemonium_array_deep_equal(&_pandemonium_array, &p_array._pandemonium_array);
-}
 bool Array::deep_equal(const Array &p_array, const int p_recursion_count) const {
 	return Pandemonium::api->pandemonium_array_deep_equal_recursion_count(&_pandemonium_array, &p_array._pandemonium_array, p_recursion_count);
-}
-bool Array::deep_equal_approx(const Array &p_array) const {
-	return Pandemonium::api->pandemonium_array_deep_equal_approx(&_pandemonium_array, &p_array._pandemonium_array);
 }
 bool Array::deep_equal_approx(const Array &p_array, const int p_recursion_count) const {
 	return Pandemonium::api->pandemonium_array_deep_equal_approx_recursion_count(&_pandemonium_array, &p_array._pandemonium_array, p_recursion_count);

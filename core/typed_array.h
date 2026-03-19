@@ -71,10 +71,8 @@ public:
 	bool empty() const;
 	void clear();
 	
-	bool deep_equal(const TypedArray& p_array) const;
-	bool deep_equal(const TypedArray& p_array, const int p_recursion_count) const;
-	bool deep_equal_approx(const TypedArray& p_array) const;
-	bool deep_equal_approx(const TypedArray& p_array, const int p_recursion_count) const;
+	bool deep_equal(const TypedArray& p_array, const int p_recursion_count = 0) const;
+	bool deep_equal_approx(const TypedArray& p_array, const int p_recursion_count = 0) const;
 	bool operator==(const TypedArray &p_array);
 	
 	uint32_t hash() const;
