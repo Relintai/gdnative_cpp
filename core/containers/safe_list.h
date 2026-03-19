@@ -1,42 +1,40 @@
-/**************************************************************************/
-/*  safe_list.h                                                           */
-/**************************************************************************/
-/*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
-/**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
-/*                                                                        */
-/* Permission is hereby granted, free of charge, to any person obtaining  */
-/* a copy of this software and associated documentation files (the        */
-/* "Software"), to deal in the Software without restriction, including    */
-/* without limitation the rights to use, copy, modify, merge, publish,    */
-/* distribute, sublicense, and/or sell copies of the Software, and to     */
-/* permit persons to whom the Software is furnished to do so, subject to  */
-/* the following conditions:                                              */
-/*                                                                        */
-/* The above copyright notice and this permission notice shall be         */
-/* included in all copies or substantial portions of the Software.        */
-/*                                                                        */
-/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,        */
-/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF     */
-/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. */
-/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY   */
-/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,   */
-/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE      */
-/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
-/**************************************************************************/
-
 #ifndef SAFE_LIST_H
 #define SAFE_LIST_H
 
-#include "core/os/memory.h"
-#include "core/typedefs.h"
+/*************************************************************************/
+/*  safe_list.h                                                          */
+/*************************************************************************/
+/*                         This file is part of:                         */
+/*                          PANDEMONIUM ENGINE                           */
+/*             https://github.com/Relintai/pandemonium_engine            */
+/*************************************************************************/
+/* Copyright (c) 2022-present Péter Magyar.                              */
+/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
+/*                                                                       */
+/* Permission is hereby granted, free of charge, to any person obtaining */
+/* a copy of this software and associated documentation files (the       */
+/* "Software"), to deal in the Software without restriction, including   */
+/* without limitation the rights to use, copy, modify, merge, publish,   */
+/* distribute, sublicense, and/or sell copies of the Software, and to    */
+/* permit persons to whom the Software is furnished to do so, subject to */
+/* the following conditions:                                             */
+/*                                                                       */
+/* The above copyright notice and this permission notice shall be        */
+/* included in all copies or substantial portions of the Software.       */
+/*                                                                       */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,       */
+/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */
+/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/
+/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */
+/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */
+/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
+/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
+/*************************************************************************/
 
-#include <atomic>
-#include <functional>
-#include <type_traits>
+#include "core/os/memory.h"
+#include "core/os/safe_refcount.h"
+#include "core/typedefs.h"
 
 // Design goals for these classes:
 // - Accessing this list with an iterator will never result in a use-after free,
@@ -51,11 +49,11 @@
 template <class T, class A = DefaultAllocator>
 class SafeList {
 	struct SafeListNode {
-		std::atomic<SafeListNode *> next = nullptr;
+		SafePointer<SafeListNode *> next;
 
 		// If the node is logically deleted, this pointer will typically point
 		// to the previous list item in time that was also logically deleted.
-		std::atomic<SafeListNode *> graveyard_next = nullptr;
+		SafePointer<SafeListNode *> graveyard_next;
 
 		void (*deletion_fn)(T t);
 
@@ -64,16 +62,14 @@ class SafeList {
 		static void default_deletion_fn(T) {}
 
 		SafeListNode() {
-			next = NULL;
-			graveyard_next = NULL;
 			deletion_fn = default_deletion_fn;
 		}
 	};
 
-	std::atomic<SafeListNode *> head;
-	std::atomic<SafeListNode *> graveyard_head;
+	SafePointer<SafeListNode *> head;
+	SafePointer<SafeListNode *> graveyard_head;
 
-	std::atomic<uint32_t> active_iterator_count;
+	SafeNumeric<uint32_t> active_iterator_count;
 
 public:
 	class Iterator {
@@ -85,18 +81,18 @@ public:
 		Iterator(SafeListNode *p_cursor, SafeList *p_list) {
 			cursor = p_cursor;
 			list = p_list;
-			list->active_iterator_count++;
+			list->active_iterator_count.increment();
 		}
 
 	public:
 		Iterator(const Iterator &p_other) {
 			cursor = p_other.cursor;
 			list = p_other.list;
-			list->active_iterator_count++;
+			list->active_iterator_count.increment();
 		}
 
 		~Iterator() {
-			list->active_iterator_count--;
+			list->active_iterator_count.decrement();
 		}
 
 	public:
@@ -135,8 +131,8 @@ public:
 		new_node->val = p_value;
 		SafeListNode *expected_head = nullptr;
 		do {
-			expected_head = head.load();
-			new_node->next.store(expected_head);
+			expected_head = head.get();
+			new_node->next.set(expected_head);
 		} while (!head.compare_exchange_strong(/* expected= */ expected_head, /* new= */ new_node));
 	}
 
@@ -149,7 +145,7 @@ public:
 		return end();
 	}
 
-	void erase(T p_value, std::function<void(T)> p_deletion_fn) {
+	void erase(T p_value, void (*p_deletion_fn)(T)) {
 		Iterator tmp = find(p_value);
 		erase(tmp, p_deletion_fn);
 	}
@@ -159,7 +155,7 @@ public:
 		erase(tmp, [](T t) { return; });
 	}
 
-	void erase(Iterator &p_iterator, std::function<void(T)> p_deletion_fn) {
+	void erase(Iterator &p_iterator, void (*p_deletion_fn)(T)) {
 		p_iterator.cursor->deletion_fn = p_deletion_fn;
 		erase(p_iterator);
 	}
