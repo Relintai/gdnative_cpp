@@ -77,7 +77,11 @@ class PoolIntArray;
 class PoolRealArray;
 class PoolStringArray;
 class PoolVector2Array;
+class PoolVector2iArray;
 class PoolVector3Array;
+class PoolVector3iArray;
+class PoolVector4Array;
+class PoolVector4iArray;
 class PoolColorArray;
 
 class Object;
@@ -93,93 +97,93 @@ class Array {
 	}
 
 public:
-	Array();
-	Array(const Array &other);
+	Variant &operator[](const int idx);
+	const Variant &operator[](const int idx) const;
+	
+	void set(int p_idx, const Variant &p_value);
+	const Variant &get(int p_idx) const;
+
+	int size() const;
+	bool empty() const;
+	void clear();
+	
+	bool deep_equal(const Array& p_array) const;
+	bool deep_equal(const Array& p_array, const int p_recursion_count) const;
+	bool deep_equal_approx(const Array& p_array) const;
+	bool deep_equal_approx(const Array& p_array, const int p_recursion_count) const;
+	bool operator==(const Array &p_array);
+	
+	uint32_t hash() const;
 	Array &operator=(const Array &other);
+	
+	void push_back(const Variant &v);
+	void append(const Variant &v);
+	void append_array(const Array& p_array);
+	void resize(const int size);
 
-	Array(const PoolByteArray &a);
+	void insert(const int pos, const Variant &value);
+	void remove(const int idx);
+	void fill(const Variant &p_value);
 
-	Array(const PoolIntArray &a);
+	Variant front() const;
+	Variant back() const;
 
-	Array(const PoolRealArray &a);
+	void sort();
+	void sort_custom(Object *obj, const String &func);
+	void shuffle();
 
-	Array(const PoolStringArray &a);
+	int bsearch(const Variant &value, const bool before = true);
+	int bsearch_custom(const Variant &value, const Object *obj, const String &func, const bool before = true);
 
-	Array(const PoolVector2Array &a);
+	void invert();
 
-	Array(const PoolVector3Array &a);
+	int find(const Variant &what, const int from = 0) const;
+	int rfind(const Variant &what, const int from = -1) const;
+	int find_last(const Variant &what) const;
+	int count(const Variant &v);
+	bool has(const Variant &what) const;
 
-	Array(const PoolColorArray &a);
+	void erase(const Variant &v);
+
+	void push_front(const Variant &v);
+	Variant pop_back();
+	Variant pop_front();
+	Variant pop_at(int p_pos);
+
+	Array duplicate(const bool deep = false) const;
+
+	Array slice(int p_begin, int p_end, int p_step = 1, bool p_deep = false) const;
+
+	Variant min() const;
+	Variant max() const;
+	
+	// Not exposed in gdnative
+	//bool operator<(const Array &p_array) const;
+	//bool operator<=(const Array &p_array) const;
+	//bool operator>(const Array &p_array) const;
+	//bool operator>=(const Array &p_array) const;
+
+	bool is_shared() const;
 
 	template <class... Args>
 	static Array make(Args... args) {
 		return helpers::append_all(Array(), args...);
 	}
 
-	Variant &operator[](const int idx);
+	Array();
+	Array(const Array &other);
 
-	const Variant &operator[](const int idx) const;
-
-	void append(const Variant &v);
-
-	void clear();
-
-	int count(const Variant &v);
-
-	bool empty() const;
-
-	void erase(const Variant &v);
-
-	Variant front() const;
-
-	Variant back() const;
-
-	int find(const Variant &what, const int from = 0) const;
-
-	int find_last(const Variant &what) const;
-
-	bool has(const Variant &what) const;
-
-	uint32_t hash() const;
-
-	void insert(const int pos, const Variant &value);
-
-	void invert();
-
-	bool is_shared() const;
-
-	Variant pop_back();
-
-	Variant pop_front();
-
-	void push_back(const Variant &v);
-
-	void push_front(const Variant &v);
-
-	void remove(const int idx);
-
-	int size() const;
-
-	void resize(const int size);
-
-	int rfind(const Variant &what, const int from = -1) const;
-
-	void sort();
-
-	void sort_custom(Object *obj, const String &func);
-
-	int bsearch(const Variant &value, const bool before = true);
-
-	int bsearch_custom(const Variant &value, const Object *obj,
-			const String &func, const bool before = true);
-
-	Array duplicate(const bool deep = false) const;
-
-	Variant max() const;
-
-	Variant min() const;
-
-	void shuffle();
+	Array(const PoolByteArray &a);
+	Array(const PoolIntArray &a);
+	Array(const PoolRealArray &a);
+	Array(const PoolStringArray &a);
+	Array(const PoolVector2Array &a);
+	Array(const PoolVector2iArray &a);
+	Array(const PoolVector3Array &a);
+	Array(const PoolVector3iArray &a);
+	Array(const PoolVector4Array &a);
+	Array(const PoolVector4iArray &a);
+	Array(const PoolColorArray &a);
 
 	~Array();
 };
