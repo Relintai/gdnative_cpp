@@ -329,6 +329,10 @@ def generate_class_header(used_classes, c, use_template_get_node):
                     return default_value.lower()
                 if _type == "Array":
                     return "Array()"
+                if _type == "TypedArray":
+                    return "TypedArray()"
+                if _type == "PackedTypedArray":
+                    return "PackedTypedArray()"
                 if _type in [
                     "PoolVector2Array",
                     "PoolVector2iArray",
