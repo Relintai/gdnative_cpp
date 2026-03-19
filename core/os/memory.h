@@ -35,7 +35,6 @@
 #include "core/wrapped.h"
 
 #include <stddef.h>
-#include <type_traits>
 
 #ifndef PAD_ALIGN
 #define PAD_ALIGN 16 // must always be greater than this at much
@@ -90,9 +89,38 @@ _ALWAYS_INLINE_ T *_post_initialize(T *p_obj) {
 	return p_obj;
 }
 
+/*
 template <typename T>
 _ALWAYS_INLINE_ T *memnew_template() {
 	if (std::is_base_of<_Wrapped, T>::value) {
+		return T::_new();
+	}
+
+	return _post_initialize(new T);
+}
+*/
+
+// https://stackoverflow.com/questions/257288/how-can-you-check-whether-a-templated-class-has-a-member-function/257382#257382
+// SFINAE test
+template <typename T>
+class _has__new_checker {
+	typedef char one;
+	struct two {
+		char x[2];
+	};
+
+	template <typename C>
+	static one test(decltype(&C::_new));
+	template <typename C>
+	static two test(...);
+
+public:
+	enum { value = sizeof(test<T>(0)) == sizeof(char) };
+};
+
+template <typename T>
+_ALWAYS_INLINE_ T *memnew_template() {
+	if (_has__new_checker<T>::value) {
 		return T::_new();
 	}
 
