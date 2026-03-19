@@ -357,7 +357,7 @@ void register_method(const char *name, M method_ptr, pandemonium_method_rpc_mode
 template <class D, class B, class R, class... As>
 void register_method_explicit(const char *name, R (B::*method_ptr)(As...),
 		pandemonium_method_rpc_mode rpc_type = PANDEMONIUM_METHOD_RPC_MODE_DISABLED) {
-	static_assert(std::is_base_of<B, D>::value, "Explicit class must derive from method class");
+	//static_assert(std::is_base_of<B, D>::value, "Explicit class must derive from method class");
 	register_method(name, static_cast<R (D::*)(As...)>(method_ptr), rpc_type);
 }
 
