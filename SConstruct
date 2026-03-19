@@ -197,9 +197,9 @@ if host_platform == "windows" and env["platform"] != "android":
 # Require C++14
 if host_platform == "windows" and env["platform"] == "windows" and not env["use_mingw"]:
     # MSVC
-    env.Append(CCFLAGS=["/std:c++14"])
+    env.Append(CCFLAGS=["/std:c++11"])
 else:
-    env.Append(CCFLAGS=["-std=c++14"])
+    env.Append(CCFLAGS=["-std=c++11"])
 
 if env["platform"] == "linux" or env["platform"] == "freebsd":
     if env["use_llvm"]:
@@ -315,8 +315,8 @@ elif env["platform"] == "windows":
         env = Environment(ENV=os.environ, tools=["mingw"])
         opts.Update(env)
 
-        # Still need to use C++14.
-        env.Append(CCFLAGS=["-std=c++14"])
+        # Still need to use C++11.
+        env.Append(CCFLAGS=["-std=c++11"])
         # Don't want lib prefixes
         env["IMPLIBPREFIX"] = ""
         env["SHLIBPREFIX"] = ""
