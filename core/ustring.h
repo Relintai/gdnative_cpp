@@ -73,6 +73,8 @@ class String {
 	friend class NodePath;
 	friend class Variant;
 	friend class StringName;
+	friend class TypedArray;
+	friend class PackedTypedArray;
 
 	explicit inline String(pandemonium_string contents) :
 			_pandemonium_string(contents) {}

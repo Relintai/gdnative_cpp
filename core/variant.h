@@ -64,6 +64,9 @@ class Variant {
 	pandemonium_variant _pandemonium_variant;
 
 	friend class Array;
+	friend class TypedArray;
+	friend class PackedTypedArray;
+	
 	inline explicit Variant(pandemonium_variant v) {
 		_pandemonium_variant = v;
 	}

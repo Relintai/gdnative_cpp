@@ -41,6 +41,9 @@ class StringName {
 	friend class Dictionary;
 	friend class NodePath;
 	friend class Variant;
+	friend class TypedArray;
+	friend class PackedTypedArray;
+	
 	explicit inline StringName(pandemonium_string_name contents) :
 			_pandemonium_string_name(contents) {}
 
