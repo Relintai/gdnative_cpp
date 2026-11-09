@@ -29,12 +29,13 @@
 /*************************************************************************/
 
 #include <pandemonium.h>
-#include <reference.h>
+#include <gen/sprite.h>
+
+#include <vector2.h>
 
 
-
-class SimpleClass : public Reference {
-	GDCLASS(SimpleClass, Reference);
+class SimpleClass : public Sprite {
+	GDCLASS(SimpleClass, Sprite);
 
 public:
 	SimpleClass() {}
@@ -44,6 +45,10 @@ public:
 		_name = String("SimpleClass");
 		_value = 0;
 	}
+
+  void _process(const real_t delta) {
+    set_position(get_position() + Vector2(0, 1));
+  }
 
 	void test_void_method() {
 		Pandemonium::print("This is test");
@@ -58,6 +63,7 @@ public:
 
 	static void _register_methods() {
 		register_method("method", &SimpleClass::method);
+		register_method("_process", &SimpleClass::_process);
 
 		/**
 		 * The line below is equivalent to the following GDScript export:
@@ -99,5 +105,5 @@ extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_t
 extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
 	Pandemonium::nativescript_init(handle);
 
-	Pandemonium::register_class<SimpleClass>();
+	register_class<SimpleClass>();
 }

@@ -223,7 +223,7 @@ extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_t
 extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
     Pandemonium::nativescript_init(handle);
 
-    Pandemonium::register_class<SimpleClass>();
+    register_class<SimpleClass>();
 }
 ```
 
