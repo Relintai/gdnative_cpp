@@ -91,19 +91,36 @@ public:
 	}
 };
 
+
+// Order:
+// pandemonium_gdnative_init
+// pandemonium_gdnative_singleton
+// ...
+// pandemonium_gdnative_terminate
+
 /** GDNative Initialize **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_init(pandemonium_gdnative_init_options *o) {
 	Pandemonium::gdnative_init(o);
+
+  ERR_PRINT("pandemonium_gdnative_init");
 }
 
 /** GDNative Terminate **/
 extern "C" void GDN_EXPORT pandemonium_gdnative_terminate(pandemonium_gdnative_terminate_options *o) {
+  ERR_PRINT("pandemonium_gdnative_terminate");
 	Pandemonium::gdnative_terminate(o);
 }
 
 /** NativeScript Initialize **/
 extern "C" void GDN_EXPORT pandemonium_nativescript_init(void *handle) {
+  ERR_PRINT("pandemonium_nativescript_init");
 	Pandemonium::nativescript_init(handle);
 
 	register_class<SimpleClass>();
 }
+
+/** GDNative Initialize Singleton (Optional, needed if library is set as singleton) **/
+extern "C" void GDN_EXPORT pandemonium_gdnative_singleton() {
+  ERR_PRINT("pandemonium_gdnative_singleton");
+}
+
