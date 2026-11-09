@@ -120,7 +120,8 @@ opts.Add(
         ignorecase=2,
     )
 )
-opts.Add(EnumVariable("bits", "Target platform bits", "64" if is64 else "32", ("32", "64")))
+#opts.Add(EnumVariable("bits", "Target platform bits", "64" if is64 else "32", ("32", "64")))
+opts.Add(EnumVariable("bits", "Target platform bits", "default", ("default", "32", "64")))
 opts.Add(BoolVariable("use_llvm", "Use the LLVM compiler - only effective when targeting Linux or FreeBSD", False))
 opts.Add(BoolVariable("use_mingw", "Use the MinGW compiler instead of MSVC - only effective on Windows", False))
 # Must be the same setting as used for cpp_bindings
@@ -170,6 +171,7 @@ opts.Add(
         True,
     )
 )
+opts.Add("custom_arch_suffix", "Custom arch suffix.", "")
 
 # Note that currently all dependent classes need to be added to what you need.
 # TODO skip rendering getters and setters that use non listed classes
@@ -527,6 +529,10 @@ elif env["platform"] == "osx":
         arch_suffix = env["macos_arch"]
 elif env["platform"] == "javascript":
     arch_suffix = "wasm"
+
+if env["custom_arch_suffix"] != "":
+    arch_suffix = env["custom_arch_suffix"]
+
 # Expose it to projects that import this env.
 env["arch_suffix"] = arch_suffix
 

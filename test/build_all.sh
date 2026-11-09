@@ -28,13 +28,6 @@ if [[ ! -z "${NIGHTLY}" ]]; then
   custom_envvars='-e BUILD_NAME=nightly'
 fi
 
-# Windows Build
-docker run ${custom_envvars} \
-	      -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
-	      -v ${project_root}:/root/project \
-	      -w /root/project pandemonium-windows:${img_version} \
-	      bash /root/in_container_build_scripts/windows.sh "$@" 2>&1 | tee logs/windows.log
-
 # Linux Build
 docker run ${custom_envvars} \
         -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
@@ -42,12 +35,15 @@ docker run ${custom_envvars} \
         -w /root/project pandemonium-linux:${img_version} \
         bash /root/in_container_build_scripts/linux.sh "$@" 2>&1 | tee logs/linux.log
 
-# Linux Build
+exit 0
+
+# Windows Build
 docker run ${custom_envvars} \
-        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
-        -v ${project_root}:/root/project \
-        -w /root/project pandemonium-linux:${img_version} \
-        bash /root/in_container_build_scripts/linux_server.sh "$@" 2>&1 | tee logs/linux_server.log
+	      -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
+	      -v ${project_root}:/root/project \
+	      -w /root/project pandemonium-windows:${img_version} \
+	      bash /root/in_container_build_scripts/windows.sh "$@" 2>&1 | tee logs/windows.log
+
 
 # Javascript Build
 docker run ${custom_envvars} \
@@ -77,20 +73,6 @@ docker run ${custom_envvars} \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-appleembedded:${img_version} \
         bash /root/in_container_build_scripts/ios.sh "$@" 2>&1 | tee logs/ios.log
-
-# FRT Build
-docker run ${custom_envvars} \
-        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
-        -v ${project_root}:/root/project \
-        -w /root/project pandemonium-linux:${img_version} \
-        bash /root/in_container_build_scripts/frt.sh "$@" 2>&1 | tee logs/frt.log
-
-# FRT SDL Build
-docker run ${custom_envvars} \
-        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
-        -v ${project_root}:/root/project \
-        -w /root/project pandemonium-linux:${img_version} \
-        bash /root/in_container_build_scripts/frt_sdl.sh "$@" 2>&1 | tee logs/frt_sdl.log
 
 # Check files
 
