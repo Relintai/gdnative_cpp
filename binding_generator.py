@@ -85,8 +85,6 @@ def print_file_list(api_filepath, output_dir, headers=False, sources=False, bind
 
 
 def scons_emit_files(target, source, env):
-    print(env["bindings_filter_classes"])
-    print(env["bindings_class_list"])
     files = [env.File(f) for f in get_file_list(str(source[0]), target[0].abspath, True, True, env["bindings_filter_classes"], env["bindings_class_list"])]
     env.Clean(target, files)
     env["pandemonium_cpp_gen_dir"] = target[0].abspath
@@ -94,8 +92,6 @@ def scons_emit_files(target, source, env):
 
 
 def scons_generate_bindings(target, source, env):
-    print(env["bindings_filter_classes"])
-    print(env["bindings_class_list"])
     generate_bindings(str(source[0]), env["generate_template_get_node"], env["pandemonium_cpp_gen_dir"], env["bindings_filter_classes"], env["bindings_class_list"])
     return None
 

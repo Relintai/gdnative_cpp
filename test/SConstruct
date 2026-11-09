@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-env = SConscript("../SConstruct")
+# Ue this if you want to filter generated binds:
 
-# TODO, these need to be set before the env = SConscript("../SConstruct") call somehow, as it
-# the file list gets generated before the actual files.
+bindings_filter_classes = True
+bindings_class_list = "Object,Node,Node2D,Sprite,CanvasItem,Reference,GlobalConstants,OS,InputEvent,Font,Texture,AESContext,Resource,Image,InputEventKey,Material,Mesh,Shape,MultiMesh,InputEventWithModifiers,TriangleMesh,ArrayMesh,MultiplayerAPI,NetworkedMultiplayerPeer,ProcessGroup,PacketPeer,StyleBox,World2D,Physics2DDirectSpaceState,SceneTree,MainLoop,PackedScene,SceneTreeTween,SceneState,CallbackTweener,Physics2DShapeQueryParameters,SceneTreeTimer,Tweener,Viewport,IntervalTweener,World,MethodTweener,Camera2D,Control,PropertyTweener,Shader,ViewportTexture,Camera,Spatial,SpatialGizmo,World3D,Environment3D,Sky,PhysicsDirectSpaceState,PhysicsShapeQueryParameters,Theme,_OS"
 
-env["bindings_filter_classes"] = True;
-env["bindings_class_list"] = "Object,Node,Node2D,Sprite,CanvasItem,Reference,GlobalConstants,OS,InputEvent,Font,Texture,AESContext,Resource,Image,InputEventKey,Material,Mesh,Shape,MultiMesh,InputEventWithModifiers,TriangleMesh,ArrayMesh,MultiplayerAPI,NetworkedMultiplayerPeer,ProcessGroup,PacketPeer,StyleBox,World2D,Physics2DDirectSpaceState,SceneTree,MainLoop,PackedScene,SceneTreeTween,SceneState,CallbackTweener,Physics2DShapeQueryParameters,SceneTreeTimer,Tweener,Viewport,IntervalTweener,World,MethodTweener,Camera2D,Control,PropertyTweener,Shader,ViewportTexture,Camera,Spatial,SpatialGizmo,World3D,Environment3D,Sky,PhysicsDirectSpaceState,PhysicsShapeQueryParameters,Theme";
+env = SConscript("../SConstruct", exports={"bindings_filter_classes":bindings_filter_classes, "bindings_class_list":bindings_class_list})
+
+# Or use this, if you want all binds:
+#env = SConscript("../SConstruct")
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=['src/'])

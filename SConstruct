@@ -179,6 +179,18 @@ opts.Add(BoolVariable("build_library", "Build the pandemonium-cpp library.", Tru
 opts.Update(env)
 Help(opts.GenerateHelpText(env))
 
+try:
+    Import("bindings_filter_classes")
+    env["bindings_filter_classes"] = bindings_filter_classes
+except:
+    pass
+
+try:
+    Import("bindings_class_list")
+    env["bindings_class_list"] = bindings_class_list
+except:
+    pass
+
 # Detect and print a warning listing unknown SCons variables to ease troubleshooting.
 unknown = opts.UnknownVariables()
 if unknown:
