@@ -75,9 +75,7 @@ public:
 
 	const Variant operator[](const int idx) const;
 	
-	//todo fix gdnative bind
-	//bool set(int p_idx, const Variant &p_value);
-	void set(int p_idx, const Variant &p_value);
+	bool set(int p_idx, const Variant &p_value);
 	const Variant get(int p_idx) const;
 
 	int size() const;

@@ -43,11 +43,8 @@ const Variant PackedTypedArray::operator[](const int idx) const {
 	return Variant(v);
 }
 
-// bool PackedTypedArray::set(int p_idx, const Variant &p_value) {
-//	return Pandemonium::api->pandemonium_packed_typed_array_set(&_pandemonium_packed_typed_array, p_idx, (const pandemonium_variant *)&p_value);
-// }
-void PackedTypedArray::set(int p_idx, const Variant &p_value) {
-	Pandemonium::api->pandemonium_packed_typed_array_set(&_pandemonium_packed_typed_array, p_idx, (const pandemonium_variant *)&p_value);
+bool PackedTypedArray::set(int p_idx, const Variant &p_value) {
+	return Pandemonium::api->pandemonium_packed_typed_array_set(&_pandemonium_packed_typed_array, p_idx, (const pandemonium_variant *)&p_value);
 }
 const Variant PackedTypedArray::get(int p_idx) const {
 	pandemonium_variant v = Pandemonium::api->pandemonium_packed_typed_array_get(&_pandemonium_packed_typed_array, p_idx);
