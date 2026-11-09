@@ -48,14 +48,20 @@ def class_name_to_file_name(class_name):
 classes = []
 
 
-def get_file_list(api_filepath, output_dir, headers=False, sources=False):
+def get_file_list(api_filepath, output_dir, headers=False, sources=False, bindings_filter_classes=False, bindings_class_list=""):
     global classes
     files = []
     with open(api_filepath) as api_file:
         classes = json.load(api_file)
     include_gen_folder = Path(output_dir) / "gen"
     source_gen_folder = Path(output_dir) / "gen"
+
+    bindings_keep_classes = bindings_class_list.split(",")
+
     for _class in classes:
+        if bindings_filter_classes and not _class['name'] in bindings_keep_classes:
+            continue
+
         header_filename = include_gen_folder / (class_name_to_file_name(strip_name(_class["name"])) + ".h")
         source_filename = source_gen_folder / (class_name_to_file_name(strip_name(_class["name"])) + ".cpp")
         if headers:
@@ -73,24 +79,28 @@ def get_file_list(api_filepath, output_dir, headers=False, sources=False):
     return files
 
 
-def print_file_list(api_filepath, output_dir, headers=False, sources=False):
-    for f in get_file_list(api_filepath, output_dir, headers, sources):
+def print_file_list(api_filepath, output_dir, headers=False, sources=False, bindings_filter_classes=False, bindings_class_list=""):
+    for f in get_file_list(api_filepath, output_dir, headers, sources, bindings_filter_classes, bindings_class_list):
         print(f, end=";")
 
 
 def scons_emit_files(target, source, env):
-    files = [env.File(f) for f in get_file_list(str(source[0]), target[0].abspath, True, True)]
+    print(env["bindings_filter_classes"])
+    print(env["bindings_class_list"])
+    files = [env.File(f) for f in get_file_list(str(source[0]), target[0].abspath, True, True, env["bindings_filter_classes"], env["bindings_class_list"])]
     env.Clean(target, files)
     env["pandemonium_cpp_gen_dir"] = target[0].abspath
     return files, source
 
 
 def scons_generate_bindings(target, source, env):
-    generate_bindings(str(source[0]), env["generate_template_get_node"], env["pandemonium_cpp_gen_dir"])
+    print(env["bindings_filter_classes"])
+    print(env["bindings_class_list"])
+    generate_bindings(str(source[0]), env["generate_template_get_node"], env["pandemonium_cpp_gen_dir"], env["bindings_filter_classes"], env["bindings_class_list"])
     return None
 
 
-def generate_bindings(api_filepath, use_template_get_node, output_dir="."):
+def generate_bindings(api_filepath, use_template_get_node, output_dir=".", bindings_filter_classes=False, bindings_class_list=""):
     global classes
     with open(api_filepath) as api_file:
         classes = json.load(api_file)
@@ -102,8 +112,13 @@ def generate_bindings(api_filepath, use_template_get_node, output_dir="."):
     include_gen_folder.mkdir(parents=True, exist_ok=True)
     source_gen_folder.mkdir(parents=True, exist_ok=True)
 
+    bindings_keep_classes = bindings_class_list.split(",")
+
     for c in classes:
-        # print(c['name'])
+        if bindings_filter_classes and not c['name'] in bindings_keep_classes:
+            continue
+        
+        #print(c['name'])
         used_classes = sorted(get_used_classes(c))
         if use_template_get_node and c["name"] == "Node":
             correct_method_name(c["methods"])
@@ -126,11 +141,11 @@ def generate_bindings(api_filepath, use_template_get_node, output_dir="."):
 
     register_types_filename = source_gen_folder / "__register_types.cpp"
     with register_types_filename.open("w+") as register_types_file:
-        register_types_file.write(generate_type_registry(classes))
+        register_types_file.write(generate_type_registry(classes, bindings_filter_classes, bindings_class_list))
 
     init_method_bindings_filename = source_gen_folder / "__init_method_bindings.cpp"
     with init_method_bindings_filename.open("w+") as init_method_bindings_file:
-        init_method_bindings_file.write(generate_init_method_bindings(classes))
+        init_method_bindings_file.write(generate_init_method_bindings(classes, bindings_filter_classes, bindings_class_list))
 
 
 def is_reference_type(t):
@@ -806,14 +821,19 @@ def generate_icall_header(icalls):
     return "\n".join(source)
 
 
-def generate_type_registry(classes):
+def generate_type_registry(classes, bindings_filter_classes=False, bindings_class_list=""):
     source = []
+
+    bindings_keep_classes = bindings_class_list.split(",")
 
     source.append('#include "tag_db.h"')
     source.append("#include <typeinfo>")
     source.append("\n")
 
     for c in classes:
+        if bindings_filter_classes and not c['name'] in bindings_keep_classes:
+            continue
+
         source.append("#include <" + class_name_to_file_name(strip_name(c["name"])) + ".h>")
 
     source.append("")
@@ -823,6 +843,9 @@ def generate_type_registry(classes):
     source.append("{")
 
     for c in classes:
+        if bindings_filter_classes and not c['name'] in bindings_keep_classes:
+            continue
+
         class_name = strip_name(c["name"])
         base_class_name = strip_name(c["base_class"])
 
@@ -850,10 +873,15 @@ def generate_type_registry(classes):
     return "\n".join(source)
 
 
-def generate_init_method_bindings(classes):
+def generate_init_method_bindings(classes, bindings_filter_classes=False, bindings_class_list=""):
     source = []
 
+    bindings_keep_classes = bindings_class_list.split(",")
+
     for c in classes:
+        if bindings_filter_classes and not c['name'] in bindings_keep_classes:
+            continue
+
         source.append("#include <" + class_name_to_file_name(strip_name(c["name"])) + ".h>")
 
     source.append("")
@@ -863,6 +891,9 @@ def generate_init_method_bindings(classes):
     source.append("{")
 
     for c in classes:
+        if bindings_filter_classes and not c['name'] in bindings_keep_classes:
+            continue
+
         source.append("\t" + strip_name(c["name"]) + "::___init_method_bindings();")
 
     source.append("}")

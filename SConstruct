@@ -171,6 +171,9 @@ opts.Add(
     )
 )
 
+opts.Add(BoolVariable("bindings_filter_classes", "Enable bindings class list filtering", False))
+opts.Add("bindings_class_list", "Only generate bindings for the given classes, separated by comma (,).", "")
+
 opts.Add(BoolVariable("build_library", "Build the pandemonium-cpp library.", True))
 
 opts.Update(env)

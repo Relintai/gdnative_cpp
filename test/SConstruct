@@ -2,6 +2,12 @@
 
 env = SConscript("../SConstruct")
 
+# TODO, these need to be set before the env = SConscript("../SConstruct") call somehow, as it
+# the file list gets generated before the actual files.
+
+env["bindings_filter_classes"] = True;
+env["bindings_class_list"] = "Object,Node,Node2D,Sprite,CanvasItem,Reference,GlobalConstants,OS,InputEvent,Font,Texture,AESContext,Resource,Image,InputEventKey,Material,Mesh,Shape,MultiMesh,InputEventWithModifiers,TriangleMesh,ArrayMesh,MultiplayerAPI,NetworkedMultiplayerPeer,ProcessGroup,PacketPeer,StyleBox,World2D,Physics2DDirectSpaceState,SceneTree,MainLoop,PackedScene,SceneTreeTween,SceneState,CallbackTweener,Physics2DShapeQueryParameters,SceneTreeTimer,Tweener,Viewport,IntervalTweener,World,MethodTweener,Camera2D,Control,PropertyTweener,Shader,ViewportTexture,Camera,Spatial,SpatialGizmo,World3D,Environment3D,Sky,PhysicsDirectSpaceState,PhysicsShapeQueryParameters,Theme";
+
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=['src/'])
 sources = Glob('src/*.cpp')
