@@ -457,7 +457,7 @@ elif env["platform"] == "javascript":
     env["CXX"] = "em++"
     env["AR"] = "emar"
     env["RANLIB"] = "emranlib"
-    env.Append(CPPFLAGS=["-s", "SIDE_MODULE=1"])
+    env.Append(CPPFLAGS=["-s", "SIDE_MODULE=1", "-DNO_THREADS"])
     env.Append(LINKFLAGS=["-s", "SIDE_MODULE=1"])
     env["SHOBJSUFFIX"] = ".bc"
     env["SHLIBSUFFIX"] = ".wasm"

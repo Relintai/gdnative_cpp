@@ -35,8 +35,6 @@ docker run ${custom_envvars} \
         -w /root/project pandemonium-linux:${img_version} \
         bash /root/in_container_build_scripts/linux.sh "$@" 2>&1 | tee logs/linux.log
 
-exit 0
-
 # Windows Build
 docker run ${custom_envvars} \
 	      -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
@@ -44,35 +42,37 @@ docker run ${custom_envvars} \
 	      -w /root/project pandemonium-windows:${img_version} \
 	      bash /root/in_container_build_scripts/windows.sh "$@" 2>&1 | tee logs/windows.log
 
-
+# Currently broken
 # Javascript Build
-docker run ${custom_envvars} \
-        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
-        -v ${project_root}:/root/project \
-        -w /root/project pandemonium-javascript:${img_version} \
-        bash /root/in_container_build_scripts/javascript.sh "$@" 2>&1 | tee logs/javascript.log
+#docker run ${custom_envvars} \
+#        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
+#        -v ${project_root}:/root/project \
+#        -w /root/project pandemonium-javascript:${img_version} \
+#        bash /root/in_container_build_scripts/javascript.sh "$@" 2>&1 | tee logs/javascript.log
 
+# Currently broken
 # Android Build
-docker run ${custom_envvars} \
-        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
-        -v ${project_root}:/root/project \
-        -w /root/project pandemonium-android:${img_version} \
-        bash /root/in_container_build_scripts/android.sh "$@" 2>&1 | tee logs/android.log
+#docker run ${custom_envvars} \
+#        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
+#        -v ${project_root}:/root/project \
+#        -w /root/project pandemonium-android:${img_version} \
+#        bash /root/in_container_build_scripts/android.sh "$@" 2>&1 | tee logs/android.log
  
+# Currently broken
 # OSX Build
-docker run ${custom_envvars} \
-        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
-        -v ${project_root}:/root/project \
-        -w /root/project pandemonium-osx:${img_version} \
-        bash /root/in_container_build_scripts/osx.sh "$@" 2>&1 | tee logs/osx.log
+#docker run ${custom_envvars} \
+#        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
+#        -v ${project_root}:/root/project \
+#        -w /root/project pandemonium-osx:${img_version} \
+#        bash /root/in_container_build_scripts/osx.sh "$@" 2>&1 | tee logs/osx.log
 
-
+# Currently broken
 # iOS Build
-docker run ${custom_envvars} \
-        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
-        -v ${project_root}:/root/project \
-        -w /root/project pandemonium-appleembedded:${img_version} \
-        bash /root/in_container_build_scripts/ios.sh "$@" 2>&1 | tee logs/ios.log
+#docker run ${custom_envvars} \
+#        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
+#        -v ${project_root}:/root/project \
+#        -w /root/project pandemonium-appleembedded:${img_version} \
+#        bash /root/in_container_build_scripts/ios.sh "$@" 2>&1 | tee logs/ios.log
 
 # Check files
 

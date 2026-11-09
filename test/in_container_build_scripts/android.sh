@@ -1,39 +1,21 @@
 #!/bin/bash
 set -e
 
-# Android editor
-scons production=yes tools=yes target=release_debug custom_modules_shared=no debug_symbols=no platform=android android_arch=armv7 "$@"
-scons production=yes tools=yes target=release_debug custom_modules_shared=no debug_symbols=no platform=android android_arch=arm64v8 "$@" 
-scons production=yes tools=yes target=release_debug custom_modules_shared=no debug_symbols=no platform=android android_arch=x86 "$@"
-scons production=yes tools=yes target=release_debug custom_modules_shared=no debug_symbols=no platform=android android_arch=x86_64 "$@"
+# Currently the test project is inside the bindings project
+# If you put the bindings project inside your library project, comment this out
+cd test
 
-pushd platform/android/java/
 
-./gradlew generatePandemoniumEditor 
+scons platform=android android_arch=armv7 target=release "$@"
+scons platform=android android_arch=armv7 target=debug "$@"
 
-popd
+scons platform=android android_arch=arm64v8 target=release "$@"
+scons platform=android android_arch=arm64v8 target=debug "$@"
 
-# Android templates release_debug
-scons production=yes tools=no target=release_debug custom_modules_shared=no debug_symbols=no platform=android android_arch=armv7 "$@"
-scons production=yes tools=no target=release_debug custom_modules_shared=no debug_symbols=no platform=android android_arch=arm64v8 "$@"
-scons production=yes tools=no target=release_debug custom_modules_shared=no debug_symbols=no platform=android android_arch=x86 "$@"
-scons production=yes tools=no target=release_debug custom_modules_shared=no debug_symbols=no platform=android android_arch=x86_64 "$@"
+scons platform=android android_arch=x86 target=release "$@"
+scons platform=android android_arch=x86 target=debug "$@"
 
-pushd platform/android/java/
+scons platform=android android_arch=x86_64 target=release "$@"
+scons platform=android android_arch=x86_64 target=debug "$@"
 
-./gradlew generatePandemoniumTemplates
-
-popd
-
-# Android templates release
-scons production=yes tools=no target=release custom_modules_shared=no debug_symbols=no platform=android android_arch=armv7 "$@"
-scons production=yes tools=no target=release custom_modules_shared=no debug_symbols=no platform=android android_arch=arm64v8 "$@"
-scons production=yes tools=no target=release custom_modules_shared=no debug_symbols=no platform=android android_arch=x86 "$@"
-scons production=yes tools=no target=release custom_modules_shared=no debug_symbols=no platform=android android_arch=x86_64 "$@"
-
-pushd platform/android/java/
-
-./gradlew generatePandemoniumTemplates 
-
-popd
 
