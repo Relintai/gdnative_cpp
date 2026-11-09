@@ -194,7 +194,7 @@ if host_platform == "windows" and env["platform"] != "android":
 
     opts.Update(env)
 
-# Require C++14
+# Require C++11
 if host_platform == "windows" and env["platform"] == "windows" and not env["use_mingw"]:
     # MSVC
     env.Append(CCFLAGS=["/std:c++11"])
