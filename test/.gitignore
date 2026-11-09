@@ -1,6 +1,8 @@
 # Pandemonium 4+ specific ignores
 .pandemonium/
 
+logs/
+
 # Pandemonium-specific ignores
 .import/
 export.cfg
