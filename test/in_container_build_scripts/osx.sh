@@ -15,10 +15,7 @@ scons production=yes tools=no target=release custom_modules_shared=no debug_symb
 
 # OSX lipo
 
-pushd misc/osx
-
 ./lipo.sh
 
-popd
 
 
