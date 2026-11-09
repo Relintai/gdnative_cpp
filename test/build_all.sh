@@ -3,6 +3,9 @@ set -e
 
 basedir=$(pwd)/
 
+lib_name=libgdexample
+output_folder=test/bin/
+
 # Currently the test project is inside the bindings project
 # If you put the bindings project inside your library project, comment this out
 cd ..
@@ -42,7 +45,7 @@ docker run ${custom_envvars} \
 	      -w /root/project pandemonium-windows:${img_version} \
 	      bash /root/in_container_build_scripts/windows.sh "$@" 2>&1 | tee logs/windows.log
 
-# Currently broken
+# TODO
 # Javascript Build
 #docker run ${custom_envvars} \
 #        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
@@ -50,7 +53,7 @@ docker run ${custom_envvars} \
 #        -w /root/project pandemonium-javascript:${img_version} \
 #        bash /root/in_container_build_scripts/javascript.sh "$@" 2>&1 | tee logs/javascript.log
 
-# Currently broken
+# TODO
 # Android Build
 #docker run ${custom_envvars} \
 #        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
@@ -58,7 +61,7 @@ docker run ${custom_envvars} \
 #        -w /root/project pandemonium-android:${img_version} \
 #        bash /root/in_container_build_scripts/android.sh "$@" 2>&1 | tee logs/android.log
  
-# Currently broken
+# TODO
 # OSX Build
 #docker run ${custom_envvars} \
 #        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
@@ -66,7 +69,7 @@ docker run ${custom_envvars} \
 #        -w /root/project pandemonium-osx:${img_version} \
 #        bash /root/in_container_build_scripts/osx.sh "$@" 2>&1 | tee logs/osx.log
 
-# Currently broken
+# TODO
 # iOS Build
 #docker run ${custom_envvars} \
 #        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
@@ -76,101 +79,31 @@ docker run ${custom_envvars} \
 
 # Check files
 
-cd ./bin/
+cd $output_folder
 
 files=(
   # Windows
-  "pandemonium.windows.opt.64.exe"
-  "pandemonium.windows.opt.debug.64.exe"
+  "$lib_name.windows.debug.32.dll"
+  "$lib_name.windows.release.32.dll"
   
-  "pandemonium.windows.opt.32.exe"
-  "pandemonium.windows.opt.debug.32.exe"
+  "$lib_name.windows.debug.32.dll"
+  "$lib_name.windows.release.32.dll"
 
   # Linux
-  "pandemonium.x11.opt.32"
-  "pandemonium.x11.opt.64"
-  "pandemonium.x11.opt.arm"
-  "pandemonium.x11.opt.arm64"
+  "$lib_name.linux.debug.arm32v6.so"
+  "$lib_name.linux.release.arm32v6.so"
 
-  "pandemonium.x11.opt.debug.32"
-  "pandemonium.x11.opt.debug.64"
-  "pandemonium.x11.opt.debug.arm"
-  "pandemonium.x11.opt.debug.arm64"
+  "$lib_name.linux.debug.arm32v7.so"
+  "$lib_name.linux.release.arm32v7.so"
 
-  # Server (Linux)
-  "pandemonium_server.x11.opt.32"
-  "pandemonium_server.x11.opt.64"
-  "pandemonium_server.x11.opt.arm"
-  "pandemonium_server.x11.opt.arm64"
+  "$lib_name.linux.debug.arm64v8.so"
+  "$lib_name.linux.release.arm64v8.so"
 
-  "pandemonium_server.x11.opt.debug.32"
-  "pandemonium_server.x11.opt.debug.64"
-  "pandemonium_server.x11.opt.debug.arm"
-  "pandemonium_server.x11.opt.debug.arm64"
+  "$lib_name.linux.debug.x86_32.so"
+  "$lib_name.linux.release.x86_32.so"
 
-  # HTTP Server (Linux)
-  "pandemonium_http_server.x11.opt.32"
-  "pandemonium_http_server.x11.opt.64"
-  "pandemonium_http_server.x11.opt.arm"
-  "pandemonium_http_server.x11.opt.arm64"
-
-  "pandemonium_http_server.x11.opt.debug.32"
-  "pandemonium_http_server.x11.opt.debug.64"
-  "pandemonium_http_server.x11.opt.debug.arm"
-  "pandemonium_http_server.x11.opt.debug.arm64"
-
-  # JS
-  "pandemonium.javascript.opt.zip"
-  "pandemonium.javascript.opt.debug.zip"
-
-  # Android
-  "android_source.zip"
-  "android_debug.apk"
-  "android_release.apk"
-  "android_editor.apk"
-  "pandemonium-lib.release.aar"
-  "pandemonium-lib.debug.aar"
-
-  # OSX
-  "pandemonium.osx.opt.universal"
-  "pandemonium.osx.opt.debug.universal"
-  "pandemonium.osx.opt.tools.universal"
-
-  # Note: These are not needed in the final release, only the universals.
-  "pandemonium.osx.opt.arm64"
-  "pandemonium.osx.opt.x86_64"
-
-  "pandemonium.osx.opt.debug.arm64"
-  "pandemonium.osx.opt.debug.x86_64"
-
-  # iOS
-  "libpandemonium.iphone.opt.arm64.a"
-  "libpandemonium.iphone.opt.debug.arm64.a"
-
-  "libpandemonium.iphone.opt.debug.x86_64.simulator.a"
-  "libpandemonium.iphone.opt.x86_64.simulator.a"
-
-  # FRT
-  "pandemonium.frt.opt.arm32v6"
-  "pandemonium.frt.opt.arm32v7"
-  "pandemonium.frt.opt.arm64v8"
-
-  "pandemonium.frt.opt.debug.arm32v6"
-  "pandemonium.frt.opt.debug.arm32v7"
-  "pandemonium.frt.opt.debug.arm64v8"
-
-  # FRT SDL
-  "pandemonium.frt_sdl.opt.arm32v6"
-  "pandemonium.frt_sdl.opt.arm32v7"
-  "pandemonium.frt_sdl.opt.arm64v8"
-  "pandemonium.frt_sdl.opt.x86_32"
-  "pandemonium.frt_sdl.opt.x86_64"
-
-  "pandemonium.frt_sdl.opt.debug.arm32v6"
-  "pandemonium.frt_sdl.opt.debug.arm32v7"
-  "pandemonium.frt_sdl.opt.debug.arm64v8"
-  "pandemonium.frt_sdl.opt.debug.x86_32"
-  "pandemonium.frt_sdl.opt.debug.x86_64"
+  "$lib_name.linux.debug.x86_64.so"
+  "$lib_name.linux.release.x86_64.so"
 )
 
 error=0
