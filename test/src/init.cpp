@@ -29,7 +29,7 @@
 /*************************************************************************/
 
 #include <pandemonium.h>
-#include <Reference.h>
+#include <reference.h>
 
 
 
