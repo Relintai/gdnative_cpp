@@ -171,6 +171,8 @@ opts.Add(
     )
 )
 
+# Note that currently all dependent classes need to be added to what you need.
+# TODO skip rendering getters and setters that use non listed classes
 opts.Add(BoolVariable("bindings_filter_classes", "Enable bindings class list filtering", False))
 opts.Add("bindings_class_list", "Only generate bindings for the given classes, separated by comma (,).", "")
 
