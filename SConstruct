@@ -308,6 +308,8 @@ elif env["platform"] == "ios":
         env.Append(CCFLAGS=["-O3"])
 
 elif env["platform"] == "windows":
+    env["SHLIBSUFFIX"] = ".dll"
+
     if host_platform == "windows" and not env["use_mingw"]:
         # MSVC
         env.Append(LINKFLAGS=["/WX"])
