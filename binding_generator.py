@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from __future__ import print_function
 import json
 import os
@@ -36,6 +37,11 @@ def class_name_to_file_name(class_name):
             new_name += "_"
                     
         new_name += upper_str.lower()
+
+    new_name=new_name.replace("1_d", "1d")
+    new_name=new_name.replace("2_d", "2d")
+    new_name=new_name.replace("3_d", "3d")
+    new_name=new_name.replace("4_d", "4d")
 
     return new_name
 
