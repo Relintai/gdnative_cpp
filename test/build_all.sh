@@ -3,7 +3,9 @@ set -e
 
 basedir=$(pwd)/
 
-cd ../..
+# Currently the test project is inside the bindings project
+# If you put the bindings project inside your library project, comment this out
+cd ..
 
 project_root=$(pwd)/
 img_version=pe
@@ -28,67 +30,67 @@ fi
 
 # Windows Build
 docker run ${custom_envvars} \
-	      -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+	      -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
 	      -v ${project_root}:/root/project \
 	      -w /root/project pandemonium-windows:${img_version} \
-	      bash /root/engine_build_scripts/windows.sh "$@" 2>&1 | tee logs/windows.log
+	      bash /root/in_container_build_scripts/windows.sh "$@" 2>&1 | tee logs/windows.log
 
 # Linux Build
 docker run ${custom_envvars} \
-        -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-linux:${img_version} \
-        bash /root/engine_build_scripts/linux.sh "$@" 2>&1 | tee logs/linux.log
+        bash /root/in_container_build_scripts/linux.sh "$@" 2>&1 | tee logs/linux.log
 
 # Linux Build
 docker run ${custom_envvars} \
-        -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-linux:${img_version} \
-        bash /root/engine_build_scripts/linux_server.sh "$@" 2>&1 | tee logs/linux_server.log
+        bash /root/in_container_build_scripts/linux_server.sh "$@" 2>&1 | tee logs/linux_server.log
 
 # Javascript Build
 docker run ${custom_envvars} \
-        -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-javascript:${img_version} \
-        bash /root/engine_build_scripts/javascript.sh "$@" 2>&1 | tee logs/javascript.log
+        bash /root/in_container_build_scripts/javascript.sh "$@" 2>&1 | tee logs/javascript.log
 
 # Android Build
 docker run ${custom_envvars} \
-        -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-android:${img_version} \
-        bash /root/engine_build_scripts/android.sh "$@" 2>&1 | tee logs/android.log
+        bash /root/in_container_build_scripts/android.sh "$@" 2>&1 | tee logs/android.log
  
 # OSX Build
 docker run ${custom_envvars} \
-        -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-osx:${img_version} \
-        bash /root/engine_build_scripts/osx.sh "$@" 2>&1 | tee logs/osx.log
+        bash /root/in_container_build_scripts/osx.sh "$@" 2>&1 | tee logs/osx.log
 
 
 # iOS Build
 docker run ${custom_envvars} \
-        -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-appleembedded:${img_version} \
-        bash /root/engine_build_scripts/ios.sh "$@" 2>&1 | tee logs/ios.log
+        bash /root/in_container_build_scripts/ios.sh "$@" 2>&1 | tee logs/ios.log
 
 # FRT Build
 docker run ${custom_envvars} \
-        -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-linux:${img_version} \
-        bash /root/engine_build_scripts/frt.sh "$@" 2>&1 | tee logs/frt.log
+        bash /root/in_container_build_scripts/frt.sh "$@" 2>&1 | tee logs/frt.log
 
 # FRT SDL Build
 docker run ${custom_envvars} \
-        -v ${basedir}/engine_build_scripts:/root/engine_build_scripts \
+        -v ${basedir}/in_container_build_scripts:/root/in_container_build_scripts \
         -v ${project_root}:/root/project \
         -w /root/project pandemonium-linux:${img_version} \
-        bash /root/engine_build_scripts/frt_sdl.sh "$@" 2>&1 | tee logs/frt_sdl.log
+        bash /root/in_container_build_scripts/frt_sdl.sh "$@" 2>&1 | tee logs/frt_sdl.log
 
 # Check files
 
@@ -102,9 +104,6 @@ files=(
   "pandemonium.windows.opt.32.exe"
   "pandemonium.windows.opt.debug.32.exe"
 
-  "pandemonium.windows.opt.tools.64.exe"
-  "pandemonium.windows.opt.tools.32.exe"
-
   # Linux
   "pandemonium.x11.opt.32"
   "pandemonium.x11.opt.64"
@@ -116,11 +115,6 @@ files=(
   "pandemonium.x11.opt.debug.arm"
   "pandemonium.x11.opt.debug.arm64"
 
-  "pandemonium.x11.opt.tools.32"
-  "pandemonium.x11.opt.tools.64"
-  "pandemonium.x11.opt.tools.arm"
-  "pandemonium.x11.opt.tools.arm64"
-
   # Server (Linux)
   "pandemonium_server.x11.opt.32"
   "pandemonium_server.x11.opt.64"
@@ -131,11 +125,6 @@ files=(
   "pandemonium_server.x11.opt.debug.64"
   "pandemonium_server.x11.opt.debug.arm"
   "pandemonium_server.x11.opt.debug.arm64"
-
-  "pandemonium_server.x11.opt.tools.32"
-  "pandemonium_server.x11.opt.tools.64"
-  "pandemonium_server.x11.opt.tools.arm"
-  "pandemonium_server.x11.opt.tools.arm64"
 
   # HTTP Server (Linux)
   "pandemonium_http_server.x11.opt.32"
@@ -151,17 +140,6 @@ files=(
   # JS
   "pandemonium.javascript.opt.zip"
   "pandemonium.javascript.opt.debug.zip"
-
-  "pandemonium.javascript.opt.threads.zip"
-  "pandemonium.javascript.opt.debug.threads.zip"
-
-  "pandemonium.javascript.opt.gdnative.zip"
-  "pandemonium.javascript.opt.debug.gdnative.zip"
-
-  "pandemonium.javascript.opt.gdnative.threads.zip"
-  "pandemonium.javascript.opt.debug.gdnative.threads.zip"
-
-  "pandemonium.javascript.opt.tools.threads.zip"
 
   # Android
   "android_source.zip"
@@ -182,9 +160,6 @@ files=(
 
   "pandemonium.osx.opt.debug.arm64"
   "pandemonium.osx.opt.debug.x86_64"
-
-  "pandemonium.osx.opt.tools.arm64"
-  "pandemonium.osx.opt.tools.x86_64"
 
   # iOS
   "libpandemonium.iphone.opt.arm64.a"
