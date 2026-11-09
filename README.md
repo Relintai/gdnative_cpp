@@ -1,111 +1,8 @@
 # pandemonium-cpp
 
-This repository contains the  *C++ bindings* for the [**Pandemonium Engine**](https://github.com/pandemoniumengine/pandemonium)'s GDNative API.
+This repository contains the  *C++ bindings* for the [**Pandemonium Engine**](https://github.com/Relintai/pandemonium_engine)'s GDNative API.
 
-- [**Versioning**](#versioning)
-- [**Contributing**](#contributing)
-- [**Getting Started**](#getting-started)
-- [**Creating a simple class**](#creating-a-simple-class)
-
-## Versioning
-
-This repositories follows the same branch versioning as the main [Pandemonium Engine
-repository](https://github.com/pandemoniumengine/pandemonium):
-
-- `master` tracks the current development branch.
-- `3.x` tracks the development of the next 3.x minor release.
-- Other versioned branches (e.g. `3.3`, `3.2`) track the latest stable release
-  in the corresponding branch.
-
-Stable releases are also tagged on this repository:
-[**Tags**](https://github.com/pandemoniumengine/pandemonium-cpp/tags).
-
-**For any project built against a stable release of Pandemonium, we recommend using
-this repository as a Git submodule, checking out the specific tag matching your
-Pandemonium version.**
-
-> As the `master` and `3.x` branches are constantly getting updates, if you are
-> using `pandemonium-cpp` against a more current version of Pandemonium, see the instructions
-> in [**pandemonium_headers**](https://github.com/pandemoniumengine/pandemonium_headers) for
-> updating the relevant files.
-
-## Contributing
-
-We greatly appreciate help in maintaining and extending this project. If you
-wish to help out, ensure you have an account on GitHub and create a "fork" of
-this repository. Rémi "Akien" Verschelde wrote an excellent bit of documentation
-for the main Pandemonium project on this:
-[Pull request workflow](https://docs.pandemoniumengine.org/en/stable/community/contributing/pr_workflow.html)
-
-Please install clang-format and copy the files in `misc/hooks` into `.git/hooks`
-so formatting is done before your changes are submitted.
-
-## Getting Started
-
-| **Build latest version of Pandemonium** | [**GitHub**](https://github.com/pandemoniumengine/pandemonium) | [**Docs**](https://pandemonium.readthedocs.io/en/latest/development/compiling/index.html) |
-| --- | --- | --- |
-
-### Setting up a new project
-
-We recommend using Git for managing your project. The instructions below assume
-you're using Git. Alternatively, you can download the source code directly from
-GitHub. In this case, you need to download both
-[pandemonium-cpp](https://github.com/pandemoniumengine/pandemonium-cpp) and
-[pandemonium_headers](https://github.com/pandemoniumengine/pandemonium_headers).
-
-```bash
-mkdir SimpleLibrary
-cd SimpleLibrary
-mkdir bin
-mkdir src
-git clone --recursive https://github.com/pandemoniumengine/pandemonium-cpp
-```
-
-If you wish to use a specific branch, add the -b option to the clone command:
-
-```bash
-git clone --recursive https://github.com/pandemoniumengine/pandemonium-cpp -b 3.0
-```
-
-If your project is an existing repository, use a Git submodule instead:
-
-```bash
-git submodule add https://github.com/pandemoniumengine/pandemonium-cpp
-git submodule update --init --recursive
-```
-
-Right now, our directory structure should look like this:
-
-```text
-SimpleLibrary/
-├─pandemonium-cpp/
-| └─pandemonium_headers/
-├─bin/
-└─src/
-```
-
-### Updating the `api.json` file
-
-Our `api.json` file contains metadata for all the classes that are part of the
-Pandemonium core. This metadata is required to generate the C++ binding classes for
-use in GDNative modules.
-
-This file is supplied with our
-[pandemonium_headers](https://github.com/pandemoniumengine/pandemonium_headers) repository
-for your convenience. However, if you're running a custom build of Pandemonium and
-need access to classes that have recent changes, you must generate a new
-`api.json` file. You do this by starting your Pandemonium executable with the
-following parameters:
-
-```bash
-pandemonium --gdnative-generate-json-api api.json
-```
-
-Now copy the `api.json` file into your folder structure to make it easier to
-access.
-
-See the remark below for the extra ```custom_api_file``` SCons argument, which
-is required to tell SCons where to find your file.
+See the sample project: https://github.com/Relintai/gdnative_cpp_sample on usage.
 
 ### Compiling the C++ bindings library
 
@@ -157,9 +54,7 @@ Create `init.cpp` under `SimpleLibrary/src/` and add the following code:
 
 ```cpp
 #include <pandemonium.h>
-#include <Reference.h>
-
-
+#include <reference.h>
 
 class SimpleClass : public Reference {
     GDCLASS(SimpleClass, Reference);
