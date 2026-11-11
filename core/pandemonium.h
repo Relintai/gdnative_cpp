@@ -132,7 +132,7 @@ inline T *create_custom_class_instance() {
 // ___get_base_id:             Gets the ID of the direct base class, as returned by ___get_id
 // ___get_base_class_name:     Name of the direct base class
 // ___get_from_variant:        Converts a Variant into an Object*. Will be non-null if the class matches.
-#define GDCLASS(Name, Base)                                        \
+#define GDCLASS(Name, Base)                                                  \
                                                                              \
 public:                                                                      \
 	inline static const char *___get_class_name() {                          \
@@ -281,8 +281,7 @@ struct __construct_sequence<0, I...> {
 // Now the wrapping part.
 template <class T, class R, class... As>
 struct _WrappedMethod {
-	R(T::*f)
-	(As...);
+	R (T::*f)(As...);
 
 	template <int... I>
 	void apply(Variant *ret, T *obj, Variant **args, __Sequence<I...>) {
@@ -331,12 +330,12 @@ __pandemonium_wrapper_method ___get_wrapper_function(R (T::* /*f*/)(As...)) {
 
 template <class T, class R, class... A>
 void *___make_wrapper_function(R (T::*f)(A...) const) {
-	return ___make_wrapper_function((R(T::*)(A...))f);
+	return ___make_wrapper_function((R (T::*)(A...))f);
 }
 
 template <class T, class R, class... A>
 __pandemonium_wrapper_method ___get_wrapper_function(R (T::*f)(A...) const) {
-	return ___get_wrapper_function((R(T::*)(A...))f);
+	return ___get_wrapper_function((R (T::*)(A...))f);
 }
 
 template <class M>
@@ -353,7 +352,7 @@ void register_method(const char *name, M method_ptr) {
 // User can specify a derived class D to register the method for, instead of it being inferred.
 template <class D, class B, class R, class... As>
 void register_method_explicit(const char *name, R (B::*method_ptr)(As...)) {
-	//static_assert(std::is_base_of<B, D>::value, "Explicit class must derive from method class");
+	// static_assert(std::is_base_of<B, D>::value, "Explicit class must derive from method class");
 	register_method(name, static_cast<R (D::*)(As...)>(method_ptr));
 }
 
@@ -372,8 +371,7 @@ struct _PropertySetFunc {
 
 template <class T, class P>
 struct _PropertyGetFunc {
-	P(T::*f)
-	();
+	P (T::*f)();
 	static pandemonium_variant _wrapped_getter(pandemonium_object * /*object*/, void *method_data, void *user_data) {
 		_PropertyGetFunc<T, P> *get_func = (_PropertyGetFunc<T, P> *)method_data;
 		T *obj = (T *)user_data;
@@ -519,7 +517,7 @@ template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)() const, P default_value,
 		pandemonium_property_usage_flags usage = PANDEMONIUM_PROPERTY_USAGE_DEFAULT,
 		pandemonium_property_hint hint = PANDEMONIUM_PROPERTY_HINT_NONE, String hint_string = "") {
-	register_property(name, setter, (P(T::*)())getter, default_value, usage, hint, hint_string);
+	register_property(name, setter, (P (T::*)())getter, default_value, usage, hint, hint_string);
 }
 
 template <class T>
