@@ -340,25 +340,21 @@ __pandemonium_wrapper_method ___get_wrapper_function(R (T::*f)(A...) const) {
 }
 
 template <class M>
-void register_method(const char *name, M method_ptr, pandemonium_method_rpc_mode rpc_type = PANDEMONIUM_METHOD_RPC_MODE_DISABLED) {
+void register_method(const char *name, M method_ptr) {
 	pandemonium_instance_method method = {};
 	method.method_data = ___make_wrapper_function(method_ptr);
 	method.free_func = Pandemonium::api->pandemonium_free;
 	method.method = (__pandemonium_wrapper_method)___get_wrapper_function(method_ptr);
 
-	pandemonium_method_attributes attr = {};
-	attr.rpc_type = rpc_type;
-
 	Pandemonium::nativescript_api->pandemonium_nativescript_register_method(_RegisterState::nativescript_handle,
-			___get_method_class_name(method_ptr), name, attr, method);
+			___get_method_class_name(method_ptr), name, method);
 }
 
 // User can specify a derived class D to register the method for, instead of it being inferred.
 template <class D, class B, class R, class... As>
-void register_method_explicit(const char *name, R (B::*method_ptr)(As...),
-		pandemonium_method_rpc_mode rpc_type = PANDEMONIUM_METHOD_RPC_MODE_DISABLED) {
+void register_method_explicit(const char *name, R (B::*method_ptr)(As...)) {
 	//static_assert(std::is_base_of<B, D>::value, "Explicit class must derive from method class");
-	register_method(name, static_cast<R (D::*)(As...)>(method_ptr), rpc_type);
+	register_method(name, static_cast<R (D::*)(As...)>(method_ptr));
 }
 
 template <class T, class P>
@@ -426,7 +422,6 @@ struct _PropertyDefaultGetFunc {
 
 template <class T, class P>
 void register_property(const char *name, P(T::*var), P default_value,
-		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
 		pandemonium_property_usage_flags usage = PANDEMONIUM_PROPERTY_USAGE_DEFAULT,
 		pandemonium_property_hint hint = PANDEMONIUM_PROPERTY_HINT_NONE, String hint_string = "") {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
@@ -454,7 +449,6 @@ void register_property(const char *name, P(T::*var), P default_value,
 	}
 
 	attr.hint = hint;
-	attr.rset_type = rpc_mode;
 	attr.usage = usage;
 	attr.hint_string = *_hint_string;
 
@@ -482,7 +476,6 @@ void register_property(const char *name, P(T::*var), P default_value,
 
 template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(), P default_value,
-		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
 		pandemonium_property_usage_flags usage = PANDEMONIUM_PROPERTY_USAGE_DEFAULT,
 		pandemonium_property_hint hint = PANDEMONIUM_PROPERTY_HINT_NONE, String hint_string = "") {
 	static_assert(T::___CLASS_IS_SCRIPT, "This function must only be used on custom classes");
@@ -499,7 +492,6 @@ void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(),
 		attr.default_value = *(pandemonium_variant *)&def_val;
 	}
 	attr.hint = hint;
-	attr.rset_type = rpc_mode;
 	attr.usage = usage;
 	attr.hint_string = *_hint_string;
 
@@ -525,10 +517,9 @@ void register_property(const char *name, void (T::*setter)(P), P (T::*getter)(),
 
 template <class T, class P>
 void register_property(const char *name, void (T::*setter)(P), P (T::*getter)() const, P default_value,
-		pandemonium_method_rpc_mode rpc_mode = PANDEMONIUM_METHOD_RPC_MODE_DISABLED,
 		pandemonium_property_usage_flags usage = PANDEMONIUM_PROPERTY_USAGE_DEFAULT,
 		pandemonium_property_hint hint = PANDEMONIUM_PROPERTY_HINT_NONE, String hint_string = "") {
-	register_property(name, setter, (P(T::*)())getter, default_value, rpc_mode, usage, hint, hint_string);
+	register_property(name, setter, (P(T::*)())getter, default_value, usage, hint, hint_string);
 }
 
 template <class T>
