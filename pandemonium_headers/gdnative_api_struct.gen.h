@@ -57,7 +57,7 @@ typedef struct pandemonium_gdnative_ext_nativescript_api_struct {
 	const pandemonium_gdnative_api_struct *next;
 	void (*pandemonium_nativescript_register_class)(void *p_gdnative_handle, const char *p_name, const char *p_base, pandemonium_instance_create_func p_create_func, pandemonium_instance_destroy_func p_destroy_func);
 	void (*pandemonium_nativescript_register_tool_class)(void *p_gdnative_handle, const char *p_name, const char *p_base, pandemonium_instance_create_func p_create_func, pandemonium_instance_destroy_func p_destroy_func);
-	void (*pandemonium_nativescript_register_method)(void *p_gdnative_handle, const char *p_name, const char *p_function_name, pandemonium_method_attributes p_attr, pandemonium_instance_method p_method);
+	void (*pandemonium_nativescript_register_method)(void *p_gdnative_handle, const char *p_name, const char *p_function_name, pandemonium_instance_method p_method);
 	void (*pandemonium_nativescript_register_property)(void *p_gdnative_handle, const char *p_name, const char *p_path, pandemonium_property_attributes *p_attr, pandemonium_property_set_func p_set_func, pandemonium_property_get_func p_get_func);
 	void (*pandemonium_nativescript_register_signal)(void *p_gdnative_handle, const char *p_name, const pandemonium_signal *p_signal);
 	void *(*pandemonium_nativescript_get_userdata)(pandemonium_object *p_instance);
