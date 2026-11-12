@@ -830,7 +830,7 @@ def generate_type_registry(classes, bindings_filter_classes=False, bindings_clas
         if bindings_filter_classes and not c['name'] in bindings_keep_classes:
             continue
 
-        source.append("#include <" + class_name_to_file_name(strip_name(c["name"])) + ".h>")
+        source.append("#include \"" + class_name_to_file_name(strip_name(c["name"])) + ".h\"")
 
     source.append("")
     source.append("")
@@ -878,7 +878,7 @@ def generate_init_method_bindings(classes, bindings_filter_classes=False, bindin
         if bindings_filter_classes and not c['name'] in bindings_keep_classes:
             continue
 
-        source.append("#include <" + class_name_to_file_name(strip_name(c["name"])) + ".h>")
+        source.append("#include \"" + class_name_to_file_name(strip_name(c["name"])) + ".h\"")
 
     source.append("")
     source.append("")

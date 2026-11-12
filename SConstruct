@@ -511,7 +511,7 @@ if env["generate_bindings"]:
     NoCache(bindings)
 
 # Includes
-env.Append(CPPPATH=[[env.Dir(d) for d in [".", env["headers_dir"], "gen", "core"]]])
+env.Append(CPPPATH=[[env.Dir(d) for d in [".", env["headers_dir"], "core"]]])
 
 # Sources to compile
 sources = []

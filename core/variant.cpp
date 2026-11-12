@@ -34,7 +34,7 @@
 
 #include "core_types.h"
 #include "defs.h"
-#include "object.h"
+#include "gen/object.h"
 #include "pandemonium_global.h"
 
 Variant::Variant() {

@@ -32,7 +32,7 @@
 /*************************************************************************/
 
 #include "pandemonium_global.h"
-#include "reference.h"
+#include "gen/reference.h"
 #include "variant.h"
 
 // Replicates Pandemonium's Ref<T> behavior
